@@ -13,7 +13,7 @@ Summary(uk):	ðÒÏÇÒÁ×ÁÞ ÍÕÚÉËÉ Ú WinAmp GUI
 Summary(zh_CN):	XMMS - X ¶Ë¶àÃ½Ìå²¥·ÅÆ÷
 Name:		xmms
 Version:	1.2.10
-Release:	1
+Release:	2
 Epoch:		2
 License:	GPL v2+
 Group:		X11/Applications/Sound
@@ -214,7 +214,7 @@ Summary(pl):	XMMS - wtyczka do odtwarzania MODów
 Summary(pt_BR):	Plugin de entrada para o XMMS tocar MODs (.MOD,.XM,.S3M, etc)
 Summary(zh_CN):	XMMS - ²¥·Å M0Ds ÎÄ¼þµÄÊäÈë²å¼þ
 Group:		X11/Applications/Sound
-Requires:	%{name} = %{epoch}:%{version}
+Requires:	%{name}-libs = %{epoch}:%{version}
 Requires:	libmikmod >= 3.1.7
 Obsoletes:	xmms-input-modplug
 Obsoletes:	xmms-mikmod
@@ -256,7 +256,7 @@ Summary(ja):	XMMS - OGGs¤òºÆÀ¸¤¹¤ë¤¿¤á¤ÎÆþÎÏ¥×¥é¥°¥¤¥ó
 Summary(pl):	XMMS - wtyczka do odtwarzania plików OGG Vorbis
 Summary(zh_CN):	XMMS - ²¥·Å 0GGs ±àÂëÎÄ¼þµÄÊäÈë²å¼þ
 Group:		X11/Applications/Sound
-Requires:	%{name} >= %{epoch}:%{version}
+Requires:	%{name}-libs >= %{epoch}:%{version}
 
 %description input-vorbis
 OGG Vorbis input plugin for XMMS.
@@ -268,7 +268,7 @@ Wtyczka do odtwarzania plików w formacie OGG Vorbis.
 Summary:	XMMS - cdaudio input plugin
 Summary(pl):	XMMS - wtyczka do odtwarzania plyt CD-audio
 Group:		X11/Applications/Sound
-Requires:	%{name} >= %{epoch}:%{version}
+Requires:	%{name}-libs >= %{epoch}:%{version}
 
 %description input-cdaudio
 CD audio input plugin for XMMS.
@@ -280,7 +280,7 @@ Wtyczka do odtwarzania p³yt CD-audio.
 Summary:	XMMS - mpg123 input plugin
 Summary(pl):	XMMS - wtyczka do odtwarzania plikow mp3
 Group:		X11/Applications/Sound
-Requires:	%{name} >= %{epoch}:%{version}
+Requires:	%{name}-libs >= %{epoch}:%{version}
 
 %description input-mpg123
 mpg123 input plugin for XMMS.
@@ -292,7 +292,7 @@ Wtyczka dla XMMS-a do obs³ugi mpg123.
 Summary:	XMMS - wav input plugin
 Summary(pl):	XMMS - wtyczka do odtwarzania plikow wav
 Group:		X11/Applications/Sound
-Requires:	%{name} >= %{epoch}:%{version}
+Requires:	%{name}-libs >= %{epoch}:%{version}
 
 %description input-wav
 wav input plugin for XMMS.
@@ -510,10 +510,8 @@ echo "to play."
 %attr(755,root,root) %{_libdir}/xmms/Visualization/libsanalyzer*
 %dir %{_datadir}/xmms
 %dir %{_datadir}/xmms/Skins
-%dir %{_libdir}/xmms
 %dir %{_libdir}/xmms/Effect
 %dir %{_libdir}/xmms/General
-%dir %{_libdir}/xmms/Input
 %dir %{_libdir}/xmms/Output
 %dir %{_libdir}/xmms/Visualization
 %{_datadir}/xmms/*gif
@@ -537,6 +535,8 @@ echo "to play."
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/xmms-config
 %attr(755,root,root) %{_libdir}/libxmms.so.*.*
+%dir %{_libdir}/xmms
+%dir %{_libdir}/xmms/Input
 
 %files devel
 %defattr(644,root,root,755)
