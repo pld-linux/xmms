@@ -20,14 +20,14 @@ Epoch:		2
 License:	GPL v2+
 Group:		X11/Applications/Sound
 Source0:	http://www.xmms.org/files/1.2.x/%{name}-%{version}.tar.bz2
-# Source0-md5: 9bec488842920df359516b7d062d15dc
+# Source0-md5:	9bec488842920df359516b7d062d15dc
 Source1:	%{name}-icons.tar.gz
-# Source1-md5: 14fc5a0bb3679daf1c3900e3a30674e9
+# Source1-md5:	14fc5a0bb3679daf1c3900e3a30674e9
 Source2:	mp3license
 Source3:	%{name}.desktop
 Source4:	wm%{name}.desktop
 Source5:	%{name}-skins.tar.bz2
-# Source5-md5: 39d6de4bf2c37c17b868df3596871c59
+# Source5-md5:	39d6de4bf2c37c17b868df3596871c59
 Source6:	%{name}-gnome-mime-info
 Source7:	%{name}.png
 Patch0:		%{name}-amfix.patch
@@ -39,8 +39,9 @@ Patch5:		%{name}-patch.czech.patch
 #Patch6:		%{name}-ass-20020303.patch
 Patch7:		%{name}-gtk2.patch
 # Original location:
-#Patch8                http://members.jcom.home.ne.jp/jacobi/linux/etc/xmms-1.2.7-mmx.patch.gz
-Patch8:                %{name}-%{version}-mmx.patch
+#Patch8		http://members.jcom.home.ne.jp/jacobi/linux/etc/xmms-1.2.7-mmx.patch.gz
+Patch8:		%{name}-%{version}-mmx.patch
+Patch9:		%{name}-zh.patch
 URL:		http://www.xmms.org/
 BuildRequires:	OpenGL-devel
 BuildRequires:	autoconf
@@ -55,8 +56,8 @@ BuildRequires:	libxml-devel >= 1.7.0
 BuildRequires:	zlib-devel
 BuildRequires:	gtk+-devel >= 1.2.2
 %if %{?_without_gtk2:1}%{?!_without_gtk2:0}
-%{!?_without_gnome:BuildRequires:      gnome-core-devel}
-%{!?_without_gnome:BuildRequires:      gnome-libs-devel}
+%{!?_without_gnome:BuildRequires:	gnome-core-devel}
+%{!?_without_gnome:BuildRequires:	gnome-libs-devel}
 Requires:	glib >= 1.2.2
 Requires:	gtk+ >= 1.2.2
 %endif
@@ -427,6 +428,9 @@ OpenGL.
 %ifarch %{ix86}
 %patch8 -p1
 %endif
+%patch9 -p1
+
+mv -f po/zh_CN.GB2312.po po/zh_CN.po
 
 cp -f %{SOURCE2} .
 
