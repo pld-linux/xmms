@@ -8,8 +8,6 @@ Release:	6
 Epoch:		2
 License:	GPL
 Group:		X11/Applications/Multimedia
-Group(de):	X11/Applikationen/Multimedia
-Group(pl):	X11/Aplikacje/Multimedia
 Source0:	http://www.xmms.org/files/1.2.x/%{name}-%{version}.tar.bz2
 Source1:	%{name}-icons.tar.gz
 Source2:	mp3license
@@ -73,8 +71,6 @@ se tornou GPL.
 Summary:	XMMS applet for WindowMaker
 Summary(pl):	Aplet XMMS dla WindowMakera
 Group:		X11/Applications/Multimedia
-Group(de):	X11/Applikationen/Multimedia
-Group(pl):	X11/Aplikacje/Multimedia
 Requires:	%{name} = %{version}
 
 %description wm
@@ -87,8 +83,6 @@ Aplet XMMS dla WindowMakera.
 Summary:	XMMS - applet for controlling XMMS from the GNOME panel
 Summary(pl):	XMMS - aplet umo¿liwiaj±cy sterowanie XMMS-em z panelu GNOME
 Group:		X11/Applications/Multimedia
-Group(de):	X11/Applikationen/Multimedia
-Group(pl):	X11/Aplikacje/Multimedia
 Requires:	%{name} = %{version}
 Requires:	gnome-libs >= 1.0.0
 
@@ -102,8 +96,6 @@ Aplet GNOME umo¿liwiaj±cy sterowanie XMMS-em z panelu GNOME.
 Summary:	XMMS - Skins
 Summary(pl):	XMMS - Skórki
 Group:		X11/Applications/Multimedia
-Group(de):	X11/Applikationen/Multimedia
-Group(pl):	X11/Aplikacje/Multimedia
 Requires:	%{name} >= %{version}
 Requires:	unzip
 
@@ -119,13 +111,6 @@ Summary(es):	Bibliotecas y archivos de inclusión, necesarios para compilar plugi
 Summary(pl):	XMMS - biblioteki i pliki nag³ówkowe
 Summary(pt_BR):	Bibliotecas e arquivos de inclusão necessários para se compilar plugins do XMMS
 Group:		X11/Development/Libraries
-Group(de):	X11/Entwicklung/Libraries
-Group(es):	X11/Desarrollo/Bibliotecas
-Group(fr):	X11/Development/Librairies
-Group(pl):	X11/Programowanie/Biblioteki
-Group(pt_BR):	X11/Desenvolvimento/Bibliotecas
-Group(ru):	X11/òÁÚÒÁÂÏÔËÁ/âÉÂÌÉÏÔÅËÉ
-Group(uk):	X11/òÏÚÒÏÂËÁ/â¦ÂÌ¦ÏÔÅËÉ
 Requires:	gtk+-devel
 Requires:	%{name} = %{version}
 
@@ -150,13 +135,6 @@ Summary(es):	Static libraries for XMMS development
 Summary(pl):	XMMS - biblioteki statyczne
 Summary(pt_BR):	Bibliotecas estáticas para desenvolvimento com XMMS
 Group:		X11/Development/Libraries
-Group(de):	X11/Entwicklung/Libraries
-Group(es):	X11/Desarrollo/Bibliotecas
-Group(fr):	X11/Development/Librairies
-Group(pl):	X11/Programowanie/Biblioteki
-Group(pt_BR):	X11/Desenvolvimento/Bibliotecas
-Group(ru):	X11/òÁÚÒÁÂÏÔËÁ/âÉÂÌÉÏÔÅËÉ
-Group(uk):	X11/òÏÚÒÏÂËÁ/â¦ÂÌ¦ÏÔÅËÉ
 Requires:	%{name}-devel = %{version}
 
 %description static
@@ -177,8 +155,6 @@ Summary(es):	Login de entrada para que XMMS alcance MODs (.MOD,.XM,.S3M, etc)
 Summary(pl):	XMMS - wtyczka do odtwarzania MODów
 Summary(pt_BR):	Plugin de entrada para o XMMS tocar MODs (.MOD,.XM,.S3M, etc)
 Group:		X11/Applications/Multimedia
-Group(de):	X11/Applikationen/Multimedia
-Group(pl):	X11/Aplikacje/Multimedia
 Requires:	%{name} = %{version}
 Requires:	libmikmod >= 3.1.7
 Obsoletes:	xmms-input-modplug
@@ -206,8 +182,6 @@ Plugin de entrada para o XMMS tocar MODs (.MOD,.XM,.S3M, etc).
 Summary:	XMMS - Input plugin to generate sound of given frequency
 Summary(pl):	XMMS - wtyczka generuj±ca d¼wiêk o zadanej czêstotliwo¶ci
 Group:		X11/Applications/Multimedia
-Group(de):	X11/Applikationen/Multimedia
-Group(pl):	X11/Aplikacje/Multimedia
 Requires:	%{name} = %{version}
 Obsoletes:	xmms-tonegen
 
@@ -221,8 +195,6 @@ Wtyczka dla XMMS-a generuj±ca d¼wiêk o zadanej czêstotliwo¶ci.
 Summary:	XMMS - cdaudio input plugin
 Summary(pl):	XMMS - wtyczka do odtwarzania plików vorbis
 Group:		X11/Applications/Multimedia
-Group(de):	X11/Applikationen/Multimedia
-Group(pl):	X11/Aplikacje/Multimedia
 Requires:	%{name} >= %{version}
 
 %description input-vorbis
@@ -235,8 +207,6 @@ Wtyczka do odtwarzania plików w formacie OGG Vorbis.
 Summary:	XMMS - cdaudio input plugin
 Summary(pl):	XMMS - wtyczka do odtwarzania plyt CD-audio
 Group:		X11/Applications/Multimedia
-Group(de):	X11/Applikationen/Multimedia
-Group(pl):	X11/Aplikacje/Multimedia
 Requires:	%{name} >= %{version}
 
 %description input-cdaudio
@@ -249,8 +219,6 @@ Wtyczka do odtwarzania p³yt CD-audio.
 Summary:	XMMS - idcin input plugin
 Summary(pl):	XMMS - wtyczka do obs³ugi formatu idcin
 Group:		X11/Applications/Multimedia
-Group(de):	X11/Applikationen/Multimedia
-Group(pl):	X11/Aplikacje/Multimedia
 Requires:	%{name} >= %{version}
 
 %description input-idcin
@@ -263,8 +231,6 @@ Wtyczka dla XMMS-a do obs³ugi formatu idcin.
 Summary:	XMMS - mpg123 input plugin
 Summary(pl):	XMMS - wtyczka do odtwarzania plikow mp3
 Group:		X11/Applications/Multimedia
-Group(de):	X11/Applikationen/Multimedia
-Group(pl):	X11/Aplikacje/Multimedia
 Requires:	%{name} >= %{version}
 
 %description input-mpg123
@@ -277,8 +243,6 @@ Wtyczka dla XMMS-a do obs³ugi mpg123.
 Summary:	XMMS - wav input plugin
 Summary(pl):	XMMS - wtyczka do odtwarzania plikow wav
 Group:		X11/Applications/Multimedia
-Group(de):	X11/Applikationen/Multimedia
-Group(pl):	X11/Aplikacje/Multimedia
 Requires:	%{name} >= %{version}
 
 %description input-wav
@@ -291,8 +255,6 @@ Wtyczka dla XMMS-a do obs³ugi plików wav.
 Summary:	XMMS - OSS output plugin
 Summary(pl):	XMMS - plugin obs³ugi sterowników OSS
 Group:		X11/Applications/Multimedia
-Group(de):	X11/Applikationen/Multimedia
-Group(pl):	X11/Aplikacje/Multimedia
 Requires:	%{name} >= %{version}
 Provides:	xmms-output-plugin
 
@@ -308,8 +270,6 @@ Summary(es):	Plugin de salida para XMMS para uso con el paquete eSound.
 Summary(pl):	XMMS - wtyczka umo¿liwiaj±ca korzystanie z esound
 Summary(pt_BR):	Plugin de saida para o XMMS para uso com o pacote eSound
 Group:		X11/Applications/Multimedia
-Group(de):	X11/Applikationen/Multimedia
-Group(pl):	X11/Aplikacje/Multimedia
 Requires:	%{name} = %{version}
 Requires:	esound >= 0.2.8
 Obsoletes:	xmms-esd
@@ -332,8 +292,6 @@ Plugin de saída para o XMMS trabalhar com o esd.
 Summary:	XMMS - disk-writer output plugin
 Summary(pl):	XMMS - wtyczka do zapisywania danych na dysk
 Group:		X11/Applications/Multimedia
-Group(de):	X11/Applikationen/Multimedia
-Group(pl):	X11/Aplikacje/Multimedia
 Requires:	%{name} >= %{version}
 Provides:	xmms-output-plugin
 
@@ -347,8 +305,6 @@ Wtyczka dla XMMS-a zapisuj±ca dane wyj¶ciowe na dysk.
 Summary:	XMMS - OpenGL visualization plugins
 Summary(pl):	XMMS - wtyczki OpenGL
 Group:		X11/Applications/Multimedia
-Group(de):	X11/Applikationen/Multimedia
-Group(pl):	X11/Aplikacje/Multimedia
 Requires:	%{name} = %{version}
 Requires:	OpenGL
 Obsoletes:	xmms-mesa
