@@ -17,8 +17,6 @@ Source6:	xmms-gnome-mime-info
 Patch0:		xmms-audio.patch
 Patch1:		xmms-gtk-locale.patch
 URL:		http://www.xmms.org/
-BuildRequires:	XFree86-devel
-BuildRequires:	glib-devel >= 1.2.2
 BuildRequires:	gtk+-devel >= 1.2.2
 BuildRequires:	esound-devel
 BuildRequires:	gnome-libs-devel
