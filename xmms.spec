@@ -2,7 +2,7 @@ Summary:	Sound player with the WinAmp GUI, for Unix-based systems
 Summary(pl):	Odtwarzacz d¼wiêku z interfejsem WinAmpa
 Name:		xmms
 Version:	1.2.3
-Release:	2
+Release:	3
 Epoch:		2
 License:	GPL
 Group:		X11/Applications/Multimedia
@@ -15,10 +15,12 @@ Source3:	%{name}.desktop
 Source4:	wm%{name}.desktop
 Source5:	%{name}-skins.tar.bz2
 Source6:	%{name}-gnome-mime-info
+Source7:	vorbis_nightly_cvs.tgz
 Patch0:		%{name}-audio.patch
 Patch1:		%{name}-opt-flags.patch
 Patch2:		%{name}-pluggedup.patch
 Patch3:		%{name}-gettext.patch
+Patch4:		%{name}-vorbis-make.patch
 URL:		http://www.xmms.org/
 BuildRequires:	gettext-devel
 BuildRequires:	gtk+-devel >= 1.2.2
@@ -30,6 +32,7 @@ BuildRequires:	libmikmod-devel > 3.1.7
 BuildRequires:	libxml-devel
 BuildRequires:	zlib-devel
 BuildRequires:	OpenGL-devel
+BuildRequires:	libvorbis-static
 Requires:	glib >= 1.2.2
 Requires:	gtk+ >= 1.2.2
 Obsoletes:	x11amp
@@ -167,10 +170,11 @@ Static libraries required for compiling xmms plugins.
 Biblioteki statyczne xmms.
 
 %prep
-%setup -q -a1 -a5
+%setup -q -a1 -a5 -a7
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch4 -p1
 
 cp %{SOURCE2} .
 
@@ -222,6 +226,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/xmms/Input/libmpg123*
 %attr(755,root,root) %{_libdir}/xmms/Input/libwav*
 %attr(755,root,root) %{_libdir}/xmms/Input/libidcin*
+%attr(755,root,root) %{_libdir}/xmms/Input/libvorbis*
 %dir %{_libdir}/xmms/Output
 %attr(755,root,root) %{_libdir}/xmms/Output/libOSS*
 %attr(755,root,root) %{_libdir}/xmms/Output/libdisk_writer*
