@@ -24,6 +24,7 @@ Source6:	%{name}-gnome-mime-info
 Source7:	%{name}.png
 Patch0:		%{name}-amfix.patch
 Patch1:		%{name}-m4.patch
+Patch2:		%{name}-libogg_libvorbis_1.0_ac_fix.patch
 URL:		http://www.xmms.org/
 BuildRequires:	OpenGL-devel
 BuildRequires:	autoconf
@@ -372,6 +373,7 @@ OpenGL.
 %setup -q -a1 -a5
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 cp -f %{SOURCE2} .
 
