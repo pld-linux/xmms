@@ -22,14 +22,14 @@ Epoch:		2
 License:	GPL v2+
 Group:		X11/Applications/Sound
 Source0:	http://www.xmms.org/files/1.2.x/%{name}-%{version}.tar.bz2
-# Source0-md5: 9bec488842920df359516b7d062d15dc
+# Source0-md5:	9bec488842920df359516b7d062d15dc
 Source1:	%{name}-icons.tar.gz
-# Source1-md5: 14fc5a0bb3679daf1c3900e3a30674e9
+# Source1-md5:	14fc5a0bb3679daf1c3900e3a30674e9
 Source2:	mp3license
 Source3:	%{name}.desktop
 Source4:	wm%{name}.desktop
 Source5:	%{name}-skins.tar.bz2
-# Source5-md5: 39d6de4bf2c37c17b868df3596871c59
+# Source5-md5:	39d6de4bf2c37c17b868df3596871c59
 Source6:	%{name}-gnome-mime-info
 Source7:	%{name}.png
 Patch0:		%{name}-amfix.patch
@@ -174,8 +174,8 @@ Summary(ja):	XMMS - Ё╚х╞мя╔у╔║╔╓╔К
 Summary(ko):	XMMS - ╤Сюл╨Й╥╞╦╝©м гЛ╢У фдюо╣И
 Summary(pl):	XMMS - biblioteki i pliki nagЁСwkowe
 Summary(pt_BR):	Bibliotecas e arquivos de inclusЦo necessАrios para se compilar plugins do XMMS
-Summary(uk):	.h-файли для xmms
-Summary(ru):	.h-файлы для xmms
+Summary(uk):	.h-файли для XMMS
+Summary(ru):	.h-файлы для XMMS
 Summary(zh_CN):	XMMS - ©╙╥╒©Б
 Group:		X11/Development/Libraries
 %if %{without gtk2}
@@ -199,18 +199,18 @@ Bibliotecas e arquivos de inclusЦo necessАrios para se compilar
 plugins do XMMS.
 
 %description devel -l ru
-.h-файлы для построения подключаемых модулей для xmms.
+.h-файлы для построения подключаемых модулей для XMMS.
 
 %description devel -l uk
-.h-файли для побудови п╕д'╓днуваних модул╕в для xmms.
+.h-файли для побудови п╕д'╓днуваних модул╕в для XMMS.
 
 %package static
 Summary:	XMMS - static libraries
 Summary(es):	Static libraries for XMMS development
 Summary(pl):	XMMS - biblioteki statyczne
 Summary(pt_BR):	Bibliotecas estАticas para desenvolvimento com XMMS
-Summary(ru):	Статические библиотеки для xmms
-Summary(uk):	Статичн╕ б╕бл╕отеки для xmms
+Summary(ru):	Статические библиотеки для XMMS
+Summary(uk):	Статичн╕ б╕бл╕отеки для XMMS
 Group:		X11/Development/Libraries
 Requires:	%{name}-devel = %{epoch}:%{version}
 
@@ -227,10 +227,10 @@ Biblioteki statyczne XMMS-a.
 Bibliotecas estАticas para desenvolvimento com o XMMS.
 
 %description static -l ru
-Статические библиотеки для построения подключаемых модулей для xmms.
+Статические библиотеки для построения подключаемых модулей для XMMS.
 
 %description static -l uk
-Статичн╕ б╕бл╕отеки для побудови п╕д'╓днуваних модул╕в для xmms.
+Статичн╕ б╕бл╕отеки для побудови п╕д'╓днуваних модул╕в для XMMS.
 
 %package input-mikmod
 Summary:	XMMS - Input plugin to play MODs
