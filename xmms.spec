@@ -14,7 +14,7 @@ Name:		xmms
 Version:	1.2.7
 Release:	8
 Epoch:		2
-License:	GPL v2
+License:	GPL v2+
 Group:		X11/Applications/Multimedia
 Source0:	http://www.xmms.org/files/1.2.x/%{name}-%{version}.tar.bz2
 Source1:	%{name}-icons.tar.gz
