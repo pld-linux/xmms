@@ -12,7 +12,7 @@ Summary(uk):	ðÒÏÇÒÁ×ÁÞ ÍÕÚÉËÉ Ú WinAmp GUI
 Summary(zh_CN):	XMMS - X ¶Ë¶àÃ½Ìå²¥·ÅÆ÷.
 Name:		xmms
 Version:	1.2.7
-Release:	5
+Release:	6
 Epoch:		2
 License:	GPL
 Group:		X11/Applications/Multimedia
@@ -138,6 +138,17 @@ Additional skins for XMMS.
 %description skins -l pl
 Dodatkowe 'skórki' dla XMMS-a.
 
+%package libs
+Summary:	XMMS library
+Summary(pl):	Biblioteka XMMS
+Group:		X11/Applications/Multimedia
+
+%description libs
+XMMS library.
+
+%description libs -l pl
+Biblioteka XMMS.
+
 %package devel
 Summary:	XMMS - libraries and header files
 Summary(es):	Bibliotecas y archivos de inclusión, necesarios para compilar plugins de XMMS
@@ -149,7 +160,7 @@ Summary(ru):	.h-ÆÁÊÌÙ ÄÌÑ xmms
 Summary(zh_CN):	XMMS - ¿ª·¢¿â.
 Group:		X11/Development/Libraries
 Requires:	gtk+-devel
-Requires:	%{name} = %{version}
+Requires:	%{name}-libs = %{version}
 
 %description devel
 Libraries and header files required for compiling XMMS plugins.
@@ -440,10 +451,8 @@ rm -rf $RPM_BUILD_ROOT
 %post
 /sbin/ldconfig
 
-echo
 echo "Remember to install apropriate xmms-input-* packages for files you want"
 echo "to play."
-echo
 
 %postun -p /sbin/ldconfig
 
@@ -453,7 +462,6 @@ echo
 %{_applnkdir}/Multimedia/xmms.desktop
 %attr(755,root,root) %{_bindir}/xmms
 %attr(755,root,root) %{_bindir}/xmms-config
-%attr(755,root,root) %{_libdir}/libxmms.so.*.*
 %dir %{_libdir}/xmms
 %dir %{_libdir}/xmms/General
 %attr(755,root,root) %{_libdir}/xmms/General/*
@@ -492,6 +500,10 @@ echo
 %files skins
 %defattr(644,root,root,755)
 %{_datadir}/xmms/Skins/*
+
+%files libs
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libxmms.so.*.*
 
 %files devel
 %defattr(644,root,root,755)
