@@ -1,7 +1,7 @@
 Summary:	Sound player with the WinAmp GUI, for Unix-based systems
 Summary(pl):	Odtwarzacz d¼wiêku z interfejsem WinAmpa
 Name:		xmms
-Version:	1.0.0
+Version:	1.0.1
 Release:	1
 Serial:		2
 License:	GPL
