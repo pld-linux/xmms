@@ -21,7 +21,7 @@ Release:	16
 Epoch:		2
 License:	GPL v2+
 Group:		X11/Applications/Sound
-Source0:	http://www.xmms.org/files/1.2.x/%{name}-%{version}.tar.bz2
+Source0:	ftp://ftp.xmms.org/pub/xmms/1.2.x/%{name}-%{version}.tar.bz2
 # Source0-md5:	9bec488842920df359516b7d062d15dc
 Source1:	%{name}-icons.tar.gz
 # Source1-md5:	14fc5a0bb3679daf1c3900e3a30674e9
