@@ -2,7 +2,7 @@ Summary:	Sound player with the WinAmp GUI, for Unix-based systems
 Summary(pl):	Odtwarzacz d¼wiêku z interfejsem WinAmpa
 Name:		xmms
 Version:	1.2.4
-Release:	3
+Release:	4
 Epoch:		2
 License:	GPL
 Group:		X11/Applications/Multimedia
@@ -20,6 +20,8 @@ Patch0:		%{name}-opt-flags.patch
 Patch1:		%{name}-pluggedup.patch
 Patch2:		%{name}-gettext.patch
 URL:		http://www.xmms.org/
+BuildRequires:	autoconf
+BuildRequires:	automake
 BuildRequires:	gettext-devel
 BuildRequires:	gtk+-devel >= 1.2.2
 BuildRequires:	esound-devel
@@ -247,8 +249,10 @@ disk-wirter output plugin for XMMS
 cp %{SOURCE2} .
 
 %build
-aclocal; autoconf; automake
-(cd libxmms; aclocal; autoconf; automake)
+aclocal
+autoconf
+automake -a -c
+(cd libxmms; aclocal; autoconf; automake -a -c)
 gettextize --copy --force
 
 %configure
