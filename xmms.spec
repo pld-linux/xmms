@@ -3,8 +3,8 @@ Summary(es):	Editor de sonido con GUI semejante al de WinAmp
 Summary(pl):	Odtwarzacz d¼wiêku z interfejsem WinAmpa
 Summary(pt_BR):	Tocador de som com GUI semelhante ao do WinAmp
 Name:		xmms
-Version:	1.2.5
-Release:	4
+Version:	1.2.6
+Release:	1
 Epoch:		2
 License:	GPL
 Group:		X11/Applications/Multimedia
@@ -17,13 +17,9 @@ Source3:	%{name}.desktop
 Source4:	wm%{name}.desktop
 Source5:	%{name}-skins.tar.bz2
 Source6:	%{name}-gnome-mime-info
-Patch0:		%{name}-opt-flags.patch
-Patch1:		%{name}-pluggedup.patch
-Patch2:		%{name}-small.patch
-Patch3:		%{name}-lazy.patch
-Patch4:		%{name}-workaround.patch
-Patch5:		%{name}-audio.patch
-Patch6:		%{name}-amfix.patch
+Patch0:		%{name}-small.patch
+Patch1:		%{name}-workaround.patch
+Patch2:		%{name}-amfix.patch
 URL:		http://www.xmms.org/
 BuildRequires:	OpenGL
 BuildRequires:	OpenGL-devel
@@ -48,7 +44,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_noautoreqdep	libGL.so.1 libGLU.so.1
 %define		_prefix		/usr/X11R6
-%define		_mandi		%{_prefix}/man
+%define		_mandir		%{_prefix}/man
 %define		_sysconfdir	/etc/X11/GNOME
 
 %description
@@ -354,10 +350,6 @@ Wtyczka dla XMMS-a zapisuj±ca dane wyj¶ciowe na dysk.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
 
 cp -f %{SOURCE2} .
 
