@@ -6,7 +6,6 @@
 %bcond_without gnome
 %bcond_with gtk2
 
-%define	pre	pre1
 Summary:	Sound player with the WinAmp GUI, for Unix-based systems
 Summary(es):	Editor de sonido con GUI semejante al de WinAmp
 Summary(ja):	XMMS - X Window System╬Е╓гф╟╨Н╓╧╓К╔ч╔К╔а╔А╔г╔ё╔╒╔в╔Л║╪╔Д║╪
@@ -17,20 +16,20 @@ Summary(ru):	Проигрыватель музыки с WinAmp GUI
 Summary(uk):	Програвач музики з WinAmp GUI
 Summary(zh_CN):	XMMS - X ╤к╤Юц╫лЕ╡╔╥ефВ
 Name:		xmms
-Version:	1.2.8
-Release:	0.%{pre}.1
+Version:	1.2.7
+Release:	16
 Epoch:		2
 License:	GPL v2+
 Group:		X11/Applications/Sound
-Source0:	http://www.xmms.org/files/1.2.x/%{name}-%{version}-%{pre}.tar.bz2
-# Source0-md5:	3959cc628f1434d6a444742d42987114
+Source0:	http://www.xmms.org/files/1.2.x/%{name}-%{version}.tar.bz2
+# Source0-md5: 9bec488842920df359516b7d062d15dc
 Source1:	%{name}-icons.tar.gz
-# Source1-md5:	14fc5a0bb3679daf1c3900e3a30674e9
+# Source1-md5: 14fc5a0bb3679daf1c3900e3a30674e9
 Source2:	mp3license
 Source3:	%{name}.desktop
 Source4:	wm%{name}.desktop
 Source5:	%{name}-skins.tar.bz2
-# Source5-md5:	39d6de4bf2c37c17b868df3596871c59
+# Source5-md5: 39d6de4bf2c37c17b868df3596871c59
 Source6:	%{name}-gnome-mime-info
 Source7:	%{name}.png
 Patch0:		%{name}-amfix.patch
@@ -38,12 +37,12 @@ Patch1:		%{name}-m4.patch
 Patch2:		%{name}-libogg_libvorbis_1.0_ac_fix.patch
 Patch3:		%{name}-warn_about_unplayables.patch
 Patch4:		%{name}-configure.patch
-#Patch5:		%{name}-patch.czech.patch
+Patch5:		%{name}-patch.czech.patch
 #Patch6:		%{name}-ass-20020303.patch
 Patch7:		%{name}-gtk2.patch
 # Original location:
 #Patch8		http://members.jcom.home.ne.jp/jacobi/linux/etc/xmms-1.2.7-mmx.patch.gz
-#Patch8:		%{name}-1.2.7-mmx.patch
+Patch8:		%{name}-%{version}-mmx.patch
 URL:		http://www.xmms.org/
 BuildRequires:	OpenGL-devel
 BuildRequires:	autoconf
@@ -418,13 +417,13 @@ XMMS - п╕д'╓днуван╕ модул╕ в╕зуал╕зац╕╖, як╕ використовують б╕бл╕отеку
 OpenGL.
 
 %prep
-%setup -q -n %{name}-%{version}-%{pre} -a1 -a5
+%setup -q -a1 -a5
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-##%patch5 -p1
+%patch5 -p1
 #%patch6 -p1
 
 cp -f %{SOURCE2} .
@@ -440,7 +439,6 @@ do
 	iso-8859-1|ISO-8859-1) E=ISO8859-1 ; ;;
 	iso-8859-2|ISO-8859-2) E=ISO8859-2 ; ;;
 	iso-8859-3) E=ISO8859-3 ; ;;
-	iso-8859-5) E=ISO8859-5 ; ;;
 	ISO-8859-7) E=ISO8859-7 ; ;;
 	ISO-8859-9) E=ISO8859-9 ; ;;
 	ISO-8859-11) E=ISO8859-11 ; ;;
@@ -462,7 +460,7 @@ do
     fi
 done
 %endif
-##%patch8 -p1
+%patch8 -p1
 
 %build
 rm -f missing
