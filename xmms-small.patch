@@ -1,0 +1,11 @@
+--- xmms-1.2.3/Output/OSS/audio.c.small	Fri Sep 29 23:26:58 2000
++++ xmms-1.2.3/Output/OSS/audio.c	Fri Sep 29 23:27:27 2000
+@@ -396,6 +396,8 @@
+ 			off += cnt;
+ 
+ 		}
++		if (prebuffer_size > off)
++		  prebuffer_size = off;
+ 	}
+ 	else
+ 	{

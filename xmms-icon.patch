@@ -1,0 +1,16 @@
+diff -Nur xmms-1.2.3/xmms/main.c xmms-1.2.3.icon/xmms/main.c
+--- xmms-1.2.3/xmms/main.c	Fri Sep 15 10:36:10 2000
++++ xmms-1.2.3.icon/xmms/main.c	Fri Oct  6 17:21:16 2000
+@@ -3328,9 +3328,10 @@
+ 	gtk_rc_init();
+ 	gtk_rc_parse(filename);
+ 	g_free(filename);
+-
++/* useless, this is already done internally by gtk.. and creates
++ * an extra appicon in wmaker
+ 	gdk_window_set_group(mainwin->window, mainwin->window);
+-
++*/
+ 	setup_main_window();
+ 	playlistwin_create();
+ 	equalizerwin_create();

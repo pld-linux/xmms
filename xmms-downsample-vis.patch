@@ -1,0 +1,102 @@
+diff -ru xmms-1.2.4-2/Input/mpg123/common.c xmms-1.2.4/Input/mpg123/common.c
+--- xmms-1.2.4-2/Input/mpg123/common.c	Tue Sep 19 17:22:16 2000
++++ xmms-1.2.4/Input/mpg123/common.c	Thu Feb  1 11:34:00 2001
+@@ -51,6 +51,7 @@
+ static int bsnum = 0;
+ 
+ unsigned char *mpg123_pcm_sample;
++unsigned char *mpg123_munged_sample;
+ int mpg123_pcm_point = 0;
+ 
+ static FILE *filept;
+@@ -405,6 +406,23 @@
+ 	memset(bsspace[0],0,MAXFRAMESIZE + 512);
+ 	memset(bsspace[1],0,MAXFRAMESIZE + 512);
+ 	mpg123_info->output_audio = FALSE;
++}
++
++char *mpg123_munge_sample(char *sample)
++{
++	guint32 *mungesample = (guint32 *)mpg123_munged_sample;
++	guint32 *sourcesample = (guint32 *)sample;
++	gint x, y, shift;
++	
++	if (!mpg123_cfg.downsample)
++	  return sample;
++	
++	shift = 1 << mpg123_cfg.downsample;
++	for (x = 0; x < 8192 / shift ; x++ )
++	  for (y = 0 ; y < shift ; y++ )
++	    mungesample[x*shift + y] = sourcesample[x];
++	
++	return mpg123_munged_sample;
+ }
+ 
+ /*
+diff -ru xmms-1.2.4-2/Input/mpg123/layer1.c xmms-1.2.4/Input/mpg123/layer1.c
+--- xmms-1.2.4-2/Input/mpg123/layer1.c	Wed Aug  2 07:47:50 2000
++++ xmms-1.2.4/Input/mpg123/layer1.c	Thu Feb  1 11:32:00 2001
+@@ -172,7 +172,7 @@
+ 		{
+ 
+ 			mpg123_ip.add_vis_pcm(mpg123_ip.output->written_time(), mpg123_cfg.resolution == 16 ? FMT_S16_NE : FMT_U8,
+-					      mpg123_cfg.channels == 2 ? fr->stereo : 1, mpg123_pcm_point, mpg123_pcm_sample);
++					      mpg123_cfg.channels == 2 ? fr->stereo : 1, mpg123_pcm_point << mpg123_cfg.downsample, mpg123_munge_sample(mpg123_pcm_sample));
+ 			while (mpg123_ip.output->buffer_free() < mpg123_pcm_point && mpg123_info->going && mpg123_info->jump_to_time == -1)
+ 				xmms_usleep(10000);
+ 			if (mpg123_info->going && mpg123_info->jump_to_time == -1)
+diff -ru xmms-1.2.4-2/Input/mpg123/layer2.c xmms-1.2.4/Input/mpg123/layer2.c
+--- xmms-1.2.4-2/Input/mpg123/layer2.c	Wed Aug  2 07:47:50 2000
++++ xmms-1.2.4/Input/mpg123/layer2.c	Thu Feb  1 11:32:20 2001
+@@ -321,7 +321,7 @@
+ 	{
+ 
+ 		mpg123_ip.add_vis_pcm(mpg123_ip.output->written_time(), mpg123_cfg.resolution == 16 ? FMT_S16_NE : FMT_U8,
+-				      mpg123_cfg.channels == 2 ? fr->stereo : 1, mpg123_pcm_point, mpg123_pcm_sample);
++				      mpg123_cfg.channels == 2 ? fr->stereo : 1, mpg123_pcm_point << mpg123_cfg.downsample, mpg123_munge_sample(mpg123_pcm_sample));
+ 
+ 		while (mpg123_ip.output->buffer_free() < mpg123_pcm_point && mpg123_info->going && mpg123_info->jump_to_time == -1)
+ 			xmms_usleep(10000);
+diff -ru xmms-1.2.4-2/Input/mpg123/layer3.c xmms-1.2.4/Input/mpg123/layer3.c
+--- xmms-1.2.4-2/Input/mpg123/layer3.c	Mon Oct 16 09:37:56 2000
++++ xmms-1.2.4/Input/mpg123/layer3.c	Thu Feb  1 11:32:46 2001
+@@ -2092,7 +2092,8 @@
+ 			mpg123_ip.add_vis_pcm(mpg123_ip.output->written_time(),
+ 					      mpg123_cfg.resolution == 16 ? FMT_S16_NE : FMT_U8,
+ 					      mpg123_cfg.channels == 2 ? fr->stereo : 1,
+-					      mpg123_pcm_point, mpg123_pcm_sample);
++					      mpg123_pcm_point << mpg123_cfg.downsample,
++					      mpg123_munge_sample(mpg123_pcm_sample));
+ 			while (mpg123_ip.output->buffer_free() < mpg123_pcm_point &&
+ 			       mpg123_info->going && mpg123_info->jump_to_time == -1)
+ 				xmms_usleep(10000);
+diff -ru xmms-1.2.4-2/Input/mpg123/mpg123.c xmms-1.2.4/Input/mpg123/mpg123.c
+--- xmms-1.2.4-2/Input/mpg123/mpg123.c	Fri Nov 24 14:11:52 2000
++++ xmms-1.2.4/Input/mpg123/mpg123.c	Thu Feb  1 11:24:15 2001
+@@ -881,6 +881,7 @@
+ 	mpg123_bitrate = 0;
+ 
+ 	mpg123_pcm_sample = (unsigned char *) g_malloc0(32768);
++	mpg123_munged_sample = (unsigned char *) g_malloc0(32768);
+ 	mpg123_pcm_point = 0;
+ 	mpg123_filename = filename;
+ 
+@@ -1088,6 +1089,7 @@
+ 	if (output_opened && !audio_error)
+ 		mpg123_ip.output->close_audio();
+ 	g_free(mpg123_pcm_sample);
++	g_free(mpg123_munged_sample);
+ 	pthread_exit(NULL);
+ }
+ 
+diff -ru xmms-1.2.4-2/Input/mpg123/mpg123.h xmms-1.2.4/Input/mpg123/mpg123.h
+--- xmms-1.2.4-2/Input/mpg123/mpg123.h	Wed Oct 18 09:10:15 2000
++++ xmms-1.2.4/Input/mpg123/mpg123.h	Thu Feb  1 11:33:21 2001
+@@ -172,6 +172,7 @@
+ extern void mpg123_set_pointer(long);
+ 
+ extern unsigned char *mpg123_pcm_sample;
++extern unsigned char *mpg123_munged_sample;
+ extern int mpg123_pcm_point;
+ 
+ struct gr_info_s

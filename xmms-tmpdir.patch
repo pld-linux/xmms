@@ -1,0 +1,62 @@
+--- xmms-1.2.4/xmms/skin.c.tmpdir	Thu Feb  8 17:03:31 2001
++++ xmms-1.2.4/xmms/skin.c	Thu Feb  8 17:20:23 2001
+@@ -541,7 +541,7 @@
+ 
+ static void _load_skin(const gchar * path, gboolean force)
+ {
+-	char *ending, *tmp = NULL, *tempdir, *unzip, *tar, *lha;
++	char *ending, *tmp = NULL, *unzip, *tar, *lha;
+ 
+ 	if (!force)
+ 	{
+@@ -554,7 +554,7 @@
+ 	}
+ 	if (path)
+ 	{
+-		if (strncmp(path, g_get_tmp_dir(), strlen(g_get_tmp_dir())))
++		if (strncmp(path, "xmmstmpdir",10) && strncmp(path, g_get_tmp_dir(), strlen(g_get_tmp_dir())))
+ 		{
+ 			skin->path = g_realloc(skin->path, strlen(path) + 1);
+ 			strcpy(skin->path, path);
+@@ -567,8 +567,10 @@
+ 			    !strcasecmp(ending, ".bz2") || !strcasecmp(ending, ".tar") ||
+ 			    !strcasecmp(ending, ".lzh"))
+ 			{
+-
+-				tempdir = tempnam(NULL, NULL);
++				char tempdir[32];
++				snprintf(tempdir,32,"xmmstmpdirXXXXXX");
++				if (!mkdtemp(tempdir)) return;
++				printf("%s",tempdir);
+ 
+ 				unzip = getenv("UNZIPCMD");
+ 				if (!unzip)
+@@ -586,28 +588,23 @@
+ 				if (!strcasecmp(ending, ".tgz") || !strcasecmp(ending, ".gz"))
+ 				{
+ 					tmp = g_strdup_printf("%s >/dev/null xzf \"%s\" -C %s", tar, path, tempdir);
+-					mkdir(tempdir, 0755);	/* Permissions: 755 */
+ 				}
+ 				if (!strcasecmp(ending, ".bz2"))
+ 				{
+ 					tmp = g_strdup_printf("%s >/dev/null xIf \"%s\" -C %s", tar, path, tempdir);
+-					mkdir(tempdir, 0755);	/* Permissions: 755 */
+ 				}
+ 				if (!strcasecmp(ending, ".tar"))
+ 				{
+ 					tmp = g_strdup_printf("%s >/dev/null xf \"%s\" -C %s", tar, path, tempdir);
+-					mkdir(tempdir, 0755);	/* Permissions: 755 */
+ 				}
+ 				if (!strcasecmp(ending, ".lzh"))
+ 				{
+ 					tmp = g_strdup_printf("%s >/dev/null ew=%s %s", lha, tempdir, path);
+-					mkdir(tempdir, 0755);	/* Permissions: 755 */
+ 				}
+ 				system(tmp);
+ 				g_free(tmp);
+ 				load_skin(tempdir);
+ 				del_directory(tempdir);
+-				free(tempdir);
+ 				return;
+ 			}
+ 		}

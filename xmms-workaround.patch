@@ -1,0 +1,25 @@
+--- xmms-1.2.0/Input/cdaudio/cddb.c.blarg	Mon Jan 31 12:32:38 2000
++++ xmms-1.2.0/Input/cdaudio/cddb.c	Mon Jun 12 14:34:07 2000
+@@ -19,9 +19,9 @@
+ 
+ 
+ #include "cddb.h"
++#include "http.h"
+ #include "cdaudio.h"
+ #include "cdinfo.h"
+-#include "http.h"
+ #include <libxmms/util.h>
+ #include <gtk/gtk.h>
+ #include <stdarg.h>
+--- xmms-1.2.0/Input/cdaudio/cdindex.c.blarg	Wed Mar  1 08:13:49 2000
++++ xmms-1.2.0/Input/cdaudio/cdindex.c	Mon Jun 12 14:35:56 2000
+@@ -34,8 +34,8 @@
+ 
+ #include "libxmms/util.h"
+ 
+-#include "cdaudio.h"
+ #include "http.h"
++#include "cdaudio.h"
+ #include "cdinfo.h"
+ #include "sha.h"
+ #include "xmms/i18n.h"
