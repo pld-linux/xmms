@@ -383,6 +383,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_libdir}/xmms/Output
 
 %dir %{_datadir}/xmms
+%dir %{_datadir}/xmms/Skins
 %{_datadir}/xmms/*gif
 %{_datadir}/xmms/x*xpm
 %{_mandir}/*/xmms*
@@ -405,7 +406,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files skins
 %defattr(644,root,root,755)
-%{_datadir}/xmms/Skins
+%{_datadir}/xmms/Skins/*
 
 %files devel
 %defattr(644,root,root,755)
