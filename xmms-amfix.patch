@@ -1,6 +1,19 @@
---- xmms-1.2.5/configure.in.orig	Fri Oct 19 15:27:22 2001
-+++ xmms-1.2.5/configure.in	Fri Oct 19 15:29:00 2001
-@@ -32,6 +32,7 @@
+diff -urN xmms-1.2.6.org/Input/vorbis/Makefile.am xmms-1.2.6/Input/vorbis/Makefile.am
+--- xmms-1.2.6.org/Input/vorbis/Makefile.am	Thu Jan 17 23:25:37 2002
++++ xmms-1.2.6/Input/vorbis/Makefile.am	Thu Jan 17 23:26:28 2002
+@@ -8,7 +8,7 @@
+ 
+ INCLUDES = @GTK_CFLAGS@ @OGG_CFLAGS@ @VORBIS_CFLAGS@ -I$(top_builddir)/intl
+ libvorbis_la_LDFLAGS = @PLUGIN_LDFLAGS@
+-libvorbis_la_LIBADD = @GTK_LIBS@ @PTHREAD_LIBS@ @VORBIS_LIBS@ @OGG_LIBS@
++libvorbis_la_LIBADD = @GTK_LIBS@ @PTHREAD_LIBS@ @VORBIS_LIBS@ @VORBISFILE_LIBS@ @OGG_LIBS@
+ 
+ libvorbis_la_SOURCES = \
+ vorbis.c vorbis.h \
+diff -urN xmms-1.2.6.org/configure.in xmms-1.2.6/configure.in
+--- xmms-1.2.6.org/configure.in	Thu Jan 17 23:25:35 2002
++++ xmms-1.2.6/configure.in	Thu Jan 17 23:25:57 2002
+@@ -37,6 +37,7 @@
  
  dnl Various compiler setup.
  AC_PROG_CC
@@ -8,8 +21,9 @@
  AC_ISC_POSIX
  dnl AC_PROG_CXX
  AC_C_BIGENDIAN
---- xmms-1.2.5/xmms/Makefile.am.orig	Thu Jun 14 14:30:33 2001
-+++ xmms-1.2.5/xmms/Makefile.am	Fri Oct 19 15:34:21 2001
+diff -urN xmms-1.2.6.org/xmms/Makefile.am xmms-1.2.6/xmms/Makefile.am
+--- xmms-1.2.6.org/xmms/Makefile.am	Thu Jan 17 23:25:36 2002
++++ xmms-1.2.6/xmms/Makefile.am	Thu Jan 17 23:25:57 2002
 @@ -5,7 +5,7 @@
  bin_PROGRAMS = xmms
  
