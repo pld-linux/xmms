@@ -4,7 +4,7 @@ Summary(pl):	Odtwarzacz d¼wiêku z interfejsem WinAmpa
 Summary(pt_BR):	Tocador de som com GUI semelhante ao do WinAmp
 Name:		xmms
 Version:	1.2.6
-Release:	3
+Release:	4
 Epoch:		2
 License:	GPL
 Group:		X11/Applications/Multimedia
