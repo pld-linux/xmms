@@ -1,0 +1,26 @@
+--- xmms-0.9/libxmms/configure.in.conf	Fri Jun 11 12:36:58 1999
++++ xmms-0.9/libxmms/configure.in	Fri Jun 11 12:37:10 1999
+@@ -14,8 +14,8 @@
+ 
+ AC_CHECK_FUNCS(sched_setscheduler)
+ 
+-AM_PATH_GLIB(1.2.2,,AC_MSG_ERROR([*** GLIB >= 1.2.2 not installed - please install first ***]))
+-AM_PATH_GTK(1.2.2,,AC_MSG_ERROR([*** GTK+ >= 1.2.2 not installed - please install first ***]),gthread)
++AM_PATH_GLIB(1.2.1,,AC_MSG_ERROR([*** GLIB >= 1.2.1 not installed - please install first ***]))
++AM_PATH_GTK(1.2.1,,AC_MSG_ERROR([*** GTK+ >= 1.2.1 not installed - please install first ***]),gthread)
+ 
+ AC_OUTPUT(
+ Makefile
+--- xmms-0.9/configure.in.conf	Thu Jun 10 15:00:43 1999
++++ xmms-0.9/configure.in	Fri Jun 11 12:35:40 1999
+@@ -18,8 +18,8 @@
+ 
+ AC_CHECK_HEADER(pthread.h,,AC_MSG_ERROR([*** POSIX thread support not installed - please install first ***]))
+ 
+-AM_PATH_GLIB(1.2.2,,AC_MSG_ERROR([*** GLIB >= 1.2.2 not installed - please install first ***]))
+-AM_PATH_GTK(1.2.2,,AC_MSG_ERROR([*** GTK+ >= 1.2.2 not installed - please install first ***]),gthread)
++AM_PATH_GLIB(1.2.1,,AC_MSG_ERROR([*** GLIB >= 1.2.1 not installed - please install first ***]))
++AM_PATH_GTK(1.2.1,,AC_MSG_ERROR([*** GTK+ >= 1.2.1 not installed - please install first ***]),gthread)
+ AC_PATH_PROG(XMMS_PATH,xmms,no)
+ 
+ PTHREAD_LIBS=error
