@@ -17,7 +17,7 @@ Source3:	%{name}.desktop
 Source4:	wm%{name}.desktop
 Source5:	%{name}-skins.tar.bz2
 Source6:	%{name}-gnome-mime-info
-Source7:	xmms.xpm
+Source7:	xmms.png
 Patch0:		%{name}-amfix.patch
 Patch1:		%{name}-m4.patch
 URL:		http://www.xmms.org/
