@@ -54,6 +54,9 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_noautoreqdep	libGL.so.1 libGLU.so.1
 %define		_sysconfdir	/etc/X11/GNOME
+%if %{?_without_gnome:0}%{!?_without_gnome:1}
+%define		_appletsdir	%(gnome-config --datadir)/applets
+%endif
 
 %description
 XMMS is a sound player written from scratch. Since it uses the WinAmp
@@ -499,7 +502,7 @@ echo "to play."
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/gnomexmms
 %{_sysconfdir}/CORBA/servers/*
-%{_datadir}/applets/Multimedia/*
+%{_appletsdir}/Multimedia/*
 %{_datadir}/mime-info/xmms.keys
 %{_mandir}/*/gnomexmms*
 %endif
