@@ -50,8 +50,6 @@ Obsoletes:	x11amp
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_noautoreqdep	libGL.so.1 libGLU.so.1
-%define		_prefix		/usr/X11R6
-%define		_mandir		%{_prefix}/man
 %define		_sysconfdir	/etc/X11/GNOME
 
 %description
