@@ -1,7 +1,11 @@
 #
 # Conditional build:
-# _without_gnome	- without gnome subpackage
+# gnome		- build gnome subpackage
+# gtk2		- with gtk+2 (and without gnome :( )
 #
+%bcond_without gnome
+%bcond_with gtk2
+
 Summary:	Sound player with the WinAmp GUI, for Unix-based systems
 Summary(es):	Editor de sonido con GUI semejante al de WinAmp
 Summary(ja):	XMMS - X Window SystemæÂ§«∆∞∫Ó§π§Î•ﬁ•Î•¡•·•«•£•¢•◊•Ï°º•‰°º
@@ -13,7 +17,7 @@ Summary(uk):	“œ«“¡◊¡ﬁ Õ’⁄…À… ⁄ WinAmp GUI
 Summary(zh_CN):	XMMS - X ∂À∂‡√ΩÃÂ≤•∑≈∆˜
 Name:		xmms
 Version:	1.2.7
-Release:	12
+Release:	13
 Epoch:		2
 License:	GPL v2+
 Group:		X11/Applications/Sound
@@ -35,31 +39,34 @@ Patch3:		%{name}-warn_about_unplayables.patch
 Patch4:		%{name}-configure.patch
 Patch5:		%{name}-patch.czech.patch
 #Patch6:		%{name}-ass-20020303.patch
+Patch7:		%{name}-gtk2.patch
 URL:		http://www.xmms.org/
 BuildRequires:	OpenGL-devel
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	esound-devel
 BuildRequires:	gettext-devel
-%{!?_without_gnome:BuildRequires:	gnome-core-devel}
-%{!?_without_gnome:BuildRequires:	gnome-libs-devel}
-BuildRequires:	gtk+-devel >= 1.2.2
 BuildRequires:	libmikmod-devel > 3.1.7
 BuildRequires:	libogg-devel
 BuildRequires:	libtool
 BuildRequires:	libvorbis-devel >= 1:1.0
 BuildRequires:	libxml-devel >= 1.7.0
 BuildRequires:	zlib-devel
+%if %{without gtk2}
+%{?with_gnome:BuildRequires:	gnome-core-devel}
+%{?with_gnome:BuildRequires:	gnome-libs-devel}
+BuildRequires:	gtk+-devel >= 1.2.2
 Requires:	glib >= 1.2.2
 Requires:	gtk+ >= 1.2.2
+%endif
 Requires:	xmms-output-plugin
 Obsoletes:	x11amp
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_noautoreqdep	libGL.so.1 libGLU.so.1
 %define		_sysconfdir	/etc/X11/GNOME
-%if %{?_without_gnome:0}%{!?_without_gnome:1}
-%define		_appletsdir	%(gnome-config --datadir)/applets
+%if %{without gtk2}
+%{?with_gnome:%define		_appletsdir	%(gnome-config --datadir)/applets}
 %endif
 
 %description
@@ -168,7 +175,9 @@ Summary(uk):	.h-∆¡ Ã… ƒÃ— xmms
 Summary(ru):	.h-∆¡ ÃŸ ƒÃ— xmms
 Summary(zh_CN):	XMMS - ø™∑¢ø‚
 Group:		X11/Development/Libraries
+%if %{without gtk2}
 Requires:	gtk+-devel
+%endif
 Requires:	%{name}-libs = %{epoch}:%{version}
 
 %description devel
@@ -416,6 +425,39 @@ OpenGL.
 
 cp -f %{SOURCE2} .
 
+%if %{with gtk2}
+%patch7 -p1
+
+rm -f po/*.gmo
+for F in po/*.po
+do
+    ENC=`cat $F | grep "charset=" | cut -d= -f2 | cut -d'\' -f1`
+    case $ENC in
+	iso-8859-1|ISO-8859-1) E=ISO8859-1 ; ;;
+	iso-8859-2|ISO-8859-2) E=ISO8859-2 ; ;;
+	iso-8859-3) E=ISO8859-3 ; ;;
+	ISO-8859-7) E=ISO8859-7 ; ;;
+	ISO-8859-9) E=ISO8859-9 ; ;;
+	ISO-8859-11) E=ISO8859-11 ; ;;
+	iso-8859-13) E=ISO8859-13 ; ;;
+	windows-1251) E=WINDOWS-1251 ; ;;
+	utf-8|UTF-8) E="" ; ;;
+	EUC-JP) E="" ; ;;
+	euc-kr) E="" ; ;;
+	koi8-r) E=KOI8-R ; ;;
+	koi8-u) E=KOI8-U ; ;;
+	tcvn-5712) E=TCVN-5712 ; ;;
+	gb2312) E="" ; ;;
+	big5) E="" ; ;;
+	*) echo "Unknown encoding: $ENC"; exit 1
+    esac
+    if [ "$E" != "" ]; then
+	mv $F tmp.po
+	cat tmp.po | egrep -v '^#\.' | iconv -f $E -t UTF-8 -o $F
+    fi
+done
+%endif
+
 %build
 rm -f missing
 %{__gettextize}
@@ -431,9 +473,13 @@ cd libxmms
 %{__automake}
 cd ..
 
+GNOMEOPT=""
+%if %{without gtk2}
+%{?with_gnome:GNOMEOPT=--with-gnome}
+%endif
+
 %configure \
-	--disable-vorbistest \
-	%{?_without_gnome:--without-gnome}
+	--disable-vorbistest $GNOMEOPT
 
 test -z $SED && SED=sed
 export SED
@@ -502,7 +548,8 @@ echo "to play."
 %{_datadir}/xmms/wmxmms*xpm
 %{_mandir}/*/wmxmms*
 
-%if %{?_without_gnome:0}%{!?_without_gnome:1}
+%if %{without gtk2}
+%if %{with gnome}
 %files gnome
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/gnomexmms
@@ -510,6 +557,7 @@ echo "to play."
 %{_appletsdir}/Multimedia/*
 %{_datadir}/mime-info/xmms.keys
 %{_mandir}/*/gnomexmms*
+%endif
 %endif
 
 %files skins
