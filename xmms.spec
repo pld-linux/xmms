@@ -2,7 +2,7 @@ Summary:	Sound player with the WinAmp GUI, for Unix-based systems
 Summary(pl):	Odtwarzacz d¼wiêku z interfejsem WinAmpa
 Name:		xmms
 Version:	1.2.3
-Release:	5
+Release:	6
 Epoch:		2
 License:	GPL
 Group:		X11/Applications/Multimedia
@@ -50,7 +50,7 @@ XMMS jest odtwarzaczem d¼wiêku napisanym od zera. Jako, ¿e
 wykorzystuje interfejs WinAmpa, mo¿e równie¿ u¿ywaæ jego 'skórek'.
 Odtwarza pliki w formatach mp3, mod, s3m i wielu innych.
 
-%package mikmod
+%package input-mikmod
 Summary:	XMMS - Input plugin to play MODs
 Summary(pl):	XMMS - wtyczka do odtwarzania MODów
 Group:		X11/Applications/Multimedia
@@ -59,13 +59,13 @@ Group(pl):	X11/Aplikacje/Multimedia
 Requires:	%{name} = %{version}
 Requires:	libmikmod >= 3.1.7
 
-%description mikmod
+%description input-mikmod
 Input plugin for XMMS to play MODs (.MOD,.XM,.S3M, etc)
 
-%description mikmod -l pl
+%description input-mikmod -l pl
 Wtyczka dla XMMS do odtwarzania MODów (.MOD,.XM,.S3M, etc).
 
-%package tonegen
+%package input-tonegen
 Summary:	XMMS - Input plugin to generate sound of given frequency
 Summary(pl):	XMMS - wtyczka generuj±ca d¼wiêk o zadanej czêstotliwo¶ci
 Group:		X11/Applications/Multimedia
@@ -73,13 +73,13 @@ Group(de):	X11/Applikationen/Multimedia
 Group(pl):	X11/Aplikacje/Multimedia
 Requires:	%{name} = %{version}
 
-%description tonegen
+%description input-tonegen
 Input plugin for XMMS to generate sound of given frequency.
 
-%description tonegen -l pl
+%description input-tonegen -l pl
 Wtyczka dla XMMS generuj±ca d¼wiêk o zadanej czêstotliwo¶ci.
 
-%package esd
+%package output-esd
 Summary:	XMMS - Output plugin for use with the esound package
 Summary(pl):	XMMS - wtyczka umo¿liwiaj±ca korzystanie z esound
 Group:		X11/Applications/Multimedia
@@ -88,10 +88,10 @@ Group(pl):	X11/Aplikacje/Multimedia
 Requires:	%{name} = %{version}
 Requires:	esound >= 0.2.8
 
-%description esd
+%description output-esd
 Output plugin for xmms for use with the esound package.
 
-%description esd -l pl
+%description output-esd -l pl
 Wtyczka dla XMMS umo¿liwiaj±ca wykorzystanie esound przy odtwarzaniu
 d¼wiêków.
 
@@ -119,10 +119,10 @@ Group(pl):	X11/Aplikacje/Multimedia
 Requires:	%{name} = %{version}
 Requires:	OpenGL
 
-%description mesa
+%description visualization-mesa
 Visualization plugins that use the Mesa3d library.
 
-%description mesa -l pl
+%description visualization-mesa -l pl
 Wtyczki graficzne wykorzystuj±ce bibliotekê Mesa3d.
 
 %package skins
@@ -293,15 +293,15 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/xmms/*gif
 %{_datadir}/xmms/*xpm
 
-%files mikmod
+%files input-mikmod
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/xmms/Input/libmikmod*
 
-%files tonegen
+%files input-tonegen
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/xmms/Input/libtonegen*
 
-%files esd
+%files output-esd
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/xmms/Output/libesdout*
 
@@ -312,7 +312,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/applets/Multimedia/*
 %{_datadir}/mime-info/xmms.keys
 
-%files mesa
+%files visualization-mesa
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/xmms/Visualization/libogl_spectrum*
 
