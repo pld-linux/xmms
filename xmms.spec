@@ -461,7 +461,6 @@ echo "to play."
 %doc AUTHORS ChangeLog NEWS README mp3license FAQ
 %{_applnkdir}/Multimedia/xmms.desktop
 %attr(755,root,root) %{_bindir}/xmms
-%attr(755,root,root) %{_bindir}/xmms-config
 %dir %{_libdir}/xmms
 %dir %{_libdir}/xmms/General
 %attr(755,root,root) %{_libdir}/xmms/General/*
@@ -503,6 +502,7 @@ echo "to play."
 
 %files libs
 %defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/xmms-config
 %attr(755,root,root) %{_libdir}/libxmms.so.*.*
 
 %files devel
