@@ -2,7 +2,7 @@ Summary:	Sound player with the WinAmp GUI, for Unix-based systems
 Summary(pl):	Odtwarzacz d╪wiЙku z interfejsem WinAmpa
 Name:		xmms
 Version:	1.2.5
-Release:	4
+Release:	5
 Epoch:		2
 License:	GPL
 Group:		X11/Applications/Multimedia
@@ -21,6 +21,7 @@ Patch2:		%{name}-small.patch
 Patch3:		%{name}-lazy.patch
 Patch4:		%{name}-workaround.patch
 Patch5:		%{name}-audio.patch
+Patch6:		%{name}-amfix.patch
 URL:		http://www.xmms.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -163,7 +164,12 @@ Summary:	XMMS - libraries and header files
 Summary(pl):	XMMS - biblioteki i pliki nagЁСwkowe
 Group:		X11/Development/Libraries
 Group(de):	X11/Entwicklung/Libraries
+Group(es):	X11/Desarrollo/Bibliotecas
+Group(fr):	X11/Development/Librairies
 Group(pl):	X11/Programowanie/Biblioteki
+Group(pt_BR):	X11/Desenvolvimento/Bibliotecas
+Group(ru):	X11/Разработка/Библиотеки
+Group(uk):	X11/Розробка/Б╕бл╕отеки
 Requires:	gtk+-devel
 Requires:	%{name} = %{version}
 
@@ -178,7 +184,12 @@ Summary:	XMMS - static libraries
 Summary(pl):	XMMS - biblioteki statyczne
 Group:		X11/Development/Libraries
 Group(de):	X11/Entwicklung/Libraries
+Group(es):	X11/Desarrollo/Bibliotecas
+Group(fr):	X11/Development/Librairies
 Group(pl):	X11/Programowanie/Biblioteki
+Group(pt_BR):	X11/Desenvolvimento/Bibliotecas
+Group(ru):	X11/Разработка/Библиотеки
+Group(uk):	X11/Розробка/Б╕бл╕отеки
 Requires:	%{name}-devel = %{version}
 
 %description static
@@ -293,11 +304,12 @@ Wtyczka dla XMMS zapisuj╠ca dane wyj╤ciowe na dysk.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 
-cp %{SOURCE2} .
+cp -f %{SOURCE2} .
 
 %build
-rm missing
+rm -f missing
 gettextize --copy --force
 libtoolize --copy --force
 aclocal
@@ -312,7 +324,7 @@ automake -a -c
 cd ..
 
 %configure
-%{__make}
+%{__make} AS="%{__cc}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -333,11 +345,11 @@ gzip -9nf AUTHORS ChangeLog NEWS README mp3license FAQ
 
 %find_lang %{name}
 
-%post   -p /sbin/ldconfig
-%postun -p /sbin/ldconfig
-
 %clean
 rm -rf $RPM_BUILD_ROOT
+
+%post   -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
