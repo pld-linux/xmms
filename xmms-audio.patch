@@ -1,14 +1,3 @@
---- xmms-0.9.1/xmms/main.c.foo	Wed Sep 22 19:19:28 1999
-+++ xmms-0.9.1/xmms/main.c	Wed Sep 22 19:20:28 1999
-@@ -283,7 +283,7 @@
- 
- 	memset(&cfg, 0, sizeof (Config));
- #if defined(HAVE_SYS_SOUNDCARD_H) || defined(HAVE_MACHINE_SOUNDCARD_H)
--	cfg.outputplugin = g_strdup_printf("%s/%s/libOSS.so", PLUGIN_DIR, plugin_dir_list[0]);
-+	cfg.outputplugin = g_strdup_printf("%s/%s/libesdout.so", PLUGIN_DIR, plugin_dir_list[0]);
- #else
- 	cfg.outputplugin = g_strdup("");
- #endif
 --- xmms-0.9.1/Output/OSS/audio.c.foo	Wed Sep 22 19:21:24 1999
 +++ xmms-0.9.1/Output/OSS/audio.c	Wed Sep 22 19:26:02 1999
 @@ -476,12 +476,13 @@
