@@ -523,12 +523,8 @@ install %{SOURCE7} $RPM_BUILD_ROOT%{_pixmapsdir}
 rm -rf $RPM_BUILD_ROOT
 
 %post
-/sbin/ldconfig
-
 echo "Remember to install appropriate xmms-input-* packages for files you want"
 echo "to play."
-
-%postun	-p /sbin/ldconfig
 
 %post libs	-p /sbin/ldconfig
 %postun libs	-p /sbin/ldconfig
