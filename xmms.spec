@@ -40,6 +40,9 @@ Patch4:		%{name}-configure.patch
 Patch5:		%{name}-patch.czech.patch
 #Patch6:		%{name}-ass-20020303.patch
 Patch7:		%{name}-gtk2.patch
+# Original location:
+#Patch8		http://members.jcom.home.ne.jp/jacobi/linux/etc/xmms-1.2.7-mmx.patch.gz
+Patch8		%{name}-%{version}-mmx.patch
 URL:		http://www.xmms.org/
 BuildRequires:	OpenGL-devel
 BuildRequires:	autoconf
@@ -457,6 +460,7 @@ do
     fi
 done
 %endif
+%patch8 -p1
 
 %build
 rm -f missing
@@ -491,8 +495,7 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_applnkdir}/Multimedia,%{_pixmapsdir}} \
 	$RPM_BUILD_ROOT%{_datadir}/{mime-info,xmms/Skins}
 
-test -z $SED && SED=sed
-export SED
+test -z $SED && SED=sed; export SED
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT \
