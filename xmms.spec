@@ -162,13 +162,13 @@ make
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_applnkdir}/{Multimedia,DockApps} \
+install -d $RPM_BUILD_ROOT%{_applnkdir}/{Multimedia,DockApplets} \
 	$RPM_BUILD_ROOT%{_datadir}/{mime-info,xmms/Skins}
 
 make install DESTDIR=$RPM_BUILD_ROOT
 
 install %{SOURCE3} $RPM_BUILD_ROOT%{_applnkdir}/Multimedia
-install %{SOURCE4} $RPM_BUILD_ROOT%{_applnkdir}/DockApps
+install %{SOURCE4} $RPM_BUILD_ROOT%{_applnkdir}/DockApplets
 install %{SOURCE6} $RPM_BUILD_ROOT%{_datadir}/mime-info/xmms.keys
 install icons/*    $RPM_BUILD_ROOT%{_datadir}/xmms
 install Skins/*	   $RPM_BUILD_ROOT%{_datadir}/xmms/Skins
@@ -189,7 +189,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc {AUTHORS,ChangeLog,NEWS,README,mp3license,FAQ}.gz
 %{_applnkdir}/Multimedia/xmms.desktop
-%{_applnkdir}/DockApps/wmxmms.desktop
+%{_applnkdir}/DockApplets/wmxmms.desktop
 %attr(755,root,root) %{_bindir}/xmms
 %attr(755,root,root) %{_bindir}/wmxmms
 %attr(755,root,root) %{_libdir}/libxmms.so.*.*
