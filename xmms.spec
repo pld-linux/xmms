@@ -2,7 +2,7 @@ Summary:	Sound player with the WinAmp GUI, for Unix-based systems
 Summary(pl):	Odtwarzacz d¼wiêku z interfejsem WinAmpa
 Name:		xmms
 Version:	1.2.2
-Release:	2
+Release:	3
 Epoch:		2
 License:	GPL
 Group:		X11/Applications/Multimedia
@@ -17,6 +17,7 @@ Source6:	%{name}-gnome-mime-info
 Patch0:		%{name}-audio.patch
 Patch1:		%{name}-opt-flags.patch
 Patch2:		%{name}-pluggedup.patch
+Patch3:		%{name}-gettext.patch
 URL:		http://www.xmms.org/
 BuildRequires:	gettext-devel
 BuildRequires:	gtk+-devel >= 1.2.2
