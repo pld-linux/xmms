@@ -10,7 +10,7 @@ Summary(ru):	Проигрыватель музыки с WinAmp GUI
 Summary(uk):	Програвач музики з WinAmp GUI
 Name:		xmms
 Version:	1.2.7
-Release:	2
+Release:	3
 Epoch:		2
 License:	GPL
 Group:		X11/Applications/Multimedia
@@ -426,6 +426,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc AUTHORS ChangeLog NEWS README mp3license FAQ
 %{_applnkdir}/Multimedia/xmms.desktop
 %attr(755,root,root) %{_bindir}/xmms
+%attr(755,root,root) %{_bindir}/xmms-config
 %attr(755,root,root) %{_libdir}/libxmms.so.*.*
 %dir %{_libdir}/xmms
 %dir %{_libdir}/xmms/General
@@ -468,7 +469,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/xmms-config
 %attr(755,root,root) %{_libdir}/lib*.so
 %attr(755,root,root) %{_libdir}/lib*.la
 %{_includedir}/*
