@@ -69,77 +69,19 @@ arquivos .mp3, .mod, .s3m, e outros formatos. Agora ele suporta
 plugins de entrada, saída e outros plugins de uso geral, e sua licença
 se tornou GPL.
 
-%package input-mikmod
-Summary:	XMMS - Input plugin to play MODs
-Summary(es):	Login de entrada para que XMMS alcance MODs (.MOD,.XM,.S3M, etc)
-Summary(pl):	XMMS - wtyczka do odtwarzania MODów
-Summary(pt_BR):	Plugin de entrada para o XMMS tocar MODs (.MOD,.XM,.S3M, etc)
+%package wm
+Summary:	XMMS applet for WindowMaker
+Summary(pl):	Aplet XMMS dla WindowMakera
 Group:		X11/Applications/Multimedia
 Group(de):	X11/Applikationen/Multimedia
 Group(pl):	X11/Aplikacje/Multimedia
 Requires:	%{name} = %{version}
-Requires:	libmikmod >= 3.1.7
-Obsoletes:	xmms-input-modplug
-Obsoletes:	xmms-mikmod
 
-%description input-mikmod
-Input plugin for XMMS to play MODs (.MOD,.XM,.S3M, etc). Be aware that
-this plugin sucks (possibly due to quality of libmikmod) - it is
-unable to play correctly a lot of modules. Use xmms-input-modplug
-instaed.
+%description wm
+XMMS applet for WindowMaker.
 
-%description input-mikmod -l es
-Login de entrada para que XMMS alcance MODs (.MOD,.XM,.S3M, etc).
-
-%description input-mikmod -l pl
-Wtyczka dla XMMS-a do odtwarzania MODów (.MOD,.XM,.S3M, etc). B±d¼
-¶wiadom, ¿e ta wtyczka jest bardzo s³aba (byæ mo¿e z powodu jako¶ci
-libmikmod) - nie potrafi odtworzyæ poprawnie wielu modu³ów. Zainstaluj
-lepiej xmms-input-modplug.
-
-%description input-mikmod -l pt_BR
-Plugin de entrada para o XMMS tocar MODs (.MOD,.XM,.S3M, etc).
-
-%package input-tonegen
-Summary:	XMMS - Input plugin to generate sound of given frequency
-Summary(pl):	XMMS - wtyczka generuj±ca d¼wiêk o zadanej czêstotliwo¶ci
-Group:		X11/Applications/Multimedia
-Group(de):	X11/Applikationen/Multimedia
-Group(pl):	X11/Aplikacje/Multimedia
-Requires:	%{name} = %{version}
-Obsoletes:	xmms-tonegen
-
-%description input-tonegen
-Input plugin for XMMS to generate sound of given frequency.
-
-%description input-tonegen -l pl
-Wtyczka dla XMMS-a generuj±ca d¼wiêk o zadanej czêstotliwo¶ci.
-
-%package output-esd
-Summary:	XMMS - Output plugin for use with the esound package
-Summary(es):	Plugin de salida para XMMS para uso con el paquete eSound.
-Summary(pl):	XMMS - wtyczka umo¿liwiaj±ca korzystanie z esound
-Summary(pt_BR):	Plugin de saida para o XMMS para uso com o pacote eSound
-Group:		X11/Applications/Multimedia
-Group(de):	X11/Applikationen/Multimedia
-Group(pl):	X11/Aplikacje/Multimedia
-Requires:	%{name} = %{version}
-Requires:	esound >= 0.2.8
-Obsoletes:	xmms-esd
-Provides:	xmms-output-plugin
-
-%description output-esd
-Output plugin for XMMS for use with the esound package.
-
-%description output-esd -l es
-Plugin de salida para XMMS para uso con el paquete eSound.
-
-%description output-esd -l pl
-Wtyczka dla XMMS-a umo¿liwiaj±ca wykorzystanie esound przy odtwarzaniu
-d¼wiêków.
-
-%description output-esd -l pt_BR
-Plugin de saída para o XMMS trabalhar com o esd.
+%description wm -l pl
+Aplet XMMS dla WindowMakera.
 
 %package gnome
 Summary:	XMMS - applet for controlling XMMS from the GNOME panel
@@ -155,22 +97,6 @@ GNOME applet for controlling XMMS from the GNOME panel.
 
 %description gnome -l pl
 Aplet GNOME umo¿liwiaj±cy sterowanie XMMS-em z panelu GNOME.
-
-%package visualization-GL
-Summary:	XMMS - OpenGL visualization plugins
-Summary(pl):	XMMS - wtyczki OpenGL
-Group:		X11/Applications/Multimedia
-Group(de):	X11/Applikationen/Multimedia
-Group(pl):	X11/Aplikacje/Multimedia
-Requires:	%{name} = %{version}
-Requires:	OpenGL
-Obsoletes:	xmms-mesa
-
-%description visualization-GL
-Visualization plugins that use the Mesa3d library.
-
-%description visualization-GL -l pl
-Wtyczki graficzne wykorzystuj±ce bibliotekê Mesa3d.
 
 %package skins
 Summary:	XMMS - Skins
@@ -244,6 +170,94 @@ Biblioteki statyczne XMMS-a.
 
 %description static -l pt_BR
 Bibliotecas estáticas para desenvolvimento com o XMMS.
+
+%package input-mikmod
+Summary:	XMMS - Input plugin to play MODs
+Summary(es):	Login de entrada para que XMMS alcance MODs (.MOD,.XM,.S3M, etc)
+Summary(pl):	XMMS - wtyczka do odtwarzania MODów
+Summary(pt_BR):	Plugin de entrada para o XMMS tocar MODs (.MOD,.XM,.S3M, etc)
+Group:		X11/Applications/Multimedia
+Group(de):	X11/Applikationen/Multimedia
+Group(pl):	X11/Aplikacje/Multimedia
+Requires:	%{name} = %{version}
+Requires:	libmikmod >= 3.1.7
+Obsoletes:	xmms-input-modplug
+Obsoletes:	xmms-mikmod
+
+%description input-mikmod
+Input plugin for XMMS to play MODs (.MOD,.XM,.S3M, etc). Be aware that
+this plugin sucks (possibly due to quality of libmikmod) - it is
+unable to play correctly a lot of modules. Use xmms-input-modplug
+instaed.
+
+%description input-mikmod -l es
+Login de entrada para que XMMS alcance MODs (.MOD,.XM,.S3M, etc).
+
+%description input-mikmod -l pl
+Wtyczka dla XMMS-a do odtwarzania MODów (.MOD,.XM,.S3M, etc). B±d¼
+¶wiadom, ¿e ta wtyczka jest bardzo s³aba (byæ mo¿e z powodu jako¶ci
+libmikmod) - nie potrafi odtworzyæ poprawnie wielu modu³ów. Zainstaluj
+lepiej xmms-input-modplug.
+
+%description input-mikmod -l pt_BR
+Plugin de entrada para o XMMS tocar MODs (.MOD,.XM,.S3M, etc).
+
+%package input-tonegen
+Summary:	XMMS - Input plugin to generate sound of given frequency
+Summary(pl):	XMMS - wtyczka generuj±ca d¼wiêk o zadanej czêstotliwo¶ci
+Group:		X11/Applications/Multimedia
+Group(de):	X11/Applikationen/Multimedia
+Group(pl):	X11/Aplikacje/Multimedia
+Requires:	%{name} = %{version}
+Obsoletes:	xmms-tonegen
+
+%description input-tonegen
+Input plugin for XMMS to generate sound of given frequency.
+
+%description input-tonegen -l pl
+Wtyczka dla XMMS-a generuj±ca d¼wiêk o zadanej czêstotliwo¶ci.
+
+%package output-esd
+Summary:	XMMS - Output plugin for use with the esound package
+Summary(es):	Plugin de salida para XMMS para uso con el paquete eSound.
+Summary(pl):	XMMS - wtyczka umo¿liwiaj±ca korzystanie z esound
+Summary(pt_BR):	Plugin de saida para o XMMS para uso com o pacote eSound
+Group:		X11/Applications/Multimedia
+Group(de):	X11/Applikationen/Multimedia
+Group(pl):	X11/Aplikacje/Multimedia
+Requires:	%{name} = %{version}
+Requires:	esound >= 0.2.8
+Obsoletes:	xmms-esd
+Provides:	xmms-output-plugin
+
+%description output-esd
+Output plugin for XMMS for use with the esound package.
+
+%description output-esd -l es
+Plugin de salida para XMMS para uso con el paquete eSound.
+
+%description output-esd -l pl
+Wtyczka dla XMMS-a umo¿liwiaj±ca wykorzystanie esound przy odtwarzaniu
+d¼wiêków.
+
+%description output-esd -l pt_BR
+Plugin de saída para o XMMS trabalhar com o esd.
+
+%package visualization-GL
+Summary:	XMMS - OpenGL visualization plugins
+Summary(pl):	XMMS - wtyczki OpenGL
+Group:		X11/Applications/Multimedia
+Group(de):	X11/Applikationen/Multimedia
+Group(pl):	X11/Aplikacje/Multimedia
+Requires:	%{name} = %{version}
+Requires:	OpenGL
+Obsoletes:	xmms-mesa
+
+%description visualization-GL
+Visualization plugins that use the Mesa3d library.
+
+%description visualization-GL -l pl
+Wtyczki graficzne wykorzystuj±ce bibliotekê Mesa3d.
 
 %package input-vorbis
 Summary:	XMMS - cdaudio input plugin
@@ -373,7 +387,7 @@ cd ..
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_applnkdir}/{Multimedia,Amusements} \
+install -d $RPM_BUILD_ROOT%{_applnkdir}/Multimedia \
 	$RPM_BUILD_ROOT%{_datadir}/{mime-info,xmms/Skins}
 
 %{__make} install \
@@ -381,7 +395,7 @@ install -d $RPM_BUILD_ROOT%{_applnkdir}/{Multimedia,Amusements} \
 	m4datadir=%{_aclocaldir}
 
 install %{SOURCE3} $RPM_BUILD_ROOT%{_applnkdir}/Multimedia
-install %{SOURCE4} $RPM_BUILD_ROOT%{_applnkdir}/Amusements
+install %{SOURCE4} $RPM_BUILD_ROOT%{_applnkdir}/Multimedia
 install %{SOURCE6} $RPM_BUILD_ROOT%{_datadir}/mime-info/xmms.keys
 install icons/*    $RPM_BUILD_ROOT%{_datadir}/xmms
 install Skins/*    $RPM_BUILD_ROOT%{_datadir}/xmms/Skins
@@ -400,9 +414,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc {AUTHORS,ChangeLog,NEWS,README,mp3license,FAQ}.gz
 %{_applnkdir}/Multimedia/xmms.desktop
-%{_applnkdir}/Amusements/wmxmms.desktop
 %attr(755,root,root) %{_bindir}/xmms
-%attr(755,root,root) %{_bindir}/wmxmms
 %attr(755,root,root) %{_libdir}/libxmms.so.*.*
 %dir %{_libdir}/xmms
 %dir %{_libdir}/xmms/General
@@ -417,19 +429,15 @@ rm -rf $RPM_BUILD_ROOT
 
 %dir %{_datadir}/xmms
 %{_datadir}/xmms/*gif
-%{_datadir}/xmms/*xpm
+%{_datadir}/xmms/x*xpm
+%{_mandir}/*/xmms*
 
-%files input-mikmod
+%files wm
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/xmms/Input/libmikmod*
-
-%files input-tonegen
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/xmms/Input/libtonegen*
-
-%files output-esd
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/xmms/Output/libesdout*
+%{_applnkdir}/Multimedia/wmxmms.desktop
+%attr(755,root,root) %{_bindir}/wmxmms
+%{_datadir}/xmms/wmxmms*xpm
+%{_mandir}/*/wmxmms*
 
 %files gnome
 %defattr(644,root,root,755)
@@ -437,10 +445,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/CORBA/servers/*
 %{_datadir}/applets/Multimedia/*
 %{_datadir}/mime-info/xmms.keys
-
-%files visualization-GL
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/xmms/Visualization/libogl_spectrum*
+%{_mandir}/*/gnomexmms*
 
 %files skins
 %defattr(644,root,root,755)
@@ -457,6 +462,23 @@ rm -rf $RPM_BUILD_ROOT
 %files static
 %defattr(644,root,root,755)
 %attr(644,root,root) %{_libdir}/lib*.a
+
+
+%files input-mikmod
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/xmms/Input/libmikmod*
+
+%files input-tonegen
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/xmms/Input/libtonegen*
+
+%files output-esd
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/xmms/Output/libesdout*
+
+%files visualization-GL
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/xmms/Visualization/libogl_spectrum*
 
 %files input-cdaudio
 %defattr(644,root,root,755)
