@@ -291,16 +291,16 @@ mpg123 input plugin for XMMS.
 Wtyczka dla XMMS-a do obs³ugi mpg123.
 
 %package input-wav
-Summary:	XMMS - wav input plugin
-Summary(pl):	XMMS - wtyczka do odtwarzania plikow wav
+Summary:	XMMS - WAV input plugin
+Summary(pl):	XMMS - wtyczka do odtwarzania plików WAV
 Group:		X11/Applications/Sound
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 
 %description input-wav
-wav input plugin for XMMS.
+WAV input plugin for XMMS.
 
 %description input-wav -l pl
-Wtyczka dla XMMS-a do obs³ugi plików wav.
+Wtyczka dla XMMS-a do obs³ugi plików WAV.
 
 %package output-OSS
 Summary:	XMMS - OSS output plugin
