@@ -2,7 +2,7 @@ Summary:	Sound player with the WinAmp GUI, for Unix-based systems
 Summary(pl):	Odtwarzacz d¼wiêku z interfejsem WinAmpa
 Name:		xmms
 Version:	1.2.5
-Release:	3
+Release:	4
 Epoch:		2
 License:	GPL
 Group:		X11/Applications/Multimedia
@@ -135,6 +135,7 @@ Group:		X11/Applications/Multimedia
 Group(de):	X11/Applikationen/Multimedia
 Group(pl):	X11/Aplikacje/Multimedia
 Requires:	%{name} = %{version}
+Requires:	OpenGL
 Obsoletes:	xmms-mesa
 
 %description visualization-GL
@@ -150,7 +151,6 @@ Group:		X11/Applications/Multimedia
 Group(de):	X11/Applikationen/Multimedia
 Group(pl):	X11/Aplikacje/Multimedia
 Requires:	%{name} = %{version}
-Requires:	OpenGL
 
 %description skins
 Additional skins for xmms.
