@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=WMXmms
+Comment=Xmms Mp3 player
+Comment[pl]=Odtwarzacz MP3 Xmms
+Exec=wmxmms
+Terminal=0
+Type=Application
