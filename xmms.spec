@@ -48,6 +48,7 @@ Requires:	gtk+ >= 1.2.2
 Obsoletes:	x11amp
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
+%define 	_noautoreqdep	libGL.so.1 libGLU.so.1
 %define		_prefix		/usr/X11R6
 %define		_sysconfdir	/etc/X11/GNOME
 
@@ -152,6 +153,7 @@ Group:		X11/Applications/Multimedia
 Group(de):	X11/Applikationen/Multimedia
 Group(pl):	X11/Aplikacje/Multimedia
 Requires:	%{name} = %{version}
+Requires:	OpenGL
 
 %description skins
 Additional skins for xmms.
