@@ -1,7 +1,7 @@
 #
 # Conditional build:
 %bcond_with	gtk2	# experimental GTK+2 port (and probably broken/incomplete)
-#			  (deprecated - many plugins won't work, use beep instead)
+			# (deprecated - many plugins won't work, use beep instead)
 Summary:	Sound player with the WinAmp GUI, for Unix-based systems
 Summary(es):	Editor de sonido con GUI semejante al de WinAmp
 Summary(ja):	XMMS - X Window System上で動作するマルチメディアプレーヤー
@@ -415,32 +415,32 @@ rm -f po/stamp-po
 rm -f po/*.gmo
 for F in po/*.po
 do
-    ENC=`cat $F | grep "charset=" | cut -d= -f2 | cut -d'\' -f1`
-    case $ENC in
-	iso-8859-1|ISO-8859-1) E=ISO8859-1 ; ;;
-	iso-8859-2|ISO-8859-2) E=ISO8859-2 ; ;;
-	iso-8859-3) E=ISO8859-3 ; ;;
-	iso-8859-5) E=ISO8859-5 ; ;;
-	ISO-8859-7) E=ISO8859-7 ; ;;
-	ISO-8859-9) E=ISO8859-9 ; ;;
-	ISO-8859-11) E=ISO8859-11 ; ;;
-	iso-8859-13) E=ISO8859-13 ; ;;
-	windows-1251) E=WINDOWS-1251 ; ;;
-	utf-8|UTF-8) E="" ; ;;
-	EUC-JP) E="" ; ;;
-	euc-kr) E="" ; ;;
-	koi8-r) E=KOI8-R ; ;;
-	koi8-u) E=KOI8-U ; ;;
-	tcvn-5712) E=TCVN-5712 ; ;;
-	gb2312) E="" ; ;;
-	big5) E="" ; ;;
-	*) echo "Unknown encoding: $ENC"; exit 1
-    esac
-    if [ "$E" != "" ]; then
-	mv $F tmp.po
-	cat tmp.po | egrep -v '^#\.' | sed -e "s/\(charset=\)$ENC/\1UTF-8/" | \
-		iconv -f $E -t UTF-8 -o $F
-    fi
+	ENC=`cat $F | grep "charset=" | cut -d= -f2 | cut -d'\' -f1`
+	case $ENC in
+		iso-8859-1|ISO-8859-1) E=ISO8859-1 ; ;;
+		iso-8859-2|ISO-8859-2) E=ISO8859-2 ; ;;
+		iso-8859-3) E=ISO8859-3 ; ;;
+		iso-8859-5) E=ISO8859-5 ; ;;
+		ISO-8859-7) E=ISO8859-7 ; ;;
+		ISO-8859-9) E=ISO8859-9 ; ;;
+		ISO-8859-11) E=ISO8859-11 ; ;;
+		iso-8859-13) E=ISO8859-13 ; ;;
+		windows-1251) E=WINDOWS-1251 ; ;;
+		utf-8|UTF-8) E="" ; ;;
+		EUC-JP) E="" ; ;;
+		euc-kr) E="" ; ;;
+		koi8-r) E=KOI8-R ; ;;
+		koi8-u) E=KOI8-U ; ;;
+		tcvn-5712) E=TCVN-5712 ; ;;
+		gb2312) E="" ; ;;
+		big5) E="" ; ;;
+		*) echo "Unknown encoding: $ENC"; exit 1
+	esac
+	if [ "$E" != "" ]; then
+		mv $F tmp.po
+		cat tmp.po | egrep -v '^#\.' | sed -e "s/\(charset=\)$ENC/\1UTF-8/" | \
+			iconv -f $E -t UTF-8 -o $F
+	fi
 done
 %endif
 
