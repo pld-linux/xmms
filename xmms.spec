@@ -2,7 +2,7 @@ Summary:	Sound player with the WinAmp GUI, for Unix-based systems
 Summary(pl):	Odtwarzacz d¼wiêku z interfejsem WinAmpa
 Name:		xmms
 Version:	1.2.4
-Release:	4
+Release:	10
 Epoch:		2
 License:	GPL
 Group:		X11/Applications/Multimedia
@@ -19,6 +19,17 @@ Source7:	vorbis_nightly_cvs.tgz
 Patch0:		%{name}-opt-flags.patch
 Patch1:		%{name}-pluggedup.patch
 Patch2:		%{name}-gettext.patch
+Patch3:		%{name}-icon.patch
+Patch4:		%{name}-small.patch
+Patch5:		%{name}-lazy.patch
+Patch6:		%{name}-workaround.patch
+Patch7:		%{name}-jp.patch
+Patch8:		%{name}-mb.patch
+Patch9:		%{name}-it.patch
+Patch10:	%{name}-downsample-vis.patch
+Patch11:	%{name}-audio.patch
+Patch12:	%{name}-istereo.patch
+Patch13:	%{name}-tmpdir.patch
 URL:		http://www.xmms.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -186,7 +197,7 @@ Group(pl):	X11/Aplikacje/Multimedia
 Requires:	%{name} >= %{version}
 
 %description input-cdaudio
-CD audio input plugin for XMMS
+CD audio input plugin for XMMS.
 
 %package input-idcin
 Summary:	XMMS - idcin input plugin
@@ -196,7 +207,7 @@ Group(pl):	X11/Aplikacje/Multimedia
 Requires:	%{name} >= %{version}
 
 %description input-idcin
-idcin input plugin for XMMS
+idcin input plugin for XMMS.
 
 %package input-mpg123
 Summary:	XMMS - mpg123 input plugin
@@ -207,7 +218,7 @@ Group(pl):	X11/Aplikacje/Multimedia
 Requires:	%{name} >= %{version}
 
 %description input-mpg123
-mpg123 input plugin for XMMS
+mpg123 input plugin for XMMS.
 
 %package input-wav
 Summary:	XMMS - wav input plugin
@@ -218,7 +229,7 @@ Group(pl):	X11/Aplikacje/Multimedia
 Requires:	%{name} >= %{version}
 
 %description input-wav
-wav input plugin for XMMS
+wav input plugin for XMMS.
 
 %package output-OSS
 Summary:	XMMS - OSS output plugin
@@ -228,7 +239,7 @@ Group(pl):	X11/Aplikacje/Multimedia
 Requires:	%{name} >= %{version}
 
 %description output-OSS
-OSS output plugin for XMMS
+OSS output plugin for XMMS.
 
 %package output-disk
 Summary:	XMMS - disk-writer output plugin
@@ -238,13 +249,24 @@ Group(pl):	X11/Aplikacje/Multimedia
 Requires:	%{name} >= %{version}
 
 %description output-disk
-disk-wirter output plugin for XMMS
+disk-wirter output plugin for XMMS.
 
 %prep
 %setup -q -a1 -a5 -a7
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
+%patch7 -p1
+%patch8 -p1
+%patch9 -p1
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
+%patch13 -p1
 
 cp %{SOURCE2} .
 
