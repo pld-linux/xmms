@@ -2,9 +2,11 @@ Summary:	Sound player with the WinAmp GUI, for Unix-based systems
 Summary(es):	Editor de sonido con GUI semejante al de WinAmp
 Summary(pl):	Odtwarzacz d╪wiЙku z interfejsem WinAmpa
 Summary(pt_BR):	Tocador de som com GUI semelhante ao do WinAmp
+Summary(ru):	Проигрыватель музыки с WinAmp GUI
+Summary(uk):	Програвач музики з WinAmp GUI
 Name:		xmms
 Version:	1.2.7
-Release:	1
+Release:	2
 Epoch:		2
 License:	GPL
 Group:		X11/Applications/Multimedia
@@ -67,6 +69,18 @@ arquivos .mp3, .mod, .s3m, e outros formatos. Agora ele suporta
 plugins de entrada, saМda e outros plugins de uso geral, e sua licenГa
 se tornou GPL.
 
+%description -l ru
+XMMS - проигрыватель музыки с графическим интерфейсом, напоминающим
+интерфейс WinAmp. Он может использовать "скины" WinAmp, проигрывать
+mp3, mod, s3m и другие форматы. Теперь он поддерживает подключаемые
+модули для обработки ввода, вывода, общего назначения и визуализации.
+
+%description -l uk
+XMMS - програвач музики з граф╕чним ╕нтерфейсом, що нагаду╓ ╕нтерфейс
+WinAmp. В╕н може використовувати" ск╕ни" WinAmp, програвати mp3, mod,
+s3m та ╕нш╕ формати. Тепер в╕н п╕дтриму╓ п╕д'╓днуван╕ модул╕ обробки
+вводу, виводу, модул╕ загального призначення та в╕зуал╕зац╕╖.
+
 %package wm
 Summary:	XMMS applet for WindowMaker
 Summary(pl):	Aplet XMMS dla WindowMakera
@@ -82,6 +96,8 @@ Aplet XMMS dla WindowMakera.
 %package gnome
 Summary:	XMMS - applet for controlling XMMS from the GNOME panel
 Summary(pl):	XMMS - aplet umo©liwiaj╠cy sterowanie XMMS-em z panelu GNOME
+Summary(ru):	Апплет панели GNOME для xmms
+Summary(uk):	Аплет панел╕ GNOME для xmms
 Group:		X11/Applications/Multimedia
 Requires:	%{name} = %{version}
 Requires:	gnome-libs >= 1.0.0
@@ -91,6 +107,14 @@ GNOME applet for controlling XMMS from the GNOME panel.
 
 %description gnome -l pl
 Aplet GNOME umo©liwiaj╠cy sterowanie XMMS-em z panelu GNOME.
+
+%description gnome -l ru
+Пакет xmms-gnome содержит апплет панели GNOME, дающий возможность
+управлять xmms.
+
+%description gnome -l uk
+Пакет xmms-gnome м╕стить аплет панел╕ GNOME, який да╓ можлив╕сть
+управляти xmms.
 
 %package skins
 Summary:	XMMS - Skins
@@ -110,6 +134,8 @@ Summary:	XMMS - libraries and header files
 Summary(es):	Bibliotecas y archivos de inclusiСn, necesarios para compilar plugins de XMMS
 Summary(pl):	XMMS - biblioteki i pliki nagЁСwkowe
 Summary(pt_BR):	Bibliotecas e arquivos de inclusЦo necessАrios para se compilar plugins do XMMS
+Summary(uk):	.h-файли для xmms
+Summary(ru):	.h-файлы для xmms
 Group:		X11/Development/Libraries
 Requires:	gtk+-devel
 Requires:	%{name} = %{version}
@@ -129,11 +155,19 @@ XMMS-a.
 Bibliotecas e arquivos de inclusЦo necessАrios para se compilar
 plugins do XMMS.
 
+%description devel -l ru
+.h-файлы для построения подключаемых модулей для xmms.
+
+%description devel -l uk
+.h-файли для побудови п╕д'╓днуваних модул╕в для xmms.
+
 %package static
 Summary:	XMMS - static libraries
 Summary(es):	Static libraries for XMMS development
 Summary(pl):	XMMS - biblioteki statyczne
 Summary(pt_BR):	Bibliotecas estАticas para desenvolvimento com XMMS
+Summary(ru):	Статические библиотеки для xmms
+Summary(uk):	Статичн╕ б╕бл╕отеки для xmms
 Group:		X11/Development/Libraries
 Requires:	%{name}-devel = %{version}
 
@@ -148,6 +182,12 @@ Biblioteki statyczne XMMS-a.
 
 %description static -l pt_BR
 Bibliotecas estАticas para desenvolvimento com o XMMS.
+
+%description static -l ru
+Статические библиотеки для построения подключаемых модулей для xmms.
+
+%description static -l uk
+Статичн╕ б╕бл╕отеки для побудови п╕д'╓днуваних модул╕в для xmms.
 
 %package input-mikmod
 Summary:	XMMS - Input plugin to play MODs
@@ -302,18 +342,29 @@ disk-wirter output plugin for XMMS.
 Wtyczka dla XMMS-a zapisuj╠ca dane wyj╤ciowe na dysk.
 
 %package visualization-GL
+Summary:	XMMS - Visualization plugins that use the OenGL library
 Summary:	XMMS - OpenGL visualization plugins
-Summary(pl):	XMMS - wtyczki OpenGL
+Summary(pl):	XMMS - wtyczki do wizulalizacji OpenGL
+Summary(uk):	XMMS - п╕д'╓днуван╕ модул╕ в╕зуал╕зац╕╖, як╕ використовують б╕бл╕отеку OpenGL
+Summary(ru):	XMMS - подключаемые модули визуализации, использующие библиотеку OenGL
 Group:		X11/Applications/Multimedia
 Requires:	%{name} = %{version}
 Requires:	OpenGL
 Obsoletes:	xmms-mesa
 
 %description visualization-GL
-Visualization plugins that use the Mesa3d library.
+XMMS - Visualization plugins that use the OpenGL library.
 
 %description visualization-GL -l pl
-Wtyczki graficzne wykorzystuj╠ce bibliotekЙ Mesa3d.
+Wtyczki graficzne wykorzystuj╠ce bibliotekЙ OpenGL.
+
+%description visualization-GL -l uk
+XMMS - п╕д'╓днуван╕ модул╕ в╕зуал╕зац╕╖, як╕ використовують б╕бл╕отеку
+OpenGL.
+
+%description visualization-GL -l ru
+XMMS - подключаемые модули визуализации, использующие библиотеку
+OpenGL.
 
 %prep
 %setup -q -a1 -a5
