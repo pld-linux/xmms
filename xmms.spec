@@ -13,7 +13,7 @@ Summary(uk):	ðÒÏÇÒÁ×ÁÞ ÍÕÚÉËÉ Ú WinAmp GUI
 Summary(zh_CN):	XMMS - X ¶Ë¶àÃ½Ìå²¥·ÅÆ÷
 Name:		xmms
 Version:	1.2.9
-Release:	0.1
+Release:	1
 Epoch:		2
 License:	GPL v2+
 Group:		X11/Applications/Sound
@@ -141,9 +141,9 @@ Summary(uk):	.h-ÆÁÊÌÉ ÄÌÑ XMMS
 Summary(ru):	.h-ÆÁÊÌÙ ÄÌÑ XMMS
 Summary(zh_CN):	XMMS - ¿ª·¢¿â
 Group:		X11/Development/Libraries
+Requires:	%{name}-libs = %{epoch}:%{version}
 # broken/incomplete gtk2 patch? libxmms is still linked with old GTK+
 Requires:	gtk+-devel
-Requires:	%{name}-libs = %{epoch}:%{version}
 
 %description devel
 Libraries and header files required for compiling XMMS plugins.
@@ -318,8 +318,8 @@ Summary:	XMMS - ALSA output plugin
 Summary(pl):	XMMS - plugin obs³ugi sterowników Alsa
 Group:		X11/Applications/Sound
 Requires:	%{name} >= %{epoch}:%{version}
-Obsoletes:	xmms-output-alsa
 Provides:	xmms-output-plugin
+Obsoletes:	xmms-output-alsa
 
 %description output-ALSA
 ALSA output plugin for XMMS.
@@ -337,8 +337,8 @@ Summary(zh_CN):	XMMS - Óë esound Èí¼þ°üÒ»ÆðÊ¹ÓÃµÄÊä³ö²å¼þ
 Group:		X11/Applications/Sound
 Requires:	%{name} = %{epoch}:%{version}
 Requires:	esound >= 0.2.8
-Obsoletes:	xmms-esd
 Provides:	xmms-output-plugin
+Obsoletes:	xmms-esd
 
 %description output-esd
 Output plugin for XMMS for use with the esound package.
