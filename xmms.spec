@@ -483,7 +483,7 @@ GNOMEOPT=""
 %endif
 
 %configure \
-	--disable-vorbistest $GNOMEOPT
+	--disable-vorbistest $GNOMEOPT \
 %ifarch %{ix86}
 	--enable-simd
 %endif
