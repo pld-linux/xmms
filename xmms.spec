@@ -2,7 +2,7 @@ Summary:	Sound player with the WinAmp GUI, for Unix-based systems
 Summary(pl):	Odtwarzacz d¼wiêku z interfejsem WinAmpa
 Name:		xmms
 Version:	1.2.4
-Release:	2
+Release:	3
 Epoch:		2
 License:	GPL
 Group:		X11/Applications/Multimedia
@@ -58,6 +58,7 @@ Group(pl):	X11/Aplikacje/Multimedia
 Requires:	%{name} = %{version}
 Requires:	libmikmod >= 3.1.7
 Obsoletes:	xmms-mikmod
+Obsoletes:	xmms-input-modplug
 
 %description input-mikmod
 Input plugin for XMMS to play MODs (.MOD,.XM,.S3M, etc)
@@ -290,6 +291,8 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_libdir}/xmms/Visualization
 %attr(755,root,root) %{_libdir}/xmms/Visualization/libbscope*
 %attr(755,root,root) %{_libdir}/xmms/Visualization/libsanalyzer*
+%dir %{_libdir}/xmms/Input
+%dir %{_libdir}/xmms/Output
 
 %dir %{_datadir}/xmms
 %{_datadir}/xmms/*gif
@@ -336,30 +339,24 @@ rm -rf $RPM_BUILD_ROOT
 
 %files input-cdaudio
 %defattr(644,root,root,755)
-%dir %{_libdir}/xmms/Input
 %attr(755,root,root) %{_libdir}/xmms/Input/libcdaudio*
 
 %files input-idcin
 %defattr(644,root,root,755)
-%dir %{_libdir}/xmms/Input
 %attr(755,root,root) %{_libdir}/xmms/Input/libidcin*
 
 %files input-mpg123
 %defattr(644,root,root,755)
-%dir %{_libdir}/xmms/Input
 %attr(755,root,root) %{_libdir}/xmms/Input/libmpg123*
 
 %files input-wav
 %defattr(644,root,root,755)
-%dir %{_libdir}/xmms/Input
 %attr(755,root,root) %{_libdir}/xmms/Input/libwav*
 
 %files output-OSS
 %defattr(644,root,root,755)
-%dir %{_libdir}/xmms/Output
 %attr(755,root,root) %{_libdir}/xmms/Output/libOSS*
 
 %files output-disk
 %defattr(644,root,root,755)
-%dir %{_libdir}/xmms/Output
 %attr(755,root,root) %{_libdir}/xmms/Output/libdisk_writer*
