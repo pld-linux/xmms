@@ -2,7 +2,7 @@ Summary:	Sound player with the WinAmp GUI, for Unix-based systems
 Summary(pl):	Odtwarzacz d¼wiêku z interfejsem WinAmpa
 Name:		xmms
 Version:	1.2.3
-Release:	4
+Release:	5
 Epoch:		2
 License:	GPL
 Group:		X11/Applications/Multimedia
@@ -145,6 +145,7 @@ Summary(pl):	XMMS - biblioteki i pliki nag³ówkowe
 Group:		X11/Development/Libraries
 Group(de):	X11/Entwicklung/Libraries
 Group(pl):	X11/Programowanie/Biblioteki
+Requires:	gtk+-devel
 Requires:	%{name} = %{version}
 
 %description devel
