@@ -17,8 +17,8 @@ Summary(uk):	Програвач музики з WinAmp GUI
 Summary(zh_CN):	XMMS - X ╤к╤Юц╫лЕ╡╔╥ефВ
 Name:		xmms
 Version:	1.2.7
-Release:	13
-Epoch:		2
+Release:	14
+Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications/Sound
 Source0:	http://www.xmms.org/files/1.2.x/%{name}-%{version}.tar.bz2
@@ -40,6 +40,9 @@ Patch4:		%{name}-configure.patch
 Patch5:		%{name}-patch.czech.patch
 #Patch6:		%{name}-ass-20020303.patch
 Patch7:		%{name}-gtk2.patch
+# Original location:
+#Patch8                http://members.jcom.home.ne.jp/jacobi/linux/etc/xmms-1.2.7-mmx.patch.gz
+Patch8:                %{name}-%{version}-mmx.patch
 URL:		http://www.xmms.org/
 BuildRequires:	OpenGL-devel
 BuildRequires:	autoconf
@@ -67,7 +70,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		_sysconfdir	/etc/X11/GNOME
 %define		_prefix		/usr/X11R6
 %if %{without gtk2}
-%{?with_gnome:%define		_appletsdir	%(gnome-config --datadir)/applets}
+%{?with_gnome:%define		_appletsdir	%{_datadir}/applets}
 %endif
 
 %description
@@ -423,6 +426,7 @@ OpenGL.
 %patch4 -p1
 %patch5 -p1
 #%patch6 -p1
+%patch8 -p1
 
 cp -f %{SOURCE2} .
 
