@@ -1,0 +1,21 @@
+--- xmms-1.2.5/configure.in.orig	Fri Oct 19 15:27:22 2001
++++ xmms-1.2.5/configure.in	Fri Oct 19 15:29:00 2001
+@@ -32,6 +32,7 @@
+ 
+ dnl Various compiler setup.
+ AC_PROG_CC
++AM_PROG_AS
+ AC_ISC_POSIX
+ dnl AC_PROG_CXX
+ AC_C_BIGENDIAN
+--- xmms-1.2.5/xmms/Makefile.am.orig	Thu Jun 14 14:30:33 2001
++++ xmms-1.2.5/xmms/Makefile.am	Fri Oct 19 15:34:21 2001
+@@ -5,7 +5,7 @@
+ bin_PROGRAMS = xmms
+ 
+ xmms_LDFLAGS = -export-dynamic
+-xmms_LDADD += @GTK_LIBS@ @PTHREAD_LIBS@ @SM_LIBS@ @VM_LIBS@ \
++xmms_LDADD = @GTK_LIBS@ @PTHREAD_LIBS@ @SM_LIBS@ @VM_LIBS@ \
+ @POSIX_LIBS@ $(top_builddir)/libxmms/libxmms.la @INTLLIBS@
+ 
+ INCLUDES = @GTK_CFLAGS@ @XMMS_DEFINES@ @ARCH_DEFINES@ -I$(top_builddir)/intl
