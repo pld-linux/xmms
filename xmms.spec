@@ -395,6 +395,7 @@ aclocal
 cd ..
 
 %configure \
+	--disable-vorbistest \
 	%{?_without_gnome:--without-gnome}
 
 %{__make} AS="%{__cc}"
