@@ -101,7 +101,7 @@ Requires:	Mesa >= 3.0
 Visualization plugins that use the Mesa3d library.
 
 %description mesa -l pl
-Wtyczki pozwalaj±ce wykorzystaæ bibliotekê Mesa3d.
+Wtyczki graficzne wykorzystuj±ce bibliotekê Mesa3d.
 
 %package skins
 Summary:        XMMS - Skins
