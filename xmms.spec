@@ -1,23 +1,21 @@
 Summary:	Sound player with the WinAmp GUI, for Unix-based systems
 Summary(pl):	Odtwarzacz d¼wiêku z interfejsem WinAmpa
 Name:		xmms
-Version:	0.9.5.1
-Release:	5
+Version:	1.0.0
+Release:	1
 Serial:		2
 License:	GPL
 Group:		X11/Applications/Multimedia
 Group(pl):	X11/Aplikacje/Multimedia
-Source0:	http://www.xmms.org/xmms-%{version}.tar.gz
+Source0:	http://www.xmms.org/files/%{name}-%{version}.tar.gz
 Source1:	xmms-icons.tar.gz
 Source2:	mp3license
 Source3:	xmms.desktop
 Source4:	wmxmms.desktop
 Source5:	xmms-skins.tar.bz2
 Source6:	xmms-gnome-mime-info
-Patch0:		xmms-0.9.5.1-cvs19991011.patch
-Patch1:		xmms-audio.patch
-Patch2:		xmms-skinspath.patch
-Patch3:		xmms-gtk-locale.patch
+Patch0:		xmms-audio.patch
+Patch1:		xmms-gtk-locale.patch
 URL:		http://www.xmms.org/
 BuildRequires:	XFree86-devel
 BuildRequires:	glib-devel >= 1.2.2
@@ -146,8 +144,6 @@ Biblioteki statyczne xmms.
 %setup -q -a1 -a5
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
 
 cp %{SOURCE2} .
 
@@ -156,7 +152,7 @@ aclocal; autoconf; automake
 (cd libxmms; aclocal; autoconf; automake)
 CFLAGS="$RPM_OPT_FLAGS -I/usr/X11R6/include"
 CPPFLAGS="$RPM_OPT_FLAGS -I/usr/X11R6/include"
-LDFLAGS="-s" 
+LDFLAGS="-s -L/usr/X11R6/lib"
 export CFLAGS CPPFLAGS LDFLAGS
 %configure
 
@@ -167,7 +163,9 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_applnkdir}/{Multimedia,DockApplets} \
 	$RPM_BUILD_ROOT%{_datadir}/{mime-info,xmms/Skins}
 
-make install DESTDIR=$RPM_BUILD_ROOT
+make install \
+	DESTDIR=$RPM_BUILD_ROOT \
+	m4datadir=/usr/share/aclocal
 
 install %{SOURCE3} $RPM_BUILD_ROOT%{_applnkdir}/Multimedia
 install %{SOURCE4} $RPM_BUILD_ROOT%{_applnkdir}/DockApplets
@@ -240,6 +238,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/lib*.so
 %attr(755,root,root) %{_libdir}/lib*.la
 %{_includedir}/*
+/usr/share/aclocal/*
 
 %files static
 %attr(644,root,root) %{_libdir}/lib*.a
