@@ -3,8 +3,6 @@
 # gnome		- build gnome subpackage
 # gtk2		- with gtk+2 (and without gnome :( )
 #
-%bcond_without gnome
-%bcond_with gtk2
 
 Summary:	Sound player with the WinAmp GUI, for Unix-based systems
 Summary(es):	Editor de sonido con GUI semejante al de WinAmp
@@ -43,6 +41,7 @@ Patch7:		%{name}-gtk2.patch
 # Original location:
 #Patch8		http://members.jcom.home.ne.jp/jacobi/linux/etc/xmms-1.2.7-mmx.patch.gz
 Patch8:		%{name}-%{version}-mmx.patch
+Patch9:		%{name}-zh.patch
 URL:		http://www.xmms.org/
 BuildRequires:	OpenGL-devel
 BuildRequires:	autoconf
@@ -55,10 +54,10 @@ BuildRequires:	libtool
 BuildRequires:	libvorbis-devel >= 1:1.0
 BuildRequires:	libxml-devel >= 1.7.0
 BuildRequires:	zlib-devel
-%if %{without gtk2}
-%{?with_gnome:BuildRequires:	gnome-core-devel}
-%{?with_gnome:BuildRequires:	gnome-libs-devel}
 BuildRequires:	gtk+-devel >= 1.2.2
+%if %{?_without_gtk2:1}%{?!_without_gtk2:0}
+%{!?_without_gnome:BuildRequires:	gnome-core-devel}
+%{!?_without_gnome:BuildRequires:	gnome-libs-devel}
 Requires:	glib >= 1.2.2
 Requires:	gtk+ >= 1.2.2
 %endif
@@ -68,8 +67,9 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_noautoreqdep	libGL.so.1 libGLU.so.1
 %define		_sysconfdir	/etc/X11/GNOME
-%if %{without gtk2}
-%{?with_gnome:%define		_appletsdir	%(gnome-config --datadir)/applets}
+%define		_prefix		/usr/X11R6
+%if %{?_without_gtk2:1}%{?!_without_gtk2:0}
+%{?_with_gnome:%define		_appletsdir	%{_datadir}/applets}
 %endif
 
 %description
@@ -174,11 +174,11 @@ Summary(ja):	XMMS - Ё╚х╞мя╔у╔║╔╓╔К
 Summary(ko):	XMMS - ╤Сюл╨Й╥╞╦╝©м гЛ╢У фдюо╣И
 Summary(pl):	XMMS - biblioteki i pliki nagЁСwkowe
 Summary(pt_BR):	Bibliotecas e arquivos de inclusЦo necessАrios para se compilar plugins do XMMS
-Summary(uk):	.h-файли для XMMS
-Summary(ru):	.h-файлы для XMMS
+Summary(uk):	.h-файли для xmms
+Summary(ru):	.h-файлы для xmms
 Summary(zh_CN):	XMMS - ©╙╥╒©Б
 Group:		X11/Development/Libraries
-%if %{without gtk2}
+%if %{?_without_gtk2:1}%{?!_without_gtk2:0}
 Requires:	gtk+-devel
 %endif
 Requires:	%{name}-libs = %{epoch}:%{version}
@@ -199,18 +199,18 @@ Bibliotecas e arquivos de inclusЦo necessАrios para se compilar
 plugins do XMMS.
 
 %description devel -l ru
-.h-файлы для построения подключаемых модулей для XMMS.
+.h-файлы для построения подключаемых модулей для xmms.
 
 %description devel -l uk
-.h-файли для побудови п╕д'╓днуваних модул╕в для XMMS.
+.h-файли для побудови п╕д'╓днуваних модул╕в для xmms.
 
 %package static
 Summary:	XMMS - static libraries
 Summary(es):	Static libraries for XMMS development
 Summary(pl):	XMMS - biblioteki statyczne
 Summary(pt_BR):	Bibliotecas estАticas para desenvolvimento com XMMS
-Summary(ru):	Статические библиотеки для XMMS
-Summary(uk):	Статичн╕ б╕бл╕отеки для XMMS
+Summary(ru):	Статические библиотеки для xmms
+Summary(uk):	Статичн╕ б╕бл╕отеки для xmms
 Group:		X11/Development/Libraries
 Requires:	%{name}-devel = %{epoch}:%{version}
 
@@ -227,10 +227,10 @@ Biblioteki statyczne XMMS-a.
 Bibliotecas estАticas para desenvolvimento com o XMMS.
 
 %description static -l ru
-Статические библиотеки для построения подключаемых модулей для XMMS.
+Статические библиотеки для построения подключаемых модулей для xmms.
 
 %description static -l uk
-Статичн╕ б╕бл╕отеки для побудови п╕д'╓днуваних модул╕в для XMMS.
+Статичн╕ б╕бл╕отеки для побудови п╕д'╓днуваних модул╕в для xmms.
 
 %package input-mikmod
 Summary:	XMMS - Input plugin to play MODs
@@ -425,10 +425,16 @@ OpenGL.
 %patch4 -p1
 %patch5 -p1
 #%patch6 -p1
+%ifarch %{ix86}
+%patch8 -p1
+%endif
+%patch9 -p1
+
+mv -f po/zh_CN.GB2312.po po/zh_CN.po
 
 cp -f %{SOURCE2} .
 
-%if %{with gtk2}
+%if %{?_without_gtk2:1}%{?!_without_gtk2:0}
 %patch7 -p1
 
 rm -f po/*.gmo
@@ -460,7 +466,6 @@ do
     fi
 done
 %endif
-%patch8 -p1
 
 %build
 rm -f missing
@@ -478,8 +483,8 @@ cd libxmms
 cd ..
 
 GNOMEOPT=""
-%if %{without gtk2}
-%{?with_gnome:GNOMEOPT=--with-gnome}
+%if %{?_without_gtk2:1}%{?!_without_gtk2:0}
+%{?_with_gnome:GNOMEOPT=--with-gnome}
 %endif
 
 %configure \
@@ -498,7 +503,8 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_applnkdir}/Multimedia,%{_pixmapsdir}} \
 	$RPM_BUILD_ROOT%{_datadir}/{mime-info,xmms/Skins}
 
-test -z $SED && SED=sed; export SED
+test -z $SED && SED=sed
+export SED
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT \
@@ -554,8 +560,7 @@ echo "to play."
 %{_datadir}/xmms/wmxmms*xpm
 %{_mandir}/*/wmxmms*
 
-%if %{without gtk2}
-%if %{with gnome}
+%if %{?_without_gtk2:1}%{?!_without_gtk2:0}
 %files gnome
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/gnomexmms
@@ -563,7 +568,6 @@ echo "to play."
 %{_appletsdir}/Multimedia/*
 %{_datadir}/mime-info/xmms.keys
 %{_mandir}/*/gnomexmms*
-%endif
 %endif
 
 %files skins

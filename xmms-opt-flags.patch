@@ -1,0 +1,11 @@
+diff -urN xmms-1.2.2.orig/configure.in xmms-1.2.2/configure.in
+--- xmms-1.2.2.orig/configure.in	Tue Jul 11 21:29:05 2000
++++ xmms-1.2.2/configure.in	Wed Jul 12 15:59:52 2000
+@@ -267,7 +267,6 @@
+ ARCH_DEFINES=""
+ case "$host" in 
+ 	i386-*-* | i486-*-* | i586-*-* | i686-*-* | i86pc-*-*)
+-		CFLAGS="$CFLAGS -m486"
+ 		ARCH_DEFINES="-DI386_ASSEM"
+ 		arch_type=ix86
+ 	;;
