@@ -2,7 +2,7 @@ Summary:	Sound player with the WinAmp GUI, for Unix-based systems
 Summary(pl):	Odtwarzacz d¼wiêku z interfejsem WinAmpa
 Name:		xmms
 Version:	1.2.3
-Release:	1
+Release:	2
 Epoch:		2
 License:	GPL
 Group:		X11/Applications/Multimedia
@@ -62,7 +62,7 @@ Requires:	libmikmod >= 3.1.7
 Input plugin for XMMS to play MODs (.MOD,.XM,.S3M, etc)
 
 %description mikmod -l pl
-Wtyczka dla XMMS do odtwarzania MODów (.MOD,.XM,.S3M, etc)
+Wtyczka dla XMMS do odtwarzania MODów (.MOD,.XM,.S3M, etc).
 
 %package tonegen
 Summary:	XMMS - Input plugin to generate sound of given frequency
@@ -196,10 +196,6 @@ install %{SOURCE4} $RPM_BUILD_ROOT%{_applnkdir}/DockApplets
 install %{SOURCE6} $RPM_BUILD_ROOT%{_datadir}/mime-info/xmms.keys
 install icons/*    $RPM_BUILD_ROOT%{_datadir}/xmms
 install Skins/*	   $RPM_BUILD_ROOT%{_datadir}/xmms/Skins
-
-strip --strip-unneeded $RPM_BUILD_ROOT%{_libdir}/libxmms.so.*.* \
-	$RPM_BUILD_ROOT%{_libdir}/xmms/{Input,Output,General,Effect}/*.so \
-	$RPM_BUILD_ROOT%{_libdir}/xmms/Visualization/*.so
 
 gzip -9nf AUTHORS ChangeLog NEWS README mp3license FAQ
 
