@@ -42,7 +42,7 @@ Patch5:		%{name}-patch.czech.patch
 Patch7:		%{name}-gtk2.patch
 # Original location:
 #Patch8		http://members.jcom.home.ne.jp/jacobi/linux/etc/xmms-1.2.7-mmx.patch.gz
-Patch8		%{name}-%{version}-mmx.patch
+Patch8:		%{name}-%{version}-mmx.patch
 URL:		http://www.xmms.org/
 BuildRequires:	OpenGL-devel
 BuildRequires:	autoconf
