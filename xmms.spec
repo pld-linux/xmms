@@ -68,7 +68,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		_sysconfdir	/etc/X11/GNOME
 %define		_prefix		/usr/X11R6
 %if %{?_without_gtk2:1}%{?!_without_gtk2:0}
-%{?with_gnome:%define		_appletsdir	%{_datadir}/applets}
+%{?_with_gnome:%define		_appletsdir	%{_datadir}/applets}
 %endif
 
 %description
@@ -477,8 +477,8 @@ cd libxmms
 cd ..
 
 GNOMEOPT=""
-%if %{without gtk2}
-%{?with_gnome:GNOMEOPT=--with-gnome}
+%if %{?_without_gtk2:1}%{?!_without_gtk2:0}
+%{?_with_gnome:GNOMEOPT=--with-gnome}
 %endif
 
 %configure \
@@ -551,8 +551,7 @@ echo "to play."
 %{_datadir}/xmms/wmxmms*xpm
 %{_mandir}/*/wmxmms*
 
-%if %{without gtk2}
-%if %{with gnome}
+%if %{?_without_gtk2:1}%{?!_without_gtk2:0}
 %files gnome
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/gnomexmms
@@ -560,7 +559,6 @@ echo "to play."
 %{_appletsdir}/Multimedia/*
 %{_datadir}/mime-info/xmms.keys
 %{_mandir}/*/gnomexmms*
-%endif
 %endif
 
 %files skins
