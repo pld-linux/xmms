@@ -1,0 +1,2000 @@
+diff -uNr xmms-orig/AUTHORS xmms/AUTHORS
+--- xmms-orig/AUTHORS	Sun Jan  6 20:40:20 2002
++++ xmms/AUTHORS	Sun Dec 30 20:28:43 2001
+@@ -39,6 +39,7 @@
+                          Chris Wilson
+                          Dave Yearke
+                          Stephan K. Zitz
++                         Johan Walles (Adaptive Song Selection)
+ 
+   Homepage and Graphics: Thomas Nilsson
+ 
+diff -uNr xmms-orig/README xmms/README
+--- xmms-orig/README	Sun Jan  6 20:40:20 2002
++++ xmms/README	Sun Mar  3 11:50:13 2002
+@@ -55,6 +55,7 @@
+ 5. Features
+    5.1 Supported File formats
+    5.2 Supported Features
++       5.2.1 Adaptive Song Selection
+ 6. Obtaining XMMS
+ 7. Misc
+    7.1 Shoutcast support
+@@ -458,7 +459,6 @@
+ The 'Visualization' tab controls which visual effects you want to see when XMMS
+ is playing your music. See section 3.6.5 for the plugins shipped with XMMS.
+ 
+-
+ 3.5.4. Options
+ --------------
+ 
+@@ -1057,6 +1057,34 @@
+ Compiles and works on other UNIX's
+ Proxy authentication support
+ 
++5.2.1 Adaptive Song Selection
++-----------------------------
++Basically, Adaptive Song Selection collects statistics on how you
++listen to songs, and then adapts the shuffle play and randomize
++playlist functions to better follow your taste.  It takes care of
++itself entirely, so that's all you really need to know about it ;-).
++
++For those of you who are curious, here is how it works.  Two kinds of
++statistics are collected:
++
++- What songs you don't like
++- What songs you like to hear next to each other
++
++The first one is easy.  When you skip a song, it looses a point.
++Songs with low scores are placed at the end of the playlist.
++
++What songs you want to hear next to each other are a bit more
++intricate.  Let's say you have two songs, A and B.  A (or any song
++above it in the playlist) is playing.  You move song B to the position
++right after A.  A finishes playing, and B starts.  This is interpreted
++as "you want to hear A and B next to each other".
++
++In this example, A and B will then *tend* to (i.e. not always) end up
++next to each other in the playlist (though not necessarily in that
++order).
++
++To explicitly change your opinion of a song, or disconnect one song
++from another, you can do so from the right-click menu in the playlist.
+ 
+ 6. Obtaining XMMS
+ -------------------
+diff -uNr xmms-orig/po/sv.po xmms/po/sv.po
+diff -uNr xmms-orig/xmms/Makefile.am xmms/xmms/Makefile.am
+--- xmms-orig/xmms/Makefile.am	Mon Jun 11 17:53:51 2001
++++ xmms/xmms/Makefile.am	Mon Jun 11 17:51:16 2001
+@@ -32,6 +32,7 @@
+ menurow.c menurow.h \
+ hslider.c hslider.h \
+ monostereo.c monostereo.h \
++ass.c ass.h \
+ vis.c vis.h \
+ svis.c svis.h \
+ number.c number.h \
+diff -uNr xmms-orig/xmms/ass.c xmms/xmms/ass.c
+--- xmms-orig/xmms/ass.c	Sat Jun 16 22:30:23 2001
++++ xmms/xmms/ass.c	Sun Jan  6 19:37:21 2002
+@@ -0,0 +1,624 @@
++/*  XMMS - Cross-platform multimedia player
++ *  Copyright (C) 2001  Johan Walles, d92-jwa@nada.kth.se
++ *
++ *  This program is free software; you can redistribute it and/or modify
++ *  it under the terms of the GNU General Public License as published by
++ *  the Free Software Foundation; either version 2 of the License, or
++ *  (at your option) any later version.
++ *
++ *  This program is distributed in the hope that it will be useful,
++ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
++ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ *  GNU General Public License for more details.
++ *
++ *  You should have received a copy of the GNU General Public License
++ *  along with this program; if not, write to the Free Software
++ *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
++ */
++
++/* Hint: ASS = Adaptive Song Selector */
++
++#include <assert.h>
++
++#include "xmms.h"
++
++static GList *ass_recommendations_list;
++
++static AssNextSong *ass_find_next_song(AssStartSong *start_song,
++				       const gchar *filename)
++{
++	GList *iterator;
++
++	for (iterator = start_song->next_song;
++	     iterator != NULL;
++	     iterator = g_list_next(iterator))
++	{
++		if (strcmp(((AssNextSong *)(iterator->data))->filename,
++			   filename) == 0)
++		{
++			return (AssNextSong *)(iterator->data);
++		}
++	}
++
++	return NULL;
++}
++
++static AssStartSong *ass_find_start_song(const gchar *filename)
++{
++	GList *iterator;
++
++	if (filename == NULL)
++	{
++		return NULL;
++	}
++	
++	for (iterator = ass_recommendations_list;
++	     iterator != NULL;
++	     iterator = g_list_next(iterator))
++	{
++		if (strcmp(((AssStartSong *)(iterator->data))->filename,
++			   filename) == 0)
++		{
++			return (AssStartSong *)(iterator->data);
++		}
++	}
++
++	return NULL;
++}
++
++/*
++ * Memorize that after playing the file named start, the user might
++ * want to hear the file named follow.
++ */
++static void __ass_recommend_next(int weight, const gchar *start, const gchar *follow)
++{
++	AssStartSong *start_song;
++	AssNextSong *next_song;
++
++	/* Check if the start song already has recommendations. */
++	if ((start_song = ass_find_start_song(start)) ==
++	    NULL)
++	{
++		/* Nope, create a new recommendation start node */
++		start_song = g_new(AssStartSong, 1);
++		
++		start_song->filename = g_strdup(start);
++		start_song->next_song = NULL;
++		start_song->score = 0;
++
++		/* Add the recommendation start node to the
++		   recommendation start node list. */
++		ass_recommendations_list =
++			g_list_append(ass_recommendations_list,
++				      start_song);
++	}
++
++	/* Check if the next song is already recommended for this
++	   start song */
++	if ((next_song = ass_find_next_song(start_song,
++					    follow)) == NULL)
++	{
++		/* It's not.  Create a recommendation next node */
++		next_song = g_new(AssNextSong, 1);
++
++		next_song->filename = g_strdup(follow);
++
++		next_song->weight = 0;
++
++		/* Add the new recommendation to the start node */
++		start_song->next_song =
++			g_list_append(start_song->next_song,
++				      next_song);
++	}
++	
++	next_song->weight += weight;
++}
++
++/*
++ * Memorize that after playing the file named start, the user might
++ * want to hear the file named follow.
++ */
++void ass_recommend_next(const gchar *start, const gchar *follow)
++{
++	/* Recommend symmetrically */
++	__ass_recommend_next(1, start, follow);
++	__ass_recommend_next(1, follow, start);
++}
++
++void __ass_dissociate(const gchar *file1, const gchar *file2)
++{
++	AssStartSong *startSong;
++	AssNextSong *nextSong = NULL;
++	GList *nextSongIterator;
++	
++	// Find the start pointer for file1
++	startSong = ass_find_start_song(file1);
++	if (startSong == NULL)
++	{
++		// No such recommendation exists
++		return;
++	}
++	
++	// Find its next pointer for file2
++	for (nextSongIterator = startSong->next_song;
++	     nextSongIterator != NULL;
++	     nextSongIterator = g_list_next(nextSongIterator))
++	{
++		nextSong = (AssNextSong *)(nextSongIterator->data);
++		if (strcmp(file2, nextSong->filename) == 0)
++		{
++			break;
++		}
++	}
++	if (nextSong == NULL)
++	{
++		// No such recommendation exists
++		return;
++	}
++	
++	// Remove the next pointer
++	startSong->next_song =
++		g_list_remove_link(startSong->next_song, nextSongIterator);
++	g_free(nextSong->filename);
++	g_free(nextSong);
++	g_list_free_1(nextSongIterator);
++}
++
++void ass_dissociate(const gchar *file1, const gchar *file2)
++{
++	// The slave's chain is heavy in both ends, so let's set 'em
++	// both free :-)
++	__ass_dissociate(file1, file2);
++	__ass_dissociate(file2, file1);
++}
++
++/*
++ * Modify a song's score.
++ */
++void ass_set_score(const gchar *filename, gint score)
++{
++	AssStartSong *start_song = ass_find_start_song(filename);
++
++	if (start_song == NULL)
++	{
++		start_song = g_new(AssStartSong, 1);
++		
++		start_song->filename = g_strdup(filename);
++		start_song->next_song = NULL;
++		start_song->score = 0;
++
++		/* Add the new recommendation start node to the
++		   recommendation start node list. */
++		ass_recommendations_list =
++			g_list_append(ass_recommendations_list,
++				      start_song);
++	}
++
++	start_song->score = score;
++	/* Scores > 0 means "always put this song at the start of the
++	   list".  Probably we don't want that.
++	*/
++	if (start_song->score > 0)
++	{
++		start_song->score = 0;
++	}
++}
++
++void ass_change_score(const gchar *filename, gint delta)
++{
++	AssStartSong *start_song = ass_find_start_song(filename);
++
++	if (start_song == NULL)
++	{
++		start_song = g_new(AssStartSong, 1);
++		
++		start_song->filename = g_strdup(filename);
++		start_song->next_song = NULL;
++		start_song->score = 0;
++
++		/* Add the new recommendation start node to the
++		   recommendation start node list. */
++		ass_recommendations_list =
++			g_list_append(ass_recommendations_list,
++				      start_song);
++	}
++
++	/* Scores > 0 means "always put this song at the start of the
++	   list".  Probably we don't want that.
++	*/
++	start_song->score += delta;
++	if (start_song->score > 0)
++	{
++		start_song->score = 0;
++	}
++}
++
++/*
++ * Retrieve a song's score.
++ */
++gint ass_get_score(const gchar *filename)
++{
++	AssStartSong *start_song = ass_find_start_song(filename);
++
++	if (start_song == NULL)
++	{
++		return 0;
++	}
++	else
++	{
++		return start_song->score;
++	}
++}
++
++const GList *ass_get_recommendations(const gchar *start)
++{
++	AssStartSong *assStartSong = ass_find_start_song(start);
++
++	return assStartSong ? assStartSong->next_song : NULL;
++}
++
++static void __ass_set_score(gchar *filename, gint score)
++{
++	AssStartSong *start_song = ass_find_start_song(filename);
++
++	if (start_song == NULL)
++	{
++		start_song = g_new(AssStartSong, 1);
++		
++		start_song->filename = g_strdup(filename);
++		start_song->next_song = NULL;
++		start_song->score = 0;
++
++		/* Add the new recommendation start node to the
++		   recommendation start node list. */
++		ass_recommendations_list =
++			g_list_append(ass_recommendations_list,
++				      start_song);
++	}
++
++	start_song->score = score;
++}
++
++static guint ass_sum_recommendations(AssStartSong *start_song)
++{
++	GList *iterator;
++	guint sum = 0;
++
++	assert(start_song != NULL);
++
++	for (iterator = start_song->next_song;
++	     iterator != NULL;
++	     iterator = g_list_next(iterator))
++	{
++		sum += ((AssNextSong *)(iterator->data))->weight;
++	}
++
++	assert(sum != 0);
++	
++	return sum;
++}
++
++static const gchar *ass_get_nth_recommendation(AssStartSong *start_song,
++					       guint n)
++{
++	GList *iterator;
++	guint sum = 0;
++
++	assert(start_song != NULL);
++
++	if (n == 0)
++		return NULL;
++	
++	for (iterator = start_song->next_song;
++	     iterator != NULL;
++	     iterator = g_list_next(iterator))
++	{
++		sum += ((AssNextSong *)(iterator->data))->weight;
++
++		if (sum >= n)
++			return ((AssNextSong *)(iterator->data))->filename;
++	}
++
++	/* If we get here then the n passed to this function was too
++	   large.  It can be no larger than the number calculated by
++	   ass_sum_recommendations(). */
++	assert(FALSE);
++	
++	return NULL;
++}
++
++/*
++  Try to recommend a song to play after first_filename.  NULL means
++  that no recommendation is given (for whatever reason).
++
++  FIXME: This method should accept a list of songs *not* to choose
++  between.  If the user has asked for a recommendation and received an
++  answer that is not in the current playlist, they must be able to try
++  again.
++*/
++const gchar *ass_get_recommendation(const gchar *first_filename)
++{
++	AssStartSong *start_song;
++	guint recommendation_total;
++
++	if (first_filename == NULL)
++	{
++		return NULL;
++	}
++	
++	if ((start_song = ass_find_start_song(first_filename)) ==
++	    NULL)
++	{
++		/* There are no recommendations for first_filename */
++		return NULL;
++	}
++
++	if (start_song->next_song == NULL)
++	{
++		return NULL;
++	}
++	
++	recommendation_total = ass_sum_recommendations(start_song);
++
++	return ass_get_nth_recommendation(start_song,
++					  rand() % (recommendation_total + 1));
++}
++
++static void ass_clear(void)
++{
++	GList *start_iterator;
++	GList *next_iterator;
++
++	if (ass_recommendations_list == NULL)
++	{
++		return;
++	}
++	
++	/* Free all memory used by the recommendations */
++	for (start_iterator = ass_recommendations_list;
++	     start_iterator != NULL;
++	     start_iterator = g_list_next(start_iterator))
++	{
++		/* Free all file names in the next list */
++		for (next_iterator = ((AssStartSong *)(start_iterator->data))->next_song;
++		     next_iterator != NULL;
++		     next_iterator = g_list_next(next_iterator))
++		{
++			free(((AssNextSong *)(next_iterator->data))->filename);
++			((AssNextSong *)(next_iterator->data))->filename = NULL;
++			
++			free(next_iterator->data);
++			next_iterator->data = NULL;
++		}
++		/* Free the next list */
++		g_list_free(((AssStartSong *)(start_iterator->data))->next_song);
++		((AssStartSong *)(start_iterator->data))->next_song = NULL;
++
++		/* Free the file name */
++		free(((AssStartSong *)(start_iterator->data))->filename);
++		((AssStartSong *)(start_iterator->data))->filename = NULL;
++
++		/* Free the struct */
++		free(start_iterator->data);
++		start_iterator->data = NULL;
++	}
++	g_list_free(ass_recommendations_list);
++	ass_recommendations_list = NULL;
++}
++
++void ass_init(void)
++{
++	gchar *ass_data_file_name;
++	FILE *ass_data_file;
++
++	gchar start[950], follow[950];
++	gchar line[999];
++	int weight;
++
++	enum { NEXT, SCORES } section = NEXT;
++
++	gboolean failure = FALSE;
++
++	/* We have no recommendations to begin with */
++	ass_recommendations_list = NULL;
++
++	/* Make up a filename for the ass data file */
++	ass_data_file_name = g_strconcat(g_get_home_dir(),
++					 "/.xmms/",
++					 ASS_DATA_FILE_NAME,
++					 NULL);
++
++	/* Open the ass data file for input */
++	ass_data_file = fopen(ass_data_file_name,
++			      "r");
++	if (ass_data_file == NULL)
++	{
++		return;
++	}
++
++	/* Parse the ass data file */
++	start[0] = '\0';	
++	while (!feof(ass_data_file))
++	{
++		if (fgets(line, 990, ass_data_file) != NULL)
++		{
++			if (sscanf(line, "%d %940[^\n]\n", &weight, follow) == 2)
++			{
++				/* Found a line with both number and name */
++
++				switch (section)
++				{
++				case NEXT:
++					if (start[0] != '\0')
++					{
++						if (weight < 0)
++						{
++							failure= TRUE;
++						}
++						else if (weight > 0)
++						{
++							__ass_recommend_next(weight, start, follow);
++						}
++					}
++					else
++					{
++						/* Parse error! */
++						failure = TRUE;
++					}
++					break;
++
++				case SCORES:
++					if (weight != 0)
++					{
++						__ass_set_score(follow, weight);
++					}
++					break;
++				}
++
++				if (failure) break;
++			}
++			else if (sscanf(line, "%940[^\n]\n", start) == 1)
++			{
++				if (strcmp(start, "scores") == 0)
++				{
++					/* The scores section starts here */
++					section = SCORES;
++					start[0] = '\0';
++				}
++				else
++				{
++					/* New start song read OK */
++					section = NEXT;
++				}
++			}
++			else
++			{
++				/* Parse error! */
++				failure = TRUE;
++				break;
++			}
++		}
++	}
++
++	if (failure)
++	{
++		/* Free all space occupied by the recommendations list
++		   in favour of remembering a broken list. */
++		ass_clear();
++	}
++	
++	fclose(ass_data_file);
++	ass_data_file = NULL;
++}
++
++void ass_persist(void)
++{
++	gchar *ass_data_file_name;
++	FILE *ass_data_file;
++
++	GList *start_iterator;
++	GList *next_iterator;
++
++	gboolean failure = FALSE;
++
++	/* Are there any recommendations to store */
++	if (ass_recommendations_list == NULL)
++	{
++		/* Nope. */
++		return;
++	}
++	
++	/* Make up a filename for the ass data file */
++	ass_data_file_name = g_strconcat(g_get_home_dir(),
++					 "/.xmms/",
++					 ASS_DATA_FILE_NAME,
++					 NULL);
++
++	/* Open the ass data file for output */
++	ass_data_file = fopen(ass_data_file_name,
++			      "w");
++	if (ass_data_file == NULL)
++	{
++		/* FIXME: We fail silently.  Should we output a
++		 * warning somehow? */
++		return;
++	}
++	
++	/* Loop through all recommendation starts, storing their
++	   recommended followers */
++	for (start_iterator = ass_recommendations_list;
++	     start_iterator != NULL;
++	     start_iterator = g_list_next(start_iterator))
++	{
++		if (((AssStartSong *)(start_iterator->data))->next_song == NULL)
++		{
++			/* Don't store songs with only a score (yet). */
++			continue;
++		}
++
++		if (failure ||
++		    (fprintf(ass_data_file,
++			     "%s\n",
++			     ((AssStartSong *)(start_iterator->data))->filename) == 0))
++		{
++			failure = TRUE;
++			break;
++		}
++
++		for (next_iterator = ((AssStartSong *)(start_iterator->data))->next_song;
++		     next_iterator != NULL;
++		     next_iterator = g_list_next(next_iterator))
++		{
++			if (fprintf(ass_data_file, "%d %s\n",
++				    ((AssNextSong *)(next_iterator->data))->weight,
++				    ((AssNextSong *)(next_iterator->data))->filename) == 0)
++			{
++				failure = TRUE;
++				break;
++			}
++		}
++	}
++
++	if (!failure)
++	{
++		/* Output the "here starts the scoring section" marker. */
++		if (fprintf(ass_data_file, "scores\n") == 0)
++		{
++			failure = TRUE;
++		}
++
++		/* Output all (non-zero) scores */
++		for (start_iterator = ass_recommendations_list;
++		     start_iterator != NULL;
++		     start_iterator = g_list_next(start_iterator))
++		{
++			if (((AssStartSong *)(start_iterator->data))->score == 0)
++			{
++				/* Don't store songs with zero score. */
++				continue;
++			}
++
++			if (failure ||
++			    (fprintf(ass_data_file,
++				     "%d %s\n",
++				     ((AssStartSong *)(start_iterator->data))->score,
++				     ((AssStartSong *)(start_iterator->data))->filename) == 0))
++			{
++				failure = TRUE;
++				break;
++			}
++		}
++       }
++
++	fclose(ass_data_file);
++	ass_data_file = NULL;
++
++	if (failure)
++	{
++		/* If writing of the data file failed, attempt to
++		   remove it rather than leaving a broken data file
++		   behind. */
++
++		unlink(ass_data_file_name);
++	}
++}
+diff -uNr xmms-orig/xmms/ass.h xmms/xmms/ass.h
+--- xmms-orig/xmms/ass.h	Sat Jun 16 22:30:23 2001
++++ xmms/xmms/ass.h	Sun Jan  6 18:53:30 2002
+@@ -0,0 +1,73 @@
++/*  XMMS - Cross-platform multimedia player
++ *  Copyright (C) 2001  Johan Walles, d92-jwa@nada.kth.se
++ *
++ *  This program is free software; you can redistribute it and/or modify
++ *  it under the terms of the GNU General Public License as published by
++ *  the Free Software Foundation; either version 2 of the License, or
++ *  (at your option) any later version.
++ *
++ *  This program is distributed in the hope that it will be useful,
++ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
++ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ *  GNU General Public License for more details.
++ *
++ *  You should have received a copy of the GNU General Public License
++ *  along with this program; if not, write to the Free Software
++ *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
++ */
++
++/* Hint: ASS = Adaptive Song Selector */
++
++/* FIXME: Should lists prove to be too slow we could use balanced
++   trees for the AssStartSong collection.  The AssNextSong is scanned
++   through however, so tree-ifying will do no good. */
++
++#ifndef ASS_H
++#define ASS_H
++
++#define ASS_DATA_FILE_NAME "ass-stats"
++
++typedef struct
++{
++	gchar *filename;
++	guint weight;
++}
++AssNextSong;
++
++typedef struct
++{
++	gchar *filename;
++	gint score;
++	GList *next_song;
++}
++AssStartSong;
++
++void ass_init(void);
++void ass_persist(void);
++
++// Tell ASS that after start, the user tends to want to hear follow
++void ass_recommend_next(const gchar *start,
++			const gchar *follow);
++
++// Tell ASS to break the association between file1 and file2 (if one
++// exists)
++void ass_dissociate(const gchar *file1,
++		    const gchar *file2);
++
++
++// Let ASS recommend what to play after start.  NULL = No
++// recommendation = anything goes.
++const gchar *ass_get_recommendation(const gchar *start);
++
++// Change the absolute score for a file
++void ass_change_score(const gchar *filename, gint delta);
++void ass_set_score(const gchar *filename, gint score);
++
++// Get the score for a file.  Unknown file = score 0.
++gint ass_get_score(const gchar *filename);
++
++// Get the list of recommendations for a given file.  NULL = no
++// recommendations for that file.
++const GList *ass_get_recommendations(const gchar *start);
++
++#endif
+diff -uNr xmms-orig/xmms/main.c xmms/xmms/main.c
+--- xmms-orig/xmms/main.c	Sun Mar  3 11:38:34 2002
++++ xmms/xmms/main.c	Sun Mar  3 11:26:18 2002
+@@ -378,6 +378,7 @@
+ 
+ 	cfg.gentitle_format = NULL;
+ 
++        cfg.adaptive_song_selection = TRUE;
+ 
+ 	filename = g_strconcat(g_get_home_dir(), "/.xmms/config", NULL);
+ 	cfgfile = xmms_cfg_open_file(filename);
+@@ -479,6 +480,8 @@
+ 		}
+ 		xmms_cfg_read_string(cfgfile, "xmms", "generic_title_format", &cfg.gentitle_format);
+ 		
++		xmms_cfg_read_boolean(cfgfile, "xmms", "adaptive_song_selection", &cfg.adaptive_song_selection);
++
+ 		xmms_cfg_free(cfgfile);
+ 	}
+ 
+@@ -672,6 +675,8 @@
+ 	}
+ 	xmms_cfg_write_string(cfgfile, "xmms", "generic_title_format", cfg.gentitle_format);
+ 	
++	xmms_cfg_write_boolean(cfgfile, "xmms", "adaptive_song_selection", cfg.adaptive_song_selection);
++        
+ 	xmms_cfg_write_file(cfgfile, filename);
+ 	xmms_cfg_free(cfgfile);
+ 
+@@ -899,6 +904,7 @@
+ 	playlist_clear();
+ 	cleanup_plugins();
+ 	sm_cleanup();
++        ass_persist();
+ 	gtk_exit(0);
+ }
+ 
+@@ -3498,11 +3504,14 @@
+ 	mainwin_timeout_tag = gtk_timeout_add(10, idle_func, NULL); 
+ 	playlist_start_get_info_thread();
+ 
++        /* Initialize adaptive song selection */
++        ass_init();
++        
+ 	/* enable_x11r5_session_management(argc, argv); */
+ 	sm_init(argc, argv);
+ 	GDK_THREADS_LEAVE();
+ 	gtk_main();
+-
++        
+ 	return 0;
+ }
+ 
+diff -uNr xmms-orig/xmms/main.h xmms/xmms/main.h
+--- xmms-orig/xmms/main.h	Sun Mar  3 11:38:34 2002
++++ xmms/xmms/main.h	Sun Jan 27 11:12:54 2002
+@@ -62,6 +62,7 @@
+ 	gint mouse_change;
+ 	gboolean playlist_transparent;
+ 	gchar *gentitle_format;
++        gboolean adaptive_song_selection;
+ }
+ Config;
+ 
+diff -uNr xmms-orig/xmms/playlist.c xmms/xmms/playlist.c
+--- xmms-orig/xmms/playlist.c	Sun Mar  3 11:38:34 2002
++++ xmms/xmms/playlist.c	Wed Feb 20 19:41:28 2002
+@@ -22,6 +22,7 @@
+ #include "libxmms/util.h"
+ #include <sys/stat.h>
+ #include <unistd.h>
++#include <assert.h>
+ 
+ GList *playlist = NULL;
+ GList *shuffle_list = NULL;
+@@ -544,6 +545,17 @@
+ 
+ 	plist_pos_list = find_playlist_position_list();
+ 
++        if ((plist_pos_list != NULL) &&
++            (cfg.repeat || (g_list_next(plist_pos_list) != NULL)))
++        {
++                /*
++                  The user is skipping a song.  We interpret this as
++                  meaning "I don't like this song".
++                */
++                ass_change_score(((PlaylistEntry *)(plist_pos_list->data))->filename,
++                                 -1);
++        }
++        
+ 	if (!cfg.repeat && !g_list_next(plist_pos_list))
+ 	{
+ 		PL_UNLOCK();
+@@ -616,7 +628,18 @@
+ 	
+ 	plist_pos_list = find_playlist_position_list();
+ 	if (g_list_previous(plist_pos_list))
+-		playlist_position = plist_pos_list->prev->data;
++        {
++                playlist_position =
++                        g_list_previous(plist_pos_list)->data;
++
++                /*
++                  The user has gone back to a song.  We interpret that
++                  as meaning "I like this song so much that I want to
++                  hear it again".
++                */
++                ass_change_score(playlist_position->filename,
++                                 1);
++        }
+ 	else if (cfg.repeat)
+ 	{
+ 		GList *node;
+@@ -633,7 +656,7 @@
+ 	}
+ 	PL_UNLOCK();
+ 	playlist_check_pos_current();
+-
++        
+ 	if (restart_playing)
+ 		playlist_play();
+ 	else
+@@ -673,6 +696,7 @@
+ 
+ 	playlist_position = node->data;
+ 	PL_UNLOCK();
++        ((PlaylistEntry *)playlist_position)->moved = FALSE;
+ 	playlist_check_pos_current();
+ 
+ 	if (restart_playing)
+@@ -686,12 +710,19 @@
+ 
+ void playlist_eof_reached(void)
+ {
++        /*
++         * This function is called whenever a song ends and the next
++         * one should start playing.
++         */
++        
+ 	GList *plist_pos_list;
++	GList *previous_plist_pos;
+ 
+ 	input_stop();
+ 
+ 	PL_LOCK();
+ 	plist_pos_list = find_playlist_position_list();
++        previous_plist_pos = plist_pos_list->data;
+ 
+ 	if (cfg.no_playlist_advance)
+ 	{
+@@ -724,6 +755,25 @@
+ 	else
+ 		playlist_position = plist_pos_list->next->data;
+ 	PL_UNLOCK();
++
++        if (!cfg.shuffle && (((PlaylistEntry *)playlist_position)->moved))
++        {
++                /*
++                 * Song A has stopped playing.  Song B will start
++                 * playing now.  Song B had moved.  Thus, we conclude
++                 * that the user wants to hear Song B after song A.
++                 * Therefore, Song B should be added to Song A's
++                 * next-song-preferences.
++                 *
++                 * Song A is previous_plist_pos.  Song B is
++                 * playlist_position.  */
++                
++                ass_recommend_next(((PlaylistEntry *)previous_plist_pos)->filename,
++                                   ((PlaylistEntry *)playlist_position)->filename);
++
++                ((PlaylistEntry *)playlist_position)->moved = FALSE;
++        }
++        
+ 	playlist_check_pos_current();
+ 	playlist_play();
+ 	mainwin_set_info_text();
+@@ -948,6 +998,7 @@
+ 	ext = strrchr(filename, '.');
+ 	if (ext && !strcasecmp(ext, ".pls"))
+ 	{
++		/* It's a playlist, let's parse it. */
+ 		int noe, i;
+ 		char key[10];
+ 		
+@@ -1080,6 +1131,11 @@
+ 	gchar *ret;
+ 	PlaylistEntry *entry;
+ 	GList *node;
++
++	if (pos < 0)
++	{
++		return NULL;
++	}
+ 	
+ 	PL_LOCK();
+ 	if (!playlist)
+@@ -1087,6 +1143,11 @@
+ 		PL_UNLOCK();
+ 		return NULL;
+ 	}
++	if (pos >= __get_playlist_length())
++	{
++		PL_UNLOCK();
++		return NULL;
++	}
+ 	node = g_list_nth(playlist, pos);
+ 	if (!node)
+ 	{
+@@ -1144,6 +1205,84 @@
+ 	return title;
+ }
+ 
++int playlist_get_score(gint pos)
++{
++	PlaylistEntry *entry;
++	GList *node;
++	gint score;
++
++	PL_LOCK();
++	if (!playlist)
++	{
++		PL_UNLOCK();
++		return 0;
++	}
++	node = g_list_nth(playlist, pos);
++	if (!node)
++	{
++		PL_UNLOCK();
++		return 0;
++	}
++	entry = node->data;
++	score = ass_get_score(entry->filename);
++	PL_UNLOCK();
++
++	return score;
++}
++
++void playlist_set_score(gint pos, gint score)
++{
++	PlaylistEntry *entry;
++	GList *node;
++
++	PL_LOCK();
++	if (!playlist)
++	{
++		PL_UNLOCK();
++		return;
++	}
++	node = g_list_nth(playlist, pos);
++	if (!node)
++	{
++		PL_UNLOCK();
++		return;
++	}
++	entry = node->data;
++	ass_set_score(entry->filename, score);
++	PL_UNLOCK();
++}
++
++const gchar* playlist_filename2songtitle(const gchar *filename)
++{
++	GList *iterator;
++	
++	if (filename == NULL)
++	{
++		return NULL;
++	}
++
++	// Scan loaded songs for filename
++	PL_LOCK();
++	for (iterator = get_playlist();
++	     iterator != NULL;
++	     iterator = g_list_next(iterator))
++	{
++		PlaylistEntry *currentEntry =
++			(PlaylistEntry *)(iterator->data);
++
++		if (strcmp(currentEntry->filename, filename) == 0)
++		{
++			// FIXME: Race condition
++			PL_UNLOCK();
++			return currentEntry->title;
++		}
++	}
++	PL_UNLOCK();
++
++	// Not found / don't know
++	return NULL;
++}
++
+ gint playlist_get_songtime(gint pos)
+ {
+ 	gint retval = -1;
+@@ -1349,6 +1488,26 @@
+ 	PL_UNLOCK();
+ }
+ 
++static guint playlist_filename_to_index(PlaylistEntry *playlist_entries[],
++                                        guint n_entries,
++                                        const gchar *filename)
++{
++        guint i;
++
++        for (i = 0; i < n_entries; i++)
++        {
++                if (strcmp(playlist_entries[i]->filename,
++                           filename) == 0)
++                {
++                        return i;
++                }
++        }
++
++        return -1;
++}
++
++/* This function is used by the qsort() call in
++   smart_playlist_shuffle_list() (below). */
+ void playlist_sort_selected_by_date(void)
+ {
+ 	PL_LOCK();
+@@ -1363,52 +1522,238 @@
+ 	PL_UNLOCK();
+ }
+ 
+-static GList *playlist_shuffle_list(GList *list)
++static int playlist_entry_score_comparator(const void *a,
++                                           const void *b)
+ {
+-	/* Caller should holde playlist mutex */
++        
++        int score_a = ass_get_score((*((PlaylistEntry **)a))->filename);
++        int score_b = ass_get_score((*((PlaylistEntry **)b))->filename);
++
++        /* We want high scores before low, so if score_a > score_b we
++           want to return something negative. */
++        
++        return score_b - score_a;
++}
++
++static GList *smart_playlist_shuffle_list(GList *list)
++{
++	/* Caller should hold playlist mutex */
++
+ 	/*
+ 	 * Note that this doesn't make a copy of the original list.
+ 	 * The pointer to the original list is not valid after this
+ 	 * fuction is run.
+ 	 */
+ 	gint len = g_list_length(list);
+-	gint i, j;
+-	GList *node, **ptrs;
++	gint i;
++        gint next_score_section = -1;
++	GList *iterator;
++        PlaylistEntry **ptrs;
+ 
+-	if (!len)
++	if (len == 0)
+ 		return NULL;
+ 
+-	ptrs = g_new(GList *, len);
++	ptrs = g_new(PlaylistEntry *, len);
+ 
+-	for (node = list, i = 0; i < len; node = g_list_next(node), i++)
+-		ptrs[i] = node;
++        /* Convert the list into an array of pointers */
++	for (iterator = list, i = 0; i < len; iterator = g_list_next(iterator), i++)
++        {
++		ptrs[i] = (PlaylistEntry *)(iterator->data);
++
++                // Shuffling songs voids information about user listening preferences
++                ptrs[i]->moved = FALSE;
++        }
++        g_list_free(list);
++        list = NULL;
++
++        /* Sort the array by score */
++        qsort(ptrs, len, sizeof(PlaylistEntry *), playlist_entry_score_comparator);
++
++        /* Shuffle the pointer array */
++        for (i = 0; i < len; i++)
++        {
++                PlaylistEntry *swap_ptr;
++                gint j;
++                
++                const gchar *previous_filename;
++                const gchar *new_filename;
++
++                if (i >= next_score_section)
++                {
++                        /* We are in a new score section; find out
++                           where the next one starts */
++                        gint current_score =
++                                ass_get_score(ptrs[i]->filename);
++                        
++                        for (next_score_section = i;
++                             next_score_section < len;
++                             next_score_section++)
++                        {
++                                if (ass_get_score(ptrs[next_score_section]->filename) !=
++                                    current_score)
++                                {
++                                        break;
++                                }
++                        }
++                }
++
++                if (i == 0)
++                {
++                        previous_filename = NULL;
++                }
++                else
++                {
++                        previous_filename = ptrs[i - 1]->filename;
++                }
++
++                /* Find out from which index we should get the next song */
++                do {
++                        if ((new_filename = ass_get_recommendation(previous_filename)) !=
++                            NULL)
++                        {
++                                j = playlist_filename_to_index(&(ptrs[i]),
++                                                               len - i,
++                                                               new_filename);
++                                if (j != -1)
++                                        j += i;
++                        }
++                        else
++                        {
++                                /* Only find new songs in our current
++                                   score section */
++                                j = (rand() % (next_score_section - i)) + i;
++
++                                assert(j < next_score_section);
++                        }
++                } while (j == -1);
++
++                assert(j < len);
++                assert(j >= i);
++                
++                if (j < next_score_section)
++                {
++                        /* Swap pointer #i and pointer #j */
++                        swap_ptr = ptrs[i];
++                        ptrs[i] = ptrs[j];
++                        ptrs[j] = swap_ptr;
++                }
++                else
++                {
++                        /*
++                          We need to preserve the score section
++                          ordering, so we do it the slow way if i and
++                          j are in different scoring sections.
++                        */
++                        gint k;
++                        
++                        swap_ptr = ptrs[i];
++                        ptrs[i] = ptrs[j];
++
++                        for (k = j; k >= (i + 2); k--)
++                        {
++                                ptrs[k] = ptrs[k - 1];
++                        }
++
++                        ptrs[i + 1] = swap_ptr;
++                }
++        }
++
++        /* Create a new list from the pointer array */
++        for (i = 0; i < len; i++)
++        {
++                list = g_list_append(list, ptrs[i]);
++        }
+ 
+-	j = random() % len;
+-	list = ptrs[j];
+-	ptrs[j]->next = NULL;
+-	ptrs[j] = ptrs[0];
++	g_free(ptrs);
+ 
+-	for (i = 1; i < len; i++)
+-	{
+-		j = random() % (len - i);
+-		list->prev = ptrs[i + j];
+-		ptrs[i + j]->next = list;
+-		list = ptrs[i + j];
+-		ptrs[i + j] = ptrs[i];
+-	}
+-	list->prev = NULL;
++	return list;
++}
++
++static GList *old_playlist_shuffle_list(GList *list)
++{
++	/* Caller should hold playlist mutex */
++
++	/*
++	 * Note that this doesn't make a copy of the original list.
++	 * The pointer to the original list is not valid after this
++	 * fuction is run.
++	 */
++	gint len = g_list_length(list);
++	gint i;
++	GList *iterator;
++        PlaylistEntry **ptrs;
++
++	if (len == 0)
++		return NULL;
++
++	ptrs = g_new(PlaylistEntry *, len);
++
++        /* Convert the list into an array of pointers */
++	for (iterator = list, i = 0; i < len; iterator = g_list_next(iterator), i++)
++        {
++		ptrs[i] = (PlaylistEntry *)(iterator->data);
++
++                // Shuffling songs voids information about user listening preferences
++                ptrs[i]->moved = FALSE;
++        }
++        g_list_free(list);
++        list = NULL;
++
++        /* Shuffle the pointer array */
++        for (i = 0; i < len; i++)
++        {
++                PlaylistEntry *swap_ptr;
++                gint j;
++                
++                /* Pick a random song among the ones that are left */
++                j = (rand() % (len - i)) + i;
++
++                /* Swap pointer #i and pointer #j */
++                swap_ptr = ptrs[i];
++                ptrs[i] = ptrs[j];
++                ptrs[j] = swap_ptr;
++        }
++
++        /* Create a new list from the pointer array */
++        for (i = 0; i < len; i++)
++        {
++                list = g_list_append(list, ptrs[i]);
++        }
+ 
+ 	g_free(ptrs);
+ 
+ 	return list;
+ }
+ 
++static GList *playlist_shuffle_list(GList *list)
++{
++        if (cfg.adaptive_song_selection)
++        {
++                return smart_playlist_shuffle_list(list);
++        }
++        else
++        {
++                return old_playlist_shuffle_list(list);
++        }
++}
++
+ void playlist_random(void)
+ {
++        GList *for_each;
++        
+ 	PL_LOCK();
+ 
+ 	playlist = playlist_shuffle_list(playlist);
+ 
++        /* Remove all moved-marks from the playlist */
++
++        for (for_each = playlist;
++             for_each != NULL;
++             for_each = g_list_next(for_each))
++        {
++                ((PlaylistEntry *) for_each->data)->moved = FALSE;
++        }
++        
+ 	PL_UNLOCK();
+ }
+ 
+@@ -1428,7 +1773,52 @@
+ 	PL_UNLOCK();
+ 	return g_list_reverse(list);
+ }
+-	
++
++gint playlist_get_single_selection(void)
++{
++	// Returns the playlist position of the current selection.  If
++	// 0 or > 1 songs are selected, this method returns -1.
++	GList *iterator;
++	gint currentPos;
++
++	gint selectedPos = -1;
++
++	for (iterator = get_playlist(), currentPos = 0;
++	     iterator != NULL;
++	     iterator = g_list_next(iterator), currentPos++)
++	{
++		if (((PlaylistEntry *)(iterator->data))->selected)
++		{
++			if (selectedPos == -1)
++			{
++				// First selected song found
++				selectedPos = currentPos;
++			}
++			else
++			{
++				// > 1 selected song found
++				return -1;
++			}
++		}
++	}
++
++	return selectedPos;
++}
++
++gboolean playlist_is_selected(gint pos)
++{
++	GList *node;
++	gboolean isSelected = 0;
++
++	PL_LOCK();
++	if ((node = g_list_nth(get_playlist(), pos)) != NULL)
++	{
++		isSelected = ((PlaylistEntry *)(node->data))->selected;
++	}
++	PL_UNLOCK();
++
++	return isSelected;
++}
+ 
+ void playlist_generate_shuffle_list(void)
+ {
+diff -uNr xmms-orig/xmms/playlist.h xmms/xmms/playlist.h
+--- xmms-orig/xmms/playlist.h	Sun Jan  6 20:40:32 2002
++++ xmms/xmms/playlist.h	Sat Jan  5 20:50:28 2002
+@@ -25,7 +25,8 @@
+ 	gchar *filename;
+ 	gchar *title;
+ 	gint length;
+-	gboolean selected;
++        gboolean selected;
++	gboolean moved;
+ }
+ PlaylistEntry;
+ 
+@@ -78,8 +79,13 @@
+ void playlist_delete_filenames(GList *filenames);
+ gchar* playlist_get_filename(gint pos);
+ gchar* playlist_get_songtitle(gint pos);
++gint playlist_get_score(gint pos);
++void playlist_set_score(gint pos, gint score);
++const gchar* playlist_filename2songtitle(const gchar *filename);
+ gint playlist_get_songtime(gint pos);
+ GList * playlist_get_selected_list(void);
++gboolean playlist_is_selected(gint pos);
++gint playlist_get_single_selection(void);
+ void playlist_get_total_time(gulong *total_time, gulong *selection_time, gboolean *total_more, gboolean *selection_more);
+ void playlist_select_all(gboolean set);
+ void playlist_select_range(int min, int max, gboolean sel);
+diff -uNr xmms-orig/xmms/playlist_list.c xmms/xmms/playlist_list.c
+--- xmms-orig/xmms/playlist_list.c	Sun Mar  3 11:38:34 2002
++++ xmms/xmms/playlist_list.c	Wed Feb 20 19:44:29 2002
+@@ -24,6 +24,8 @@
+ #endif
+ #include <X11/Xatom.h>
+ 
++static gint playlist_move_delta = 0;
++static PlaylistEntry *playlist_last_moved_song = NULL;
+ static GdkFont *playlist_list_font = NULL;
+ 
+ static int playlist_list_auto_drag_down_func(gpointer data)
+@@ -61,24 +63,35 @@
+ 	GList *list;
+ 
+ 	PL_LOCK();
++
++        /* If the first song is selected... */
+ 	if ((list = get_playlist()) == NULL)
+ 	{
+ 		PL_UNLOCK();
+ 		return;
+ 	}
++
+ 	if (((PlaylistEntry *) list->data)->selected)
+ 	{
+-		/* We are at the top */
++                /* ... don't move. */
+ 		PL_UNLOCK();
+ 		return;
+ 	}
+-	while (list)
++
++        while (list)
+ 	{
+-		if (((PlaylistEntry *) list->data)->selected)
++                if (((PlaylistEntry *) list->data)->selected)
++                {
++                        playlist_last_moved_song =
++                                (PlaylistEntry *) list->data;
+ 			glist_moveup(list);
++                }
+ 		list = g_list_next(list);
+ 	}
+ 	PL_UNLOCK();
++
++        playlist_move_delta--;
++
+ 	if (pl->pl_prev_selected != -1)
+ 		pl->pl_prev_selected--;
+ 	if (pl->pl_prev_min != -1)
+@@ -92,24 +105,36 @@
+ 	GList *list;
+ 
+ 	PL_LOCK();
++
++        /* If the last song is selected... */
+ 	if ((list = g_list_last(get_playlist())) == NULL)
+ 	{
+ 		PL_UNLOCK();
+ 		return;
+ 	}
++
+ 	if (((PlaylistEntry *) list->data)->selected)
+ 	{
+-		/* We are at the bottom */
++                /* ... don't move. */
+ 		PL_UNLOCK();
+ 		return;
+ 	}
++
+ 	while (list)
+ 	{
+ 		if (((PlaylistEntry *) list->data)->selected)
++                {
++                        playlist_last_moved_song =
++                                (PlaylistEntry *) list->data;
+ 			glist_movedown(list);
++                }
+ 		list = g_list_previous(list);
+ 	}
++
+ 	PL_UNLOCK();
++
++        playlist_move_delta++;
++
+ 	if (pl->pl_prev_selected != -1)
+ 		pl->pl_prev_selected++;
+ 	if (pl->pl_prev_min != -1)
+@@ -162,6 +187,7 @@
+ 				playlist_play();
+ 		}
+ 		pl->pl_dragging = TRUE;
++		playlist_move_delta = 0;
+ 		playlistwin_update_list();
+ 	}
+ }
+@@ -229,11 +255,36 @@
+ 	}
+ }
+ 
++int playlist_n_selected_songs(void)
++{
++        int n_selected = 0;
++        GList *list;
++        
++	for (list = get_playlist();
++             list != NULL;
++             list = g_list_next(list))
++	{
++                if (((PlaylistEntry *) list->data)->selected)
++                        n_selected++;
++	}
++
++        return n_selected;
++}
++
+ void playlist_list_button_release_cb(GtkWidget * widget, GdkEventButton * event, PlayList_List * pl)
+ {
+ 	pl->pl_dragging = FALSE;
+ 	pl->pl_auto_drag_down = FALSE;
+ 	pl->pl_auto_drag_up = FALSE;
++
++        if ((playlist_move_delta < 0) && (playlist_n_selected_songs() == 1))
++        {
++                /* Exactly one song has been moved upwards, mark it as moved. */
++                playlist_last_moved_song->moved = TRUE;
++        }
++        
++        playlist_move_delta = 0;
++        playlist_last_moved_song = NULL;
+ }
+ 
+ #ifdef HAVE_WCHAR_H
+diff -uNr xmms-orig/xmms/playlistwin.c xmms/xmms/playlistwin.c
+--- xmms-orig/xmms/playlistwin.c	Sun Mar  3 11:38:34 2002
++++ xmms/xmms/playlistwin.c	Sun Jan 27 16:04:28 2002
+@@ -17,13 +17,14 @@
+  *  along with this program; if not, write to the Free Software
+  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+  */
++#include <assert.h>
+ #include "xmms.h"
+ #include "libxmms/dirbrowser.h"
+ #include "libxmms/util.h"
+ 
+ GtkWidget *playlistwin;
+ static GtkWidget *playlistwin_url_window = NULL;
+-GtkItemFactory *playlistwin_sort_menu, *playlistwin_sub_menu, *playlistwin_popup_menu;
++GtkItemFactory *playlistwin_sort_menu, *playlistwin_sub_menu, *playlistwin_popup_menu, *playlistwin_ass_menu;
+ 
+ GdkPixmap *playlistwin_bg;
+ GdkBitmap *playlistwin_mask = NULL;
+@@ -54,12 +55,14 @@
+ 	SEL_INV, SEL_ZERO, SEL_ALL,
+ 	MISC_SORT, MISC_FILEINFO, MISC_MISCOPTS,
+ 	PLIST_NEW, PLIST_SAVE, PLIST_LOAD,
+-	SEL_LOOKUP,
++	SEL_LOOKUP, ASS_GOODSONG, ASS_BADSONG,
++	ASS_DISSOCIATE
+ };
+ 
+ void playlistwin_sort_menu_callback(gpointer cb_data, guint action, GtkWidget * w);
+ void playlistwin_sub_menu_callback(gpointer cb_data, guint action, GtkWidget * w);
+ void playlistwin_set_hints(void);
++void playlistwin_dissociate_callback(GtkMenuItem *menuitem, gpointer ignored);
+ 
+ enum
+ {
+@@ -111,7 +114,11 @@
+ GtkItemFactoryEntry playlistwin_popup_menu_entries[] =
+ {
+ 	{N_("/View File Info"), NULL, playlistwin_popup_menu_callback, MISC_FILEINFO, "<Item>"},
++
+ 	{N_("/-"), NULL, NULL, 0, "<Separator>"},
++
++	{N_("/Adaptive Song Selection"), NULL, NULL, 0, "<Item>"},
++
+ 	{N_("/Add"), NULL, NULL, 0, "<Branch>"},
+ 	{N_("/Add/File"), NULL, playlistwin_popup_menu_callback, ADD_FILE, "<Item>"},
+ 	{N_("/Add/Directory"), NULL, playlistwin_popup_menu_callback, ADD_DIR, "<Item>"},
+@@ -142,6 +149,21 @@
+ 	sizeof(playlistwin_popup_menu_entries) / 
+ 	sizeof(playlistwin_popup_menu_entries[0]);
+ 
++GtkItemFactoryEntry playlistwin_ass_menu_entries[] =
++{
++	{N_("/I Like this Song"),
++	 NULL, playlistwin_popup_menu_callback, ASS_GOODSONG,
++	 "<RadioItem>"},
++	{N_("/I Don't Like this Song"),
++	 NULL, playlistwin_popup_menu_callback, ASS_BADSONG,
++	 /* <RadioItem> */ "/I Like this Song"},
++	{N_("/Dissociate From"), NULL, NULL, 0, "<Item>"}
++};
++
++static const int playlistwin_ass_menu_entries_num = 
++	sizeof(playlistwin_ass_menu_entries) / 
++	sizeof(playlistwin_ass_menu_entries[0]);
++
+ void playlistwin_draw_frame(void);
+ 
+ static void playlistwin_update_info(void)
+@@ -814,6 +836,35 @@
+ 		case PLIST_LOAD:
+ 			playlistwin_show_load_filesel();
+ 			break;
++
++			/* ASS button */
++		case ASS_GOODSONG: {
++			gint score;
++			gint selected_playlist_pos = playlist_get_single_selection();
++		
++			assert(selected_playlist_pos > -1);
++			score = playlist_get_score(selected_playlist_pos);
++			if (score < 0)
++			{
++				playlist_set_score(selected_playlist_pos, 0);
++			}
++
++			break;
++		}
++
++		case ASS_BADSONG: {
++			gint score;
++			gint selected_playlist_pos = playlist_get_single_selection();
++		
++			assert(selected_playlist_pos > -1);
++			score = playlist_get_score(selected_playlist_pos);
++			if (score >= 0)
++			{
++				playlist_set_score(selected_playlist_pos, -1);
++			}
++			
++			break;
++		}
+ 	}
+ }
+ 
+@@ -837,6 +888,133 @@
+ 		inside_widget(x, y, playlistwin_sscroll_down));
+ }
+ 
++gchar *playlistwin_fileName2songName(const gchar *fileName)
++{
++	const gchar *afterLastSlash, *beforeLastDot, *c;
++	gchar *returnMe;
++	gint i;
++	const gchar *loadedTitle =
++		playlist_filename2songtitle(fileName);
++
++	if (loadedTitle != NULL)
++	{
++		return g_strdup(loadedTitle);
++	}
++
++	// Ditch the last slash and everything before it, as well as
++	// the last dot and everything after it before returning it.
++	afterLastSlash = strrchr(fileName, '/');
++	if (afterLastSlash != NULL)
++	{
++		afterLastSlash++;
++	}
++	else
++	{
++		afterLastSlash = fileName;
++	}
++
++	beforeLastDot = strrchr(fileName, '.');
++	if ((beforeLastDot != NULL) && (beforeLastDot > afterLastSlash))
++	{
++		beforeLastDot--;
++	}
++	else
++	{
++		beforeLastDot = fileName + strlen(fileName) - 1;
++	}
++
++	if ((afterLastSlash >= beforeLastDot) ||
++	    (beforeLastDot <= fileName) ||
++	    ((afterLastSlash - fileName) >= strlen(fileName)))
++	{
++		return g_strdup(fileName);
++	}
++
++	// Copy from after last slash to before last dot
++	returnMe = g_new(gchar, (beforeLastDot - afterLastSlash) + 1);
++	i = 0;
++	for (c = afterLastSlash; c <= beforeLastDot; c++)
++	{
++		returnMe[i++] = *c;
++	}
++	returnMe[i] = '\0';
++
++	return returnMe;
++}
++
++void playlistwin_remove_dissociation_menu(GtkMenuItem *attachPoint)
++{
++	// Nuke any previous dissociations menu
++
++	// FIXME: I have absolutely no clue to how GTK+ refcounting
++	// works.  This implementation may or may not leak memory.
++	// Candidates for memory leaks are the user_data fields of the
++	// labels (they should be freed).
++	// /Johan Walles - jan 05 / 2002
++	gtk_menu_item_remove_submenu(attachPoint);
++}
++
++void playlistwin_setup_dissociation_menu(GtkMenuItem *attachPoint,
++					 gint selected_playlist_pos)
++{
++	const GList *recommendations = NULL;
++	const gchar *filename = playlist_get_filename(selected_playlist_pos);
++	
++	// Ditch the previous dissociations menu (if any)
++	playlistwin_remove_dissociation_menu(attachPoint);
++	
++	recommendations =
++		ass_get_recommendations(filename);
++
++	if (recommendations != NULL)
++	{
++		// Create a new menu
++		GtkWidget *dissociateMenu = gtk_menu_new();
++		const GList *iterator;
++
++		// Associate it with the selected song
++		gtk_object_set_user_data(GTK_OBJECT(dissociateMenu), g_strdup(filename));
++
++		// For all recommendations...
++		for (iterator = recommendations;
++		     iterator != NULL;
++		     iterator = g_list_next(iterator))
++		{
++			const gchar *filename = ((AssNextSong *)(iterator->data))->filename;
++			gchar *songName = playlistwin_fileName2songName(filename);
++			GtkWidget *newMenuItem;
++
++			// ... create a new menu entry...
++			newMenuItem = gtk_menu_item_new_with_label(songName);
++			g_free(songName);
++
++			// ... with its user_data set to point
++			// to the associated file name...
++			gtk_object_set_user_data(GTK_OBJECT(newMenuItem), g_strdup(filename));
++
++			// ... tell it what to do on receiving a click...
++			gtk_signal_connect(GTK_OBJECT(newMenuItem),
++					   "activate",
++					   GTK_SIGNAL_FUNC(playlistwin_dissociate_callback),
++					   NULL);
++
++			// ... and add it to the new menu.
++			gtk_menu_append(GTK_MENU(dissociateMenu), newMenuItem);
++		}
++		
++		// Enable our new dissociations menu
++		gtk_widget_show_all(dissociateMenu);
++		gtk_menu_item_set_submenu(attachPoint, dissociateMenu);
++		gtk_widget_set_sensitive(GTK_WIDGET(attachPoint), 1);
++	}
++	else
++	{
++		// ... or disable the dissociation menu heading
++		// if there is nothing to dissociate from.
++		gtk_widget_set_sensitive(GTK_WIDGET(attachPoint), 0);
++	}
++}
++
+ #define REGION_L(x1,x2,y1,y2)			\
+ (event->x >= (x1) && event->x < (x2) &&		\
+  event->y >= cfg.playlist_height - (y1) &&	\
+@@ -1003,18 +1181,101 @@
+ 	else if (event->button == 3 &&
+ 		 inside_widget(event->x, event->y, playlistwin_list))
+ 	{
+-		int pos, sensitive;
++		// FIXME: This block is much too long, put it in its
++		// own function
++
++		gint clicked_playlist_pos, selected_playlist_pos;
++		gboolean sensitive;
++
+ 		GtkWidget *w;
+-		pos = playlist_list_get_playlist_position(playlistwin_list,
+-							  event->x, event->y);
+-		sensitive = pos != -1;
++
++		clicked_playlist_pos =
++			playlist_list_get_playlist_position(playlistwin_list,
++							    event->x, event->y);
++		
++		// Unless the clicked song is part of a (multiple)
++		// selection...
++		if (!playlist_is_selected(clicked_playlist_pos))
++		{
++			// ... select just the current song before
++			// displaying the menu
++			playlist_select_all(0);
++			playlist_select_range(clicked_playlist_pos, clicked_playlist_pos, 1);
++			playlistwin_update_list();
++		}
++		
++		selected_playlist_pos = playlist_get_single_selection();
++		sensitive = (selected_playlist_pos != -1);
++		
++		// Disable "View File Info" if not exactly one song is selected
+ 		w = gtk_item_factory_get_widget(playlistwin_popup_menu,
+ 						"/View File Info");
+ 		gtk_widget_set_sensitive(w, sensitive);
++		
++		// Disable the ASS menu hierarchy if not exactly one
++		// song is selected
++		// FIXME: or if it's disabled in the prefs
++		w = gtk_item_factory_get_widget(playlistwin_popup_menu,
++						"/Adaptive Song Selection");
++		gtk_widget_set_sensitive(w, sensitive);
++
++		if (sensitive)
++		{
++			GtkWidget *playlistwin_ass_menu_widget =
++				gtk_item_factory_get_widget(playlistwin_ass_menu, "<Main>");
++			
++			gtk_widget_show_all(playlistwin_ass_menu_widget);
++			gtk_menu_item_set_submenu(GTK_MENU_ITEM(w), playlistwin_ass_menu_widget);
++		}
++		else
++		{
++			gtk_menu_item_remove_submenu(GTK_MENU_ITEM(w));
++			gtk_widget_hide_all(gtk_item_factory_get_widget(playlistwin_ass_menu, "<Main>"));
++		}
++
++		if (selected_playlist_pos != -1)
++		{
++			// Enable either "/I Like this Song" (if the
++			// song scores >= 0) or "Bad Song" (if the
++			// song scores < 0).
++			gint score = ass_get_score(playlist_get_filename(selected_playlist_pos));
++
++			w = gtk_item_factory_get_widget(playlistwin_ass_menu,
++							"/I Like this Song");
++			if (score >= 0)
++			{
++				gtk_check_menu_item_set_state(GTK_CHECK_MENU_ITEM(w), 1);
++			}
++			gtk_widget_set_sensitive(w, 1);
++			w = gtk_item_factory_get_widget(playlistwin_ass_menu,
++							"/I Don't Like this Song");
++			if (score < 0)
++			{
++				gtk_check_menu_item_set_state(GTK_CHECK_MENU_ITEM(w), 1);
++			}
++			gtk_widget_set_sensitive(w, 1);
++		}
++		else
++		{
++			// We don't do ratings of multiple songs at once
++			w = gtk_item_factory_get_widget(playlistwin_ass_menu,
++							"/I Like this Song");
++			gtk_widget_set_sensitive(w, 0);
++			gtk_check_menu_item_set_state(GTK_CHECK_MENU_ITEM(w), 0);
++			w = gtk_item_factory_get_widget(playlistwin_ass_menu,
++							"/I Don't Like this Song");
++			gtk_widget_set_sensitive(w, 0);
++			gtk_check_menu_item_set_state(GTK_CHECK_MENU_ITEM(w), 0);
++		}
+ 
++		// Create the dissociation menu
++		w = gtk_item_factory_get_widget(playlistwin_ass_menu,
++						"/Dissociate From");
++		playlistwin_setup_dissociation_menu(GTK_MENU_ITEM(w), selected_playlist_pos);
++		
+ 		playlistwin_set_sensitive_sortmenu();
+ 		util_item_factory_popup_with_data(playlistwin_popup_menu,
+-						  GINT_TO_POINTER(pos), NULL,
++						  GINT_TO_POINTER(selected_playlist_pos), NULL,
+ 						  event->x_root,
+ 						  event->y_root + 5,
+ 						  3, event->time);
+@@ -1708,6 +1969,11 @@
+ 					cfg.playlist_height,
+ 					gdk_rgb_get_visual()->depth);
+ 
++	playlistwin_ass_menu = gtk_item_factory_new(GTK_TYPE_MENU, "<Main>", NULL);
++	gtk_item_factory_create_items(GTK_ITEM_FACTORY(playlistwin_ass_menu),
++				      playlistwin_ass_menu_entries_num,
++				      playlistwin_ass_menu_entries, NULL);
++
+ 	playlistwin_popup_menu =
+ 		gtk_item_factory_new(GTK_TYPE_MENU, "<Main>", NULL);
+ 	gtk_item_factory_set_translate_func(playlistwin_popup_menu,
+@@ -1776,6 +2042,23 @@
+ 	tbutton_set_toggled(mainwin_pl, FALSE);
+ }
+ 
++void playlistwin_dissociate_callback(GtkMenuItem *menuitem,
++				     gpointer ignored)
++{
++	gchar *first, *second;
++
++	// Find out "first" by checking the user data of the menuitem
++	// that was activated
++	first = (gchar *)gtk_object_get_user_data(GTK_OBJECT(menuitem));
++
++	// Find out "second" by checking the user data of the menu
++	// that is the parent of the menuitem that was activated
++	second = (gchar *)gtk_object_get_user_data(GTK_OBJECT(GTK_WIDGET(menuitem)->parent));
++
++	ass_dissociate(first, second);
++}
++
++
+ void playlistwin_popup_menu_callback(gpointer cb_data, guint action, GtkWidget * w)
+ {
+ 	int pos = GPOINTER_TO_INT(gtk_item_factory_popup_data_from_widget(w));
+@@ -1787,6 +2070,17 @@
+ 			break;
+ 		case SEL_LOOKUP:
+ 			playlist_read_info_selection();
++			break;
++		case ASS_DISSOCIATE:
++			
++			break;
++		case ASS_GOODSONG:
++		case ASS_BADSONG:
++			// Act only upon the active item
++			if (GTK_CHECK_MENU_ITEM(w)->active)
++			{
++				playlistwin_popup_handler(action);
++			}
+ 			break;
+ 		default:
+ 			playlistwin_popup_handler(action);
+diff -uNr xmms-orig/xmms/prefswin.c xmms/xmms/prefswin.c
+--- xmms-orig/xmms/prefswin.c	Sun Jan  6 20:40:32 2002
++++ xmms/xmms/prefswin.c	Fri Nov 23 20:43:46 2001
+@@ -914,6 +914,8 @@
+ 
+ 	gtk_notebook_append_page(GTK_NOTEBOOK(prefswin_notebook), prefswin_options_vbox, gtk_label_new(_("Options")));
+ 
++	prefswin_option_new_with_label_to_table(&cfg.adaptive_song_selection, _("Smart playlist randomization"), GTK_TABLE(options_table), 1, 10);
++
+ 	/*
+ 	 * Fonts page
+ 	 */
+diff -uNr xmms-orig/xmms/xmms.h xmms/xmms/xmms.h
+--- xmms-orig/xmms/xmms.h	Tue Mar 13 21:49:42 2001
++++ xmms/xmms/xmms.h	Sat May 12 21:15:23 2001
+@@ -81,6 +81,7 @@
+ #include "sm.h"
+ #include "dnd.h"
+ #include "urldecode.h"
++#include "ass.h"
+ 
+ #include "config.h"
+ 
