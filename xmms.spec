@@ -12,13 +12,13 @@ Summary(ru):	Проигрыватель музыки с WinAmp GUI
 Summary(uk):	Програвач музики з WinAmp GUI
 Summary(zh_CN):	XMMS - X ╤к╤Юц╫лЕ╡╔╥ефВ
 Name:		xmms
-Version:	1.2.9
+Version:	1.2.10
 Release:	1
 Epoch:		2
 License:	GPL v2+
 Group:		X11/Applications/Sound
 Source0:	http://www.xmms.org/files/1.2.x/%{name}-%{version}.tar.bz2
-# Source0-md5:	428084b80a6ee936f57a6703a610f039
+# Source0-md5:	03a85cfc5e1877a2e1f7be4fa1d3f63c
 Source1:	%{name}-icons.tar.gz
 # Source1-md5:	14fc5a0bb3679daf1c3900e3a30674e9
 Source2:	mp3license
