@@ -17,6 +17,7 @@ Source6:	xmms-gnome-mime-info
 Patch0:		xmms-0.9.5.1-cvs19991011.patch
 Patch1:		xmms-audio.patch
 Patch2:		xmms-skinspath.patch
+Patch3:		xmms-gtk-locale.patch
 URL:		http://www.xmms.org/
 BuildRequires:	XFree86-devel
 BuildRequires:	glib-devel >= 1.2.2
@@ -146,6 +147,7 @@ Biblioteki statyczne xmms.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 cp %{SOURCE2} .
 
