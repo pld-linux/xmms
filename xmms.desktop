@@ -1,4 +1,7 @@
 [Desktop Entry]
 Name=Xmms
-Description=Mp3 player
+Comment=Mp3 player
+Comment[pl]=Odtwarzacz MP3
 Exec=xmms
+Terminal=0
+Type=Application
