@@ -10,7 +10,7 @@ Summary(ru):	Проигрыватель музыки с WinAmp GUI
 Summary(uk):	Програвач музики з WinAmp GUI
 Name:		xmms
 Version:	1.2.7
-Release:	3
+Release:	4
 Epoch:		2
 License:	GPL
 Group:		X11/Applications/Multimedia
@@ -36,7 +36,7 @@ BuildRequires:	gtk+-devel >= 1.2.2
 BuildRequires:	libmikmod-devel > 3.1.7
 BuildRequires:	libogg-devel
 BuildRequires:	libtool
-BuildRequires:	libvorbis-devel
+BuildRequires:	libvorbis-devel >= 1:1.0
 BuildRequires:	libxml-devel >= 1.7.0
 BuildRequires:	zlib-devel
 Requires:	glib >= 1.2.2
