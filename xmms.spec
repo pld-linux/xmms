@@ -61,10 +61,14 @@ Obsoletes:	xmms-mikmod
 Obsoletes:	xmms-input-modplug
 
 %description input-mikmod
-Input plugin for XMMS to play MODs (.MOD,.XM,.S3M, etc)
+Input plugin for XMMS to play MODs (.MOD,.XM,.S3M, etc). Be aware that this
+plugin sucks (possibly due to quality of libmikmod) - it is unable to play
+correctly a lot of modules. Use xmms-input-modplug instaed.
 
 %description input-mikmod -l pl
-Wtyczka dla XMMS do odtwarzania MODów (.MOD,.XM,.S3M, etc).
+Wtyczka dla XMMS do odtwarzania MODów (.MOD,.XM,.S3M, etc). Bo±d¼ ¶wiadom ¿e ta
+wtyczka jest bardzo s³aba (byæ mo¿e z powodu jaki¶ci libmikmod) - nie potrafi
+odtworzyæ poprawnie wielu modu³ów. Zainstaluj lepiej xmms-input-modplug.
 
 %package input-tonegen
 Summary:	XMMS - Input plugin to generate sound of given frequency
