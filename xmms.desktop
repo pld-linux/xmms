@@ -46,3 +46,4 @@ TerminalOptions=
 Type=Application
 BinaryPattern=
 MapNotify=false
+# vi: encoding=utf-8
