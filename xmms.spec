@@ -430,7 +430,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/xmms/*gif
 %{_datadir}/xmms/x*xpm
 %{_mandir}/*/xmms*
-%{_pixmapsdir}/xmms.xpm
+%{_pixmapsdir}/xmms*
 
 %files wm
 %defattr(644,root,root,755)
