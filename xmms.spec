@@ -217,48 +217,6 @@ Input plugin for XMMS to generate sound of given frequency.
 %description input-tonegen -l pl
 Wtyczka dla XMMS-a generuj±ca d¼wiêk o zadanej czêstotliwo¶ci.
 
-%package output-esd
-Summary:	XMMS - Output plugin for use with the esound package
-Summary(es):	Plugin de salida para XMMS para uso con el paquete eSound.
-Summary(pl):	XMMS - wtyczka umo¿liwiaj±ca korzystanie z esound
-Summary(pt_BR):	Plugin de saida para o XMMS para uso com o pacote eSound
-Group:		X11/Applications/Multimedia
-Group(de):	X11/Applikationen/Multimedia
-Group(pl):	X11/Aplikacje/Multimedia
-Requires:	%{name} = %{version}
-Requires:	esound >= 0.2.8
-Obsoletes:	xmms-esd
-Provides:	xmms-output-plugin
-
-%description output-esd
-Output plugin for XMMS for use with the esound package.
-
-%description output-esd -l es
-Plugin de salida para XMMS para uso con el paquete eSound.
-
-%description output-esd -l pl
-Wtyczka dla XMMS-a umo¿liwiaj±ca wykorzystanie esound przy odtwarzaniu
-d¼wiêków.
-
-%description output-esd -l pt_BR
-Plugin de saída para o XMMS trabalhar com o esd.
-
-%package visualization-GL
-Summary:	XMMS - OpenGL visualization plugins
-Summary(pl):	XMMS - wtyczki OpenGL
-Group:		X11/Applications/Multimedia
-Group(de):	X11/Applikationen/Multimedia
-Group(pl):	X11/Aplikacje/Multimedia
-Requires:	%{name} = %{version}
-Requires:	OpenGL
-Obsoletes:	xmms-mesa
-
-%description visualization-GL
-Visualization plugins that use the Mesa3d library.
-
-%description visualization-GL -l pl
-Wtyczki graficzne wykorzystuj±ce bibliotekê Mesa3d.
-
 %package input-vorbis
 Summary:	XMMS - cdaudio input plugin
 Summary(pl):	XMMS - wtyczka do odtwarzania plików vorbis
@@ -344,6 +302,32 @@ OSS output plugin for XMMS.
 %description output-OSS -l pl
 Obs³uga sterowników OSS dla XMMS-a.
 
+%package output-esd
+Summary:	XMMS - Output plugin for use with the esound package
+Summary(es):	Plugin de salida para XMMS para uso con el paquete eSound.
+Summary(pl):	XMMS - wtyczka umo¿liwiaj±ca korzystanie z esound
+Summary(pt_BR):	Plugin de saida para o XMMS para uso com o pacote eSound
+Group:		X11/Applications/Multimedia
+Group(de):	X11/Applikationen/Multimedia
+Group(pl):	X11/Aplikacje/Multimedia
+Requires:	%{name} = %{version}
+Requires:	esound >= 0.2.8
+Obsoletes:	xmms-esd
+Provides:	xmms-output-plugin
+
+%description output-esd
+Output plugin for XMMS for use with the esound package.
+
+%description output-esd -l es
+Plugin de salida para XMMS para uso con el paquete eSound.
+
+%description output-esd -l pl
+Wtyczka dla XMMS-a umo¿liwiaj±ca wykorzystanie esound przy odtwarzaniu
+d¼wiêków.
+
+%description output-esd -l pt_BR
+Plugin de saída para o XMMS trabalhar com o esd.
+
 %package output-disk
 Summary:	XMMS - disk-writer output plugin
 Summary(pl):	XMMS - wtyczka do zapisywania danych na dysk
@@ -358,6 +342,22 @@ disk-wirter output plugin for XMMS.
 
 %description output-disk -l pl
 Wtyczka dla XMMS-a zapisuj±ca dane wyj¶ciowe na dysk.
+
+%package visualization-GL
+Summary:	XMMS - OpenGL visualization plugins
+Summary(pl):	XMMS - wtyczki OpenGL
+Group:		X11/Applications/Multimedia
+Group(de):	X11/Applikationen/Multimedia
+Group(pl):	X11/Aplikacje/Multimedia
+Requires:	%{name} = %{version}
+Requires:	OpenGL
+Obsoletes:	xmms-mesa
+
+%description visualization-GL
+Visualization plugins that use the Mesa3d library.
+
+%description visualization-GL -l pl
+Wtyczki graficzne wykorzystuj±ce bibliotekê Mesa3d.
 
 %prep
 %setup -q -a1 -a5
@@ -463,7 +463,6 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(644,root,root) %{_libdir}/lib*.a
 
-
 %files input-mikmod
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/xmms/Input/libmikmod*
@@ -471,14 +470,6 @@ rm -rf $RPM_BUILD_ROOT
 %files input-tonegen
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/xmms/Input/libtonegen*
-
-%files output-esd
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/xmms/Output/libesdout*
-
-%files visualization-GL
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/xmms/Visualization/libogl_spectrum*
 
 %files input-cdaudio
 %defattr(644,root,root,755)
@@ -504,6 +495,14 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/xmms/Output/libOSS*
 
+%files output-esd
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/xmms/Output/libesdout*
+
 %files output-disk
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/xmms/Output/libdisk_writer*
+
+%files visualization-GL
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/xmms/Visualization/libogl_spectrum*
