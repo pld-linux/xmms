@@ -150,7 +150,7 @@ Summary(pl):	XMMS - Skórki
 Group:		X11/Applications/Multimedia
 Group(de):	X11/Applikationen/Multimedia
 Group(pl):	X11/Aplikacje/Multimedia
-Requires:	%{name} = %{version}
+Requires:	%{name} >= %{version}
 
 %description skins
 Additional skins for xmms.
