@@ -1,19 +1,19 @@
-diff -ur xmms-1.2.7.orig/xmms/about.c xmms-1.2.7/xmms/about.c
---- xmms-1.2.7.orig/xmms/about.c	Wed Jan 16 15:11:55 2002
-+++ xmms-1.2.7/xmms/about.c	Sat Aug 17 21:21:54 2002
-@@ -70,6 +70,8 @@
+diff -Nuard xmms-1.2.8.orig/xmms/about.c xmms-1.2.8/xmms/about.c
+--- xmms-1.2.8.orig/xmms/about.c	2003-09-04 15:48:34.000000000 +0200
++++ xmms-1.2.8/xmms/about.c	2003-09-08 01:18:57.000000000 +0200
+@@ -75,6 +75,8 @@
  	N_("Chris Wilson"),
  	N_("Dave Yearke"),
  	N_("Stephan K. Zitz"),
-+/* for languages that can't display 'l slash' (³) replace it with "l" */
++	/* for languages that can't display 'l slash' (³) replace it with "l" */
 +	N_("Micha³ Kochanowicz"),
  	NULL,
-  N_("Homepage and Graphics:"),
- 	N_("Thomas Nilsson"),
-diff -ur xmms-1.2.7.orig/xmms/input.c xmms-1.2.7/xmms/input.c
---- xmms-1.2.7.orig/xmms/input.c	Wed Jul 11 14:19:23 2001
-+++ xmms-1.2.7/xmms/input.c	Sat Aug 17 23:00:16 2002
-@@ -221,6 +221,72 @@
+  N_("Default skin:"),
+  	N_("Leonard \"Blayde\" Tan"),
+diff -Nuard xmms-1.2.8.orig/xmms/input.c xmms-1.2.8/xmms/input.c
+--- xmms-1.2.8.orig/xmms/input.c	2003-07-14 15:24:28.000000000 +0200
++++ xmms-1.2.8/xmms/input.c	2003-09-08 01:15:27.000000000 +0200
+@@ -224,6 +224,72 @@
  	pthread_mutex_unlock(&vis_mutex);
  }
  
@@ -86,7 +86,7 @@ diff -ur xmms-1.2.7.orig/xmms/input.c xmms-1.2.7/xmms/input.c
  gboolean input_check_file(gchar * filename)
  {
  	GList *node;
-@@ -235,6 +301,7 @@
+@@ -238,6 +304,7 @@
  			return TRUE;
  		node = node->next;
  	}
@@ -94,7 +94,7 @@ diff -ur xmms-1.2.7.orig/xmms/input.c xmms-1.2.7/xmms/input.c
  	return FALSE;
  }
  
-@@ -261,6 +328,7 @@
+@@ -272,6 +339,7 @@
  	}
  	/* We set the playing flag even if no inputplugin
  	   recognizes the file. This way we are sure it will be skipped. */
@@ -102,52 +102,52 @@ diff -ur xmms-1.2.7.orig/xmms/input.c xmms-1.2.7/xmms/input.c
  	ip_data->playing = TRUE;
  	set_current_input_plugin(NULL);
  }
-diff -ur xmms-1.2.7.orig/xmms/main.c xmms-1.2.7/xmms/main.c
---- xmms-1.2.7.orig/xmms/main.c	Wed Feb 27 15:30:28 2002
-+++ xmms-1.2.7/xmms/main.c	Sat Aug 17 22:25:02 2002
-@@ -347,6 +347,7 @@
+diff -Nuard xmms-1.2.8.orig/xmms/main.c xmms-1.2.8/xmms/main.c
+--- xmms-1.2.8.orig/xmms/main.c	2003-09-02 15:01:40.000000000 +0200
++++ xmms-1.2.8/xmms/main.c	2003-09-08 01:17:19.000000000 +0200
+@@ -346,6 +346,7 @@
  	cfg.random_skin_on_play = FALSE;
  	cfg.mainwin_use_xfont = FALSE;
- 	cfg.read_pl_metadata = TRUE;
+ 	cfg.use_pl_metadata = TRUE;
 +	cfg.warn_about_unplayables = TRUE;
  
  	cfg.playlist_x = 295;
  	cfg.playlist_y = 20;
-@@ -400,6 +401,7 @@
+@@ -397,6 +398,7 @@
  		xmms_cfg_read_boolean(cfgfile, "xmms", "no_playlist_advance", &cfg.no_playlist_advance);
  		xmms_cfg_read_boolean(cfgfile, "xmms", "sort_jump_to_file", &cfg.sort_jump_to_file);
- 		xmms_cfg_read_boolean(cfgfile, "xmms", "read_pl_metadata", &cfg.read_pl_metadata);
+ 		xmms_cfg_read_boolean(cfgfile, "xmms", "use_pl_metadata", &cfg.use_pl_metadata);
 +		xmms_cfg_read_boolean(cfgfile, "xmms", "warn_about_unplayables", &cfg.warn_about_unplayables);
  		xmms_cfg_read_boolean(cfgfile, "xmms", "smooth_title_scroll", &cfg.smooth_title_scroll);
  		xmms_cfg_read_boolean(cfgfile, "xmms", "use_backslash_as_dir_delimiter", &cfg.use_backslash_as_dir_delimiter);
  		xmms_cfg_read_int(cfgfile, "xmms", "player_x", &cfg.player_x);
-@@ -562,6 +564,7 @@
+@@ -556,6 +558,7 @@
+ 	xmms_cfg_write_boolean(cfgfile, "xmms", "save_window_positions", cfg.save_window_position);
  	xmms_cfg_write_boolean(cfgfile, "xmms", "dim_titlebar", cfg.dim_titlebar);
- 	xmms_cfg_write_boolean(cfgfile, "xmms", "save_playlist_position", cfg.save_playlist_position);
- 	xmms_cfg_write_boolean(cfgfile, "xmms", "read_pl_metadata", cfg.read_pl_metadata);
+ 	xmms_cfg_write_boolean(cfgfile, "xmms", "use_pl_metadata", cfg.use_pl_metadata);
 +	xmms_cfg_write_boolean(cfgfile, "xmms", "warn_about_unplayables", cfg.warn_about_unplayables);
- 	xmms_cfg_write_boolean(cfgfile, "xmms", "open_rev_order", cfg.open_rev_order);
  	xmms_cfg_write_boolean(cfgfile, "xmms", "get_info_on_load", cfg.get_info_on_load);
  	xmms_cfg_write_boolean(cfgfile, "xmms", "get_info_on_demand", cfg.get_info_on_demand);
-diff -ur xmms-1.2.7.orig/xmms/main.h xmms-1.2.7/xmms/main.h
---- xmms-1.2.7.orig/xmms/main.h	Mon Jan 21 15:22:38 2002
-+++ xmms-1.2.7/xmms/main.h	Sat Aug 17 22:23:44 2002
-@@ -43,6 +43,7 @@
+ 	xmms_cfg_write_boolean(cfgfile, "xmms", "eq_doublesize_linked", cfg.eq_doublesize_linked);
+diff -Nuard xmms-1.2.8.orig/xmms/main.h xmms-1.2.8/xmms/main.h
+--- xmms-1.2.8.orig/xmms/main.h	2002-10-06 18:35:27.000000000 +0200
++++ xmms-1.2.8/xmms/main.h	2003-09-08 01:17:36.000000000 +0200
+@@ -42,6 +42,7 @@
  	gboolean get_info_on_demand, eq_doublesize_linked;
  	gboolean sort_jump_to_file, use_eplugins, always_on_top, sticky;
- 	gboolean no_playlist_advance, smooth_title_scroll, read_pl_metadata;
+ 	gboolean no_playlist_advance, smooth_title_scroll, use_pl_metadata;
 +	gboolean warn_about_unplayables;
  	gboolean use_backslash_as_dir_delimiter;
  	gboolean random_skin_on_play, use_fontsets;
  	gboolean mainwin_use_xfont;
-diff -ur xmms-1.2.7.orig/xmms/prefswin.c xmms-1.2.7/xmms/prefswin.c
---- xmms-1.2.7.orig/xmms/prefswin.c	Fri Nov 16 15:39:13 2001
-+++ xmms-1.2.7/xmms/prefswin.c	Sat Aug 17 22:35:28 2002
-@@ -911,6 +911,7 @@
- 	gtk_table_attach_defaults(GTK_TABLE(options_table), options_mouse_box, 0, 1, 9, 10);
- 	
- 	prefswin_option_new_with_label_to_table(&cfg.read_pl_metadata, _("Read meta data from playlists"), GTK_TABLE(options_table), 1, 9);
+diff -Nuard xmms-1.2.8.orig/xmms/prefswin.c xmms-1.2.8/xmms/prefswin.c
+--- xmms-1.2.8.orig/xmms/prefswin.c	2003-07-16 15:17:47.000000000 +0200
++++ xmms-1.2.8/xmms/prefswin.c	2003-09-08 01:18:14.000000000 +0200
+@@ -978,6 +978,7 @@
+ 	gtk_box_pack_start(GTK_BOX(options_gi_box), options_giol, FALSE, FALSE, 0);
+ 	gtk_table_attach_defaults(GTK_TABLE(options_table), options_gi_box, 0, 1, 0, 1);
+ 	prefswin_option_new_with_label_to_table(&cfg.allow_multiple_instances, _("Allow multiple instances"), GTK_TABLE(options_table), 1, 0);
 +	prefswin_option_new_with_label_to_table(&cfg.warn_about_unplayables, _("Warn about not playable files"), GTK_TABLE(options_table), 0, 10);
  
- 	gtk_notebook_append_page(GTK_NOTEBOOK(prefswin_notebook), prefswin_options_vbox, gtk_label_new(_("Options")));
- 
+ 	prefswin_option_new_with_label_to_table(&cfg.convert_twenty, _("Convert %20 to space"), GTK_TABLE(options_table), 0, 1);
+ 	opt = prefswin_option_new_with_label_to_table(&cfg.always_show_cb, _("Always show clutterbar"), GTK_TABLE(options_table), 1, 1);
