@@ -2,7 +2,7 @@ Summary:	Sound player with the WinAmp GUI, for Unix-based systems
 Summary(pl):	Odtwarzacz d¼wiêku z interfejsem WinAmpa
 Name:		xmms
 Version:	0.9.5.1
-Release:	3
+Release:	4
 Serial:		2
 Copyright:	GPL
 Group:		X11/Applications/Multimedia
@@ -25,7 +25,7 @@ BuildRequires:	esound-devel
 BuildRequires:	gnome-libs-devel
 BuildRequires:  gnome-core-devel
 BuildRequires:	Mesa-devel
-BuildRequires:	libmikmod-devel >= 3.1.7
+BuildRequires:	libmikmod-devel > 3.1.7
 Requires:	glib >= 1.2.2
 Requires:	gtk+ >= 1.2.2
 Obsoletes:	x11amp
@@ -177,7 +177,7 @@ strip --strip-unneeded $RPM_BUILD_ROOT%{_libdir}/libxmms.so.*.* \
 	$RPM_BUILD_ROOT%{_libdir}/xmms/{Input,Output,General,Effect}/*.so \
 	$RPM_BUILD_ROOT%{_libdir}/xmms/Visualization/*.so
 
-gzip -9nf AUTHORS ChangeLog NEWS README mp3license
+gzip -9nf AUTHORS ChangeLog NEWS README mp3license FAQ
 
 %post   -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
@@ -187,7 +187,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc *.gz
+%doc {AUTHORS,ChangeLog,NEWS,README,mp3license,FAQ}.gz
 %{_applnkdir}/Multimedia/xmms.desktop
 %{_applnkdir}/DockApps/wmxmms.desktop
 %attr(755,root,root) %{_bindir}/xmms
