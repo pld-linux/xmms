@@ -63,7 +63,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 XMMS is a sound player written from scratch. Since it uses the WinAmp
-GUI, it can use WinAmp skins, and play mp3s, mods, s3ms, and other
+GUI, it can use WinAmp skins, and play MP3s, mods, s3ms, and other
 formats. It now has support for input, output, and general plugins,
 and has also been GPL'd.
 
@@ -73,25 +73,25 @@ Editor de sonido con GUI semejante al de WinAmp.
 %description -l pl
 XMMS jest odtwarzaczem d╪wiЙku napisanym od zera. Jako ©e wykorzystuje
 interfejs WinAmpa, mo©e rСwnie© u©ywaФ jego 'skСrek'. Odtwarza pliki w
-formatach mp3, mod, s3m i wielu innych. Teraz obsЁuguje tak©e pluginy
+formatach MP3, mod, s3m i wielu innych. Teraz obsЁuguje tak©e pluginy
 do wej╤cia, wyj╤cia oraz ogСlne; zostaЁ tak©e zGPL-izowany.
 
 %description -l pt_BR
 XMMS И um sound player escrito a partir do zero. Como ele utiliza a
 interface do WinAmp, ele pode utilizar "skins" do WinAmp, e tocar
-arquivos .mp3, .mod, .s3m, e outros formatos. Agora ele suporta
+arquivos .MP3, .mod, .s3m, e outros formatos. Agora ele suporta
 plugins de entrada, saМda e outros plugins de uso geral, e sua licenГa
 se tornou GPL.
 
 %description -l ru
 XMMS - проигрыватель музыки с графическим интерфейсом, напоминающим
 интерфейс WinAmp. Он может использовать "скины" WinAmp, проигрывать
-mp3, mod, s3m и другие форматы. Теперь он поддерживает подключаемые
+MP3, mod, s3m и другие форматы. Теперь он поддерживает подключаемые
 модули для обработки ввода, вывода, общего назначения и визуализации.
 
 %description -l uk
 XMMS - програвач музики з граф╕чним ╕нтерфейсом, що нагаду╓ ╕нтерфейс
-WinAmp. В╕н може використовувати" ск╕ни" WinAmp, програвати mp3, mod,
+WinAmp. В╕н може використовувати" ск╕ни" WinAmp, програвати MP3, mod,
 s3m та ╕нш╕ формати. Тепер в╕н п╕дтриму╓ п╕д'╓днуван╕ модул╕ обробки
 вводу, виводу, модул╕ загального призначення та в╕зуал╕зац╕╖.
 
@@ -280,7 +280,7 @@ Wtyczka do odtwarzania pЁyt CD-audio.
 
 %package input-mpg123
 Summary:	XMMS - mpg123 input plugin
-Summary(pl):	XMMS - wtyczka do odtwarzania plikow mp3
+Summary(pl):	XMMS - wtyczka do odtwarzania plikow MP3
 Group:		X11/Applications/Sound
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 
