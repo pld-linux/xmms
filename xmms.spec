@@ -253,18 +253,18 @@ Input plugin for XMMS to generate sound of given frequency.
 Wtyczka dla XMMS-a generuj±ca d¼wiêk o zadanej czêstotliwo¶ci.
 
 %package input-vorbis
-Summary:	XMMS - OGG Vorbis input plugin
-Summary(ja):	XMMS - OGGs¤òºÆÀ¸¤¹¤ë¤¿¤á¤ÎÆþÎÏ¥×¥é¥°¥¤¥ó
-Summary(pl):	XMMS - wtyczka do odtwarzania plików OGG Vorbis
+Summary:	XMMS - Ogg Vorbis input plugin
+Summary(ja):	XMMS - Oggs¤òºÆÀ¸¤¹¤ë¤¿¤á¤ÎÆþÎÏ¥×¥é¥°¥¤¥ó
+Summary(pl):	XMMS - wtyczka do odtwarzania plików Ogg Vorbis
 Summary(zh_CN):	XMMS - ²¥·Å 0GGs ±àÂëÎÄ¼þµÄÊäÈë²å¼þ
 Group:		X11/Applications/Sound
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 
 %description input-vorbis
-OGG Vorbis input plugin for XMMS.
+Ogg Vorbis input plugin for XMMS.
 
 %description input-vorbis -l pl
-Wtyczka do odtwarzania plików w formacie OGG Vorbis.
+Wtyczka do odtwarzania plików w formacie Ogg Vorbis.
 
 %package input-cdaudio
 Summary:	XMMS - cdaudio input plugin
