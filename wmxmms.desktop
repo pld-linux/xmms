@@ -1,8 +1,0 @@
-[Desktop Entry]
-Name=WmXmms
-Comment=Xmms Mp3 player
-Comment[pl]=Odtwarzacz MP3 Xmms
-Exec=wmxmms
-Terminal=0
-Type=Application
-# vi: encoding=utf-8
