@@ -95,11 +95,11 @@ make
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT/etc/X11/applnk/Multimedia/
+install -d $RPM_BUILD_ROOT/usr/X11R6/share/applnk/Multimedia/
 
 make install DESTDIR=$RPM_BUILD_ROOT
 
-install %{SOURCE1} $RPM_BUILD_ROOT/etc/X11/applnk/Multimedia/
+install %{SOURCE1} $RPM_BUILD_ROOT/usr/X11R6/share/applnk/Multimedia/
 
 gzip -9nf AUTHORS ChangeLog NEWS README mp3license
 
@@ -112,7 +112,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc *.gz
-/etc/X11/applnk/Multimedia/xmms.desktop
+/usr/X11R6/share/applnk/Multimedia/xmms.desktop
 %attr(755,root,root) %{_bindir}/xmms
 %attr(755,root,root) %{_bindir}/wmxmms
 %attr(755,root,root) %{_libdir}/libxmms.so.*.*
