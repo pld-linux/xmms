@@ -3,8 +3,6 @@
 # gnome		- build gnome subpackage
 # gtk2		- with gtk+2 (and without gnome :( )
 #
-%bcond_without gnome
-%bcond_with gtk2
 
 Summary:	Sound player with the WinAmp GUI, for Unix-based systems
 Summary(es):	Editor de sonido con GUI semejante al de WinAmp
@@ -55,10 +53,10 @@ BuildRequires:	libtool
 BuildRequires:	libvorbis-devel >= 1:1.0
 BuildRequires:	libxml-devel >= 1.7.0
 BuildRequires:	zlib-devel
-%if %{without gtk2}
-%{?with_gnome:BuildRequires:	gnome-core-devel}
-%{?with_gnome:BuildRequires:	gnome-libs-devel}
 BuildRequires:	gtk+-devel >= 1.2.2
+%if %{?_without_gtk2:1}%{?!_without_gtk2:0}
+%{!?_without_gnome:BuildRequires:      gnome-core-devel}
+%{!?_without_gnome:BuildRequires:      gnome-libs-devel}
 Requires:	glib >= 1.2.2
 Requires:	gtk+ >= 1.2.2
 %endif
@@ -69,7 +67,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		_noautoreqdep	libGL.so.1 libGLU.so.1
 %define		_sysconfdir	/etc/X11/GNOME
 %define		_prefix		/usr/X11R6
-%if %{without gtk2}
+%if %{?_without_gtk2:1}%{?!_without_gtk2:0}
 %{?with_gnome:%define		_appletsdir	%{_datadir}/applets}
 %endif
 
@@ -179,7 +177,7 @@ Summary(uk):	.h-файли для xmms
 Summary(ru):	.h-файлы для xmms
 Summary(zh_CN):	XMMS - ©╙╥╒©Б
 Group:		X11/Development/Libraries
-%if %{without gtk2}
+%if %{?_without_gtk2:1}%{?!_without_gtk2:0}
 Requires:	gtk+-devel
 %endif
 Requires:	%{name}-libs = %{epoch}:%{version}
@@ -430,7 +428,7 @@ OpenGL.
 
 cp -f %{SOURCE2} .
 
-%if %{with gtk2}
+%if %{?_without_gtk2:1}%{?!_without_gtk2:0}
 %patch7 -p1
 
 rm -f po/*.gmo
