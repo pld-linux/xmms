@@ -20,7 +20,7 @@ URL:		http://www.xmms.org/
 BuildRequires:	gtk+-devel >= 1.2.2
 BuildRequires:	esound-devel
 BuildRequires:	gnome-libs-devel
-BuildRequires:  gnome-core-devel
+BuildRequires:	gnome-core-devel
 BuildRequires:	Mesa-devel >= 3.1
 BuildRequires:	libmikmod-devel > 3.1.7
 Requires:	glib >= 1.2.2
@@ -33,14 +33,14 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 XMMS is a sound player written from scratch. Since it uses the WinAmp
-GUI, it can use WinAmp skins, and play mp3s, mods, s3ms, and other 
-formats. It now has support for input, output, and general plugins, and
-has also been GPL'd.
+GUI, it can use WinAmp skins, and play mp3s, mods, s3ms, and other
+formats. It now has support for input, output, and general plugins,
+and has also been GPL'd.
 
 %description -l pl
-XMMS jest odtwarzaczem d¼wiêku napisanym od zera. Jako, ¿e wykorzystuje
-interfejs WinAmpa, mo¿e równie¿ u¿ywaæ jego 'skórek'. Odtwarza pliki
-w formatach mp3, mod, s3m i wielu innych. 
+XMMS jest odtwarzaczem d¼wiêku napisanym od zera. Jako, ¿e
+wykorzystuje interfejs WinAmpa, mo¿e równie¿ u¿ywaæ jego 'skórek'.
+Odtwarza pliki w formatach mp3, mod, s3m i wielu innych.
 
 %package mikmod
 Summary:	XMMS - Input plugin to play MODs
@@ -68,7 +68,8 @@ Requires:	esound >= 0.2.8
 Output plugin for xmms for use with the esound package.
 
 %description esd -l pl
-Wtyczka dla XMMS umo¿liwiaj±ca wykorzystanie esound przy odtwarzaniu d¼wiêków.
+Wtyczka dla XMMS umo¿liwiaj±ca wykorzystanie esound przy odtwarzaniu
+d¼wiêków.
 
 %package gnome
 Summary:	XMMS - applet for controlling xmms from the GNOME panel
@@ -99,11 +100,11 @@ Visualization plugins that use the Mesa3d library.
 Wtyczki graficzne wykorzystuj±ce bibliotekê Mesa3d.
 
 %package skins
-Summary:        XMMS - Skins
+Summary:	XMMS - Skins
 Summary(pl):	XMMS - Skórki
-Group:          X11/Applications/Multimedia
+Group:		X11/Applications/Multimedia
 Group(pl):	X11/Aplikacje/Multimedia
-Requires: 	%{name} = %{version}
+Requires:	%{name} = %{version}
 
 %description skins
 Additional skins for xmms.
@@ -147,9 +148,9 @@ cp %{SOURCE2} .
 %build
 aclocal; autoconf; automake
 (cd libxmms; aclocal; autoconf; automake)
-CFLAGS="$RPM_OPT_FLAGS -I/usr/X11R6/include"
-CPPFLAGS="$RPM_OPT_FLAGS -I/usr/X11R6/include"
-LDFLAGS="-s -L/usr/X11R6/lib"
+CFLAGS="$RPM_OPT_FLAGS -I%{_prefix}/include"
+CPPFLAGS="$RPM_OPT_FLAGS -I%{_prefix}/include"
+LDFLAGS="-s -L%{_prefix}/lib"
 export CFLAGS CPPFLAGS LDFLAGS
 %configure
 
@@ -162,7 +163,7 @@ install -d $RPM_BUILD_ROOT%{_applnkdir}/{Multimedia,DockApplets} \
 
 make install \
 	DESTDIR=$RPM_BUILD_ROOT \
-	m4datadir=/usr/share/aclocal
+	m4datadir=%{_aclocaldir}
 
 install %{SOURCE3} $RPM_BUILD_ROOT%{_applnkdir}/Multimedia
 install %{SOURCE4} $RPM_BUILD_ROOT%{_applnkdir}/DockApplets
@@ -211,9 +212,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/xmms
 
 %files mikmod
+%defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/xmms/Input/libmikmod*
 
 %files esd
+%defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/xmms/Output/libesdout*
 
 %files gnome
@@ -224,6 +227,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/mime-info/xmms.keys
 
 %files mesa
+%defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/xmms/Visualization/libogl_spectrum*
 
 %files skins
@@ -236,7 +240,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/lib*.so
 %attr(755,root,root) %{_libdir}/lib*.la
 %{_includedir}/*
-/usr/share/aclocal/*
+%{_aclocaldir}/*
 
 %files static
+%defattr(644,root,root,755)
 %attr(644,root,root) %{_libdir}/lib*.a
