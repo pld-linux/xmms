@@ -1,0 +1,3 @@
+audio/x-mp3:
+	open=xmms %f
+	view=xmms %f
