@@ -408,13 +408,13 @@ cp -f %{SOURCE2} .
 rm -f missing
 %{__gettextize}
 %{__libtoolize}
-aclocal
+%{__aclocal}
 %{__autoconf}
 %{__automake}
 
 cd libxmms
 %{__libtoolize}
-aclocal
+%{__aclocal}
 %{__autoconf}
 %{__automake}
 # for some reason ltmain.sh is missing - run libtoolize once more
