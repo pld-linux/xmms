@@ -1,0 +1,633 @@
+diff -Nur xmms-1.2.7.orig/General/ir/about.c xmms-1.2.7.chng/General/ir/about.c
+--- xmms-1.2.7.orig/General/ir/about.c	Wed Feb 16 22:05:50 2000
++++ xmms-1.2.7.chng/General/ir/about.c	Mon Jul 14 12:47:05 2003
+@@ -22,7 +22,7 @@
+ 
+ 	if (ir_about_win)
+ 		return;
+-	ir_about_win = gtk_window_new(GTK_WINDOW_DIALOG);
++	ir_about_win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+ 	gtk_signal_connect(GTK_OBJECT(ir_about_win), "destroy", GTK_SIGNAL_FUNC(gtk_widget_destroyed), &ir_about_win);
+ 	gtk_window_set_title(GTK_WINDOW(ir_about_win), _("About"));
+ 	gtk_window_set_policy(GTK_WINDOW(ir_about_win), FALSE, FALSE, FALSE);
+diff -Nur xmms-1.2.7.orig/General/ir/configure.c xmms-1.2.7.chng/General/ir/configure.c
+--- xmms-1.2.7.orig/General/ir/configure.c	Wed Dec  5 15:00:07 2001
++++ xmms-1.2.7.chng/General/ir/configure.c	Mon Jul 14 12:47:14 2003
+@@ -141,7 +141,7 @@
+ 
+ 		keepConfGoing = TRUE;
+ 		irbutton_to_edit = data;
+-		irconf_controlwin = gtk_window_new(GTK_WINDOW_DIALOG);
++		irconf_controlwin = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+ 		gtk_signal_connect(GTK_OBJECT(irconf_controlwin), "destroy", GTK_SIGNAL_FUNC(gtk_widget_destroyed), &irconf_controlwin);
+ 		tmp=g_strdup_printf(_("`%s' Button Setup"),_(data));
+ 		gtk_window_set_title(GTK_WINDOW(irconf_controlwin), tmp);
+@@ -250,7 +250,7 @@
+ 	if (!irconf_mainwin)
+ 	{
+ 
+-		irconf_mainwin = gtk_window_new(GTK_WINDOW_DIALOG);
++		irconf_mainwin = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+ 		gtk_signal_connect(GTK_OBJECT(irconf_mainwin), "destroy", GTK_SIGNAL_FUNC(gtk_widget_destroyed), &irconf_mainwin);
+ 		gtk_window_set_title(GTK_WINDOW(irconf_mainwin), _("XMMS IRman Configuration"));
+ 		gtk_window_set_policy(GTK_WINDOW(irconf_mainwin), FALSE, FALSE, FALSE);
+diff -Nur xmms-1.2.7.orig/General/joystick/configure.c xmms-1.2.7.chng/General/joystick/configure.c
+--- xmms-1.2.7.orig/General/joystick/configure.c	Mon Jan  7 15:08:01 2002
++++ xmms-1.2.7.chng/General/joystick/configure.c	Mon Jul 14 19:13:17 2003
+@@ -89,7 +89,7 @@
+ 
+ 	if (!joyconf_mainwin)
+ 	{
+-		joyconf_mainwin = gtk_window_new(GTK_WINDOW_DIALOG);
++		joyconf_mainwin = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+ 		gtk_signal_connect(GTK_OBJECT(joyconf_mainwin), "destroy", GTK_SIGNAL_FUNC(gtk_widget_destroyed), &joyconf_mainwin);
+ 		gtk_window_set_title(GTK_WINDOW(joyconf_mainwin), _("XMMS Joystick Configuration"));
+ 		gtk_window_set_policy(GTK_WINDOW(joyconf_mainwin), FALSE, FALSE, FALSE);
+@@ -182,7 +182,7 @@
+ 		/* -------------------------------------------------- */
+ 		frame = gtk_frame_new(_("Directionals:"));
+ 		gtk_box_pack_start(GTK_BOX(box), frame, FALSE, FALSE, 0);
+-		dir_pack = gtk_packer_new();
++		dir_pack = gtk_hbox_new(FALSE, 10);
+ 		gtk_container_set_border_width(GTK_CONTAINER(dir_pack), 5);
+ 		gtk_container_add(GTK_CONTAINER(frame), dir_pack);
+ 		hist_val[0] = joy_cfg.up;
+@@ -194,7 +194,8 @@
+ 		{
+ 			blist = gtk_option_menu_new();
+ 			gtk_widget_set_usize(blist, 120, -1);
+-			gtk_packer_add(GTK_PACKER(dir_pack), blist, pack_pos[i], GTK_ANCHOR_CENTER, 0, 0, 5, 5, 0, 0);
++/*			gtk_packer_add(GTK_PACKER(dir_pack), blist, pack_pos[i], GTK_ANCHOR_CENTER, 0, 0, 5, 5, 0, 0);*/
++			gtk_box_pack_start(GTK_BOX(dir_pack), blist, TRUE, TRUE, 0);
+ 			gtk_option_menu_remove_menu(GTK_OPTION_MENU(blist));
+ 			gtk_option_menu_set_menu(GTK_OPTION_MENU(blist), joy_menus[i]);
+ 			gtk_option_menu_set_history(GTK_OPTION_MENU(blist), hist_val[i]);
+@@ -207,7 +208,7 @@
+ 		/* -------------------------------------------------- */
+ 		frame = gtk_frame_new(_("Directionals (alternate):"));
+ 		gtk_box_pack_start(GTK_BOX(box), frame, FALSE, FALSE, 0);
+-		dir_pack = gtk_packer_new();
++		dir_pack = gtk_hbox_new(FALSE, 0);
+ 		gtk_container_set_border_width(GTK_CONTAINER(dir_pack), 5);
+ 		gtk_container_add(GTK_CONTAINER(frame), dir_pack);
+ 		hist_val[0] = joy_cfg.alt_up;
+@@ -219,7 +220,7 @@
+ 		{
+ 			blist = gtk_option_menu_new();
+ 			gtk_widget_set_usize(blist, 120, -1);
+-			gtk_packer_add(GTK_PACKER(dir_pack), blist, pack_pos[i], GTK_ANCHOR_CENTER, 0, 0, 5, 5, 0, 0);
++			gtk_box_pack_start(GTK_BOX(dir_pack), blist, TRUE, TRUE, 0);
+ 			gtk_option_menu_remove_menu(GTK_OPTION_MENU(blist));
+ 			gtk_option_menu_set_menu(GTK_OPTION_MENU(blist), joy_menus[4 + i]);
+ 			gtk_option_menu_set_history(GTK_OPTION_MENU(blist), hist_val[i]);
+diff -Nur xmms-1.2.7.orig/General/song_change/song_change.c xmms-1.2.7.chng/General/song_change/song_change.c
+--- xmms-1.2.7.orig/General/song_change/song_change.c	Mon Jul 31 23:41:05 2000
++++ xmms-1.2.7.chng/General/song_change/song_change.c	Mon Jul 14 12:46:57 2003
+@@ -124,7 +124,7 @@
+ 
+ 	read_config();
+ 
+-	configure_win = gtk_window_new(GTK_WINDOW_DIALOG);
++	configure_win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+ 	gtk_signal_connect(GTK_OBJECT(configure_win), "destroy", GTK_SIGNAL_FUNC(gtk_widget_destroyed), &configure_win);
+ 	gtk_window_set_title(GTK_WINDOW(configure_win), _("Song Change Configuration"));
+ /*  	gtk_window_set_position(GTK_WINDOW(configure_win), GTK_WIN_POS_MOUSE); */
+diff -Nur xmms-1.2.7.orig/Input/cdaudio/cddb.c xmms-1.2.7.chng/Input/cdaudio/cddb.c
+--- xmms-1.2.7.orig/Input/cdaudio/cddb.c	Wed Feb 27 15:30:21 2002
++++ xmms-1.2.7.chng/Input/cdaudio/cddb.c	Mon Jul 14 12:46:48 2003
+@@ -836,7 +836,7 @@
+ 	if (debug_window)
+ 		return;
+ 	
+-	debug_window = gtk_window_new(GTK_WINDOW_DIALOG);
++	debug_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+ 	gtk_signal_connect(GTK_OBJECT(debug_window), "destroy",
+ 			   GTK_SIGNAL_FUNC(gtk_widget_destroyed), &debug_window);
+ 	gtk_window_set_title(GTK_WINDOW(debug_window), "CDDB networkdebug");
+diff -Nur xmms-1.2.7.orig/Input/cdaudio/configure.c xmms-1.2.7.chng/Input/cdaudio/configure.c
+--- xmms-1.2.7.orig/Input/cdaudio/configure.c	Tue Mar 20 15:39:40 2001
++++ xmms-1.2.7.chng/Input/cdaudio/configure.c	Mon Jul 14 12:46:52 2003
+@@ -83,7 +83,7 @@
+ 	if (cdda_configure_win)
+ 		return;
+ 	
+-	cdda_configure_win = gtk_window_new(GTK_WINDOW_DIALOG);
++	cdda_configure_win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+ 	gtk_signal_connect(GTK_OBJECT(cdda_configure_win), "destroy", GTK_SIGNAL_FUNC(gtk_widget_destroyed), &cdda_configure_win);
+ 	gtk_window_set_title(GTK_WINDOW(cdda_configure_win), _("CD Audio Player Configuration"));
+ 	gtk_window_set_policy(GTK_WINDOW(cdda_configure_win), FALSE, FALSE, FALSE);
+diff -Nur xmms-1.2.7.orig/Input/idcin/idcin.c xmms-1.2.7.chng/Input/idcin/idcin.c
+--- xmms-1.2.7.orig/Input/idcin/idcin.c	Fri Jun  1 15:07:48 2001
++++ xmms-1.2.7.chng/Input/idcin/idcin.c	Mon Jul 14 12:46:44 2003
+@@ -414,7 +414,7 @@
+ 
+ 	idcin_ip.set_info(NULL, (cin.num_frames * 1000)/14, cin.snd_rate * cin.snd_channels * cin.snd_width * 8, cin.snd_rate, cin.snd_channels);
+ 
+-	window = gtk_window_new(GTK_WINDOW_DIALOG);
++	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+ 	gtk_widget_set_name(window, _("IDCin Play"));
+ 	gtk_window_set_policy(GTK_WINDOW(window), FALSE, FALSE, FALSE);
+ 
+diff -Nur xmms-1.2.7.orig/Input/mikmod/plugin.c xmms-1.2.7.chng/Input/mikmod/plugin.c
+--- xmms-1.2.7.orig/Input/mikmod/plugin.c	Mon Jul 23 14:26:27 2001
++++ xmms-1.2.7.chng/Input/mikmod/plugin.c	Mon Jul 14 12:46:39 2003
+@@ -435,7 +435,7 @@
+ 
+ 	if (!mikmod_conf_window)
+ 	{
+-		mikmod_conf_window = gtk_window_new(GTK_WINDOW_DIALOG);
++		mikmod_conf_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+ 		gtk_object_set_data(GTK_OBJECT(mikmod_conf_window), "mikmod_conf_window", mikmod_conf_window);
+ 		gtk_window_set_title(GTK_WINDOW(mikmod_conf_window), _("MikMod Configuration"));
+ 		gtk_window_set_policy(GTK_WINDOW(mikmod_conf_window), FALSE, FALSE, FALSE);
+diff -Nur xmms-1.2.7.orig/Input/mpg123/configure.c xmms-1.2.7.chng/Input/mpg123/configure.c
+--- xmms-1.2.7.orig/Input/mpg123/configure.c	Tue Mar 20 15:39:40 2001
++++ xmms-1.2.7.chng/Input/mpg123/configure.c	Mon Jul 14 12:46:29 2003
+@@ -280,7 +280,7 @@
+ 		gdk_window_raise(mpg123_configurewin->window);
+ 		return;
+ 	}
+-	mpg123_configurewin = gtk_window_new(GTK_WINDOW_DIALOG);
++	mpg123_configurewin = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+ 	gtk_signal_connect(GTK_OBJECT(mpg123_configurewin), "destroy", GTK_SIGNAL_FUNC(gtk_widget_destroyed), &mpg123_configurewin);
+ 	gtk_signal_connect(GTK_OBJECT(mpg123_configurewin), "destroy", GTK_SIGNAL_FUNC(configure_destroy), &mpg123_configurewin);
+ 	gtk_window_set_title(GTK_WINDOW(mpg123_configurewin), _("MPG123 Configuration"));
+diff -Nur xmms-1.2.7.orig/Input/mpg123/fileinfo.c xmms-1.2.7.chng/Input/mpg123/fileinfo.c
+--- xmms-1.2.7.orig/Input/mpg123/fileinfo.c	Wed Feb 20 15:17:30 2002
++++ xmms-1.2.7.chng/Input/mpg123/fileinfo.c	Mon Jul 14 12:46:33 2003
+@@ -222,7 +222,7 @@
+ 		GtkWidget *label, *filename_hbox;
+ 		GtkWidget *bbox, *save, *remove_id3, *cancel;
+ 		
+-		window = gtk_window_new(GTK_WINDOW_DIALOG);
++		window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+ 		gtk_window_set_policy(GTK_WINDOW(window), FALSE, FALSE, FALSE);
+ 		gtk_signal_connect(GTK_OBJECT(window), "destroy", GTK_SIGNAL_FUNC(gtk_widget_destroyed), &window);
+ 		gtk_container_set_border_width(GTK_CONTAINER(window), 10);
+diff -Nur xmms-1.2.7.orig/Input/vorbis/configure.c xmms-1.2.7.chng/Input/vorbis/configure.c
+--- xmms-1.2.7.orig/Input/vorbis/configure.c	Mon Mar  4 22:56:45 2002
++++ xmms-1.2.7.chng/Input/vorbis/configure.c	Mon Jul 14 12:46:21 2003
+@@ -169,7 +169,7 @@
+ 		gdk_window_raise(vorbis_configurewin->window);
+ 		return;
+ 	}
+-	vorbis_configurewin = gtk_window_new(GTK_WINDOW_DIALOG);
++	vorbis_configurewin = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+ 	gtk_signal_connect(GTK_OBJECT(vorbis_configurewin), "destroy", GTK_SIGNAL_FUNC(gtk_widget_destroyed), &vorbis_configurewin);
+ 	gtk_signal_connect(GTK_OBJECT(vorbis_configurewin), "destroy", GTK_SIGNAL_FUNC(configure_destroy), &vorbis_configurewin);
+ 	gtk_window_set_title(GTK_WINDOW(vorbis_configurewin), _("Ogg Vorbis Configuration"));
+diff -Nur xmms-1.2.7.orig/Input/vorbis/fileinfo.c xmms-1.2.7.chng/Input/vorbis/fileinfo.c
+--- xmms-1.2.7.orig/Input/vorbis/fileinfo.c	Mon Mar  4 22:56:45 2002
++++ xmms-1.2.7.chng/Input/vorbis/fileinfo.c	Mon Jul 14 12:46:25 2003
+@@ -413,7 +413,7 @@
+ 		GtkWidget *table, *bbox, *cancel_button;
+ 		GtkWidget *save_button, *remove_button;
+ 
+-		window = gtk_window_new(GTK_WINDOW_DIALOG);
++		window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+ 		gtk_window_set_policy(GTK_WINDOW(window), FALSE, FALSE, FALSE);
+ 		gtk_signal_connect(GTK_OBJECT(window), "destroy", 
+ 			GTK_SIGNAL_FUNC(gtk_widget_destroyed), &window);
+diff -Nur xmms-1.2.7.orig/Output/OSS/configure.c xmms-1.2.7.chng/Output/OSS/configure.c
+--- xmms-1.2.7.orig/Output/OSS/configure.c	Tue Aug  7 14:46:07 2001
++++ xmms-1.2.7.chng/Output/OSS/configure.c	Mon Jul 14 12:46:11 2003
+@@ -175,7 +175,7 @@
+ 		return;
+ 	}
+ 
+-	configure_win = gtk_window_new(GTK_WINDOW_DIALOG);
++	configure_win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+ 	gtk_signal_connect(GTK_OBJECT(configure_win), "destroy", GTK_SIGNAL_FUNC(gtk_widget_destroyed), &configure_win);
+ 	gtk_window_set_title(GTK_WINDOW(configure_win), _("OSS Driver configuration"));
+ 	gtk_window_set_policy(GTK_WINDOW(configure_win), FALSE, FALSE, FALSE);
+diff -Nur xmms-1.2.7.orig/Output/disk_writer/disk_writer.c xmms-1.2.7.chng/Output/disk_writer/disk_writer.c
+--- xmms-1.2.7.orig/Output/disk_writer/disk_writer.c	Tue Jan  8 15:09:07 2002
++++ xmms-1.2.7.chng/Output/disk_writer/disk_writer.c	Mon Jul 14 12:46:05 2003
+@@ -338,7 +338,7 @@
+ {
+ 	if (!configure_win)
+ 	{
+-		configure_win = gtk_window_new(GTK_WINDOW_DIALOG);
++		configure_win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+ 
+ 		gtk_signal_connect(GTK_OBJECT(configure_win), "destroy", GTK_SIGNAL_FUNC(configure_destroy), NULL);
+ 		gtk_signal_connect(GTK_OBJECT(configure_win), "destroy", GTK_SIGNAL_FUNC(gtk_widget_destroyed), &configure_win);
+diff -Nur xmms-1.2.7.orig/Output/esd/configure.c xmms-1.2.7.chng/Output/esd/configure.c
+--- xmms-1.2.7.orig/Output/esd/configure.c	Mon Dec  3 15:42:17 2001
++++ xmms-1.2.7.chng/Output/esd/configure.c	Mon Jul 14 12:45:58 2003
+@@ -87,7 +87,7 @@
+ 		return;
+ 	}
+ 
+-	configure_win = gtk_window_new(GTK_WINDOW_DIALOG);
++	configure_win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+ 	gtk_signal_connect(GTK_OBJECT(configure_win), "destroy",
+ 			   GTK_SIGNAL_FUNC(gtk_widget_destroyed),
+ 			   &configure_win);
+diff -Nur xmms-1.2.7.orig/Visualization/blur_scope/blur_scope.c xmms-1.2.7.chng/Visualization/blur_scope/blur_scope.c
+--- xmms-1.2.7.orig/Visualization/blur_scope/blur_scope.c	Fri Nov 24 20:11:52 2000
++++ xmms-1.2.7.chng/Visualization/blur_scope/blur_scope.c	Mon Jul 14 12:45:43 2003
+@@ -153,7 +153,7 @@
+ 		return;
+ 	bscope_read_config();
+ 
+-	window = gtk_window_new(GTK_WINDOW_DIALOG);
++	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+ 	gtk_window_set_title(GTK_WINDOW(window),_("Blur scope"));
+ 	gtk_window_set_policy(GTK_WINDOW(window), FALSE, FALSE, FALSE);
+ 	gtk_widget_realize(window);
+diff -Nur xmms-1.2.7.orig/Visualization/blur_scope/config.c xmms-1.2.7.chng/Visualization/blur_scope/config.c
+--- xmms-1.2.7.orig/Visualization/blur_scope/config.c	Fri Jun  1 15:07:49 2001
++++ xmms-1.2.7.chng/Visualization/blur_scope/config.c	Mon Jul 14 12:45:51 2003
+@@ -63,7 +63,7 @@
+ 	color[1]=((gdouble)((bscope_cfg.color %0x10000)/0x100))/256;
+ 	color[2]=((gdouble)(bscope_cfg.color %0x100))/256;
+ 	
+-	configure_win = gtk_window_new(GTK_WINDOW_DIALOG);
++	configure_win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+ 	gtk_container_set_border_width(GTK_CONTAINER(configure_win), 10);
+ 	gtk_window_set_title(GTK_WINDOW(configure_win), _("Color Entry"));
+ 	gtk_window_set_policy(GTK_WINDOW(configure_win), FALSE, FALSE, FALSE);
+diff -Nur xmms-1.2.7.orig/Visualization/opengl_spectrum/configure.c xmms-1.2.7.chng/Visualization/opengl_spectrum/configure.c
+--- xmms-1.2.7.orig/Visualization/opengl_spectrum/configure.c	Fri Jun  1 15:07:49 2001
++++ xmms-1.2.7.chng/Visualization/opengl_spectrum/configure.c	Mon Jul 14 12:45:37 2003
+@@ -38,7 +38,7 @@
+ 
+ 	oglspectrum_read_config();
+ 
+-	configure_win = gtk_window_new(GTK_WINDOW_DIALOG);
++	configure_win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+ 	gtk_container_set_border_width(GTK_CONTAINER(configure_win), 10);
+ 	gtk_window_set_title(GTK_WINDOW(configure_win), _("OpenGL Spectrum configuration"));
+ 	gtk_window_set_policy(GTK_WINDOW(configure_win), FALSE, FALSE, FALSE);
+diff -Nur xmms-1.2.7.orig/Visualization/sanalyzer/spectrum.c xmms-1.2.7.chng/Visualization/sanalyzer/spectrum.c
+--- xmms-1.2.7.orig/Visualization/sanalyzer/spectrum.c	Mon Jul 31 23:41:05 2000
++++ xmms-1.2.7.chng/Visualization/sanalyzer/spectrum.c	Mon Jul 14 12:45:30 2003
+@@ -82,7 +82,7 @@
+ 	int i;
+ 	if(window)
+ 		return;
+-	window = gtk_window_new(GTK_WINDOW_DIALOG);
++	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+ 	gtk_window_set_title(GTK_WINDOW(window),_("Spectrum analyzer"));
+ 	gtk_window_set_policy(GTK_WINDOW(window), FALSE, FALSE, FALSE);
+ 	gtk_widget_realize(window);
+diff -Nur xmms-1.2.7.orig/configure.in xmms-1.2.7.chng/configure.in
+--- xmms-1.2.7.orig/configure.in	Mon Jul 14 12:00:34 2003
++++ xmms-1.2.7.chng/configure.in	Mon Jul 14 12:17:08 2003
+@@ -54,8 +54,8 @@
+ 
+ AC_CHECK_HEADER(pthread.h,,AC_MSG_ERROR([*** POSIX thread support not installed - please install first ***]))
+ 
+-AM_PATH_GLIB(1.2.2,,AC_MSG_ERROR([*** GLIB >= 1.2.2 not installed - please install first ***]))
+-AM_PATH_GTK(1.2.2,,AC_MSG_ERROR([*** GTK+ >= 1.2.2 not installed - please install first ***]),gthread)
++AM_PATH_GLIB_2_0(2.2.0,,AC_MSG_ERROR([*** GLIB >= 2.2.0 not installed - please install first ***]))
++AM_PATH_GTK_2_0(2.2.0,,AC_MSG_ERROR([*** GTK+ >= 2.2.0 not installed - please install first ***]),gthread)
+ AC_PATH_PROG(XMMS_PATH,xmms,no)
+ 
+ LIBS_save=$LIBS
+diff -Nur xmms-1.2.7.orig/libxmms/configure.in xmms-1.2.7.chng/libxmms/configure.in
+--- xmms-1.2.7.orig/libxmms/configure.in	Mon Jul 14 12:00:34 2003
++++ xmms-1.2.7.chng/libxmms/configure.in	Mon Jul 14 12:30:23 2003
+@@ -31,8 +31,8 @@
+ 
+ XMMS_FUNC_POSIX(sched_setscheduler nanosleep)
+ 
+-AM_PATH_GLIB(1.2.2,,AC_MSG_ERROR([*** GLIB >= 1.2.2 not installed - please install first ***]))
+-AM_PATH_GTK(1.2.2,,AC_MSG_ERROR([*** GTK+ >= 1.2.2 not installed - please install first ***]),gthread)
++AM_PATH_GLIB_2_0(2.2.0,,AC_MSG_ERROR([*** GLIB >= 2.2.0 not installed - please install first ***]))
++AM_PATH_GTK_2_0(2.2.0,,AC_MSG_ERROR([*** GTK+ >= 2.2.0 not installed - please install first ***]),gthread)
+ 
+ if test -n "$GCC"
+ then
+diff -Nur xmms-1.2.7.orig/libxmms/dirbrowser.c xmms-1.2.7.chng/libxmms/dirbrowser.c
+--- xmms-1.2.7.orig/libxmms/dirbrowser.c	Thu Feb 28 15:31:26 2002
++++ xmms-1.2.7.chng/libxmms/dirbrowser.c	Mon Jul 14 12:45:24 2003
+@@ -262,7 +262,7 @@
+ 	DirNode *dirnode;
+ 	gboolean leaf;
+ 
+-	window = gtk_window_new(GTK_WINDOW_DIALOG);
++	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+ 	gtk_window_set_title(GTK_WINDOW(window), title);
+ 	gtk_container_border_width(GTK_CONTAINER(window), 10);
+ 
+diff -Nur xmms-1.2.7.orig/wmxmms/wmxmms.c xmms-1.2.7.chng/wmxmms/wmxmms.c
+--- xmms-1.2.7.orig/wmxmms/wmxmms.c	Wed Dec  5 15:00:09 2001
++++ xmms-1.2.7.chng/wmxmms/wmxmms.c	Mon Jul 14 19:31:16 2003
+@@ -101,10 +101,6 @@
+ 	{"text/plain", 0, 1}
+ };
+ 
+-/* Does anyone know a better way? */
+-
+-extern Window gdk_leader_window;
+-
+ void action_play(void)
+ {
+ 	xmms_remote_play(xmms_session);
+@@ -555,7 +551,7 @@
+ 		gtk_tooltips_set_delay(tooltips, 1000);
+ 	}
+ 
+-	window = gtk_window_new(GTK_WINDOW_DIALOG);
++	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+ 	if (has_geometry)
+ 		gtk_widget_set_uposition(window, win_x, win_y);
+ 	gtk_widget_set_usize(window, 64, 64);
+@@ -580,7 +576,7 @@
+ 	hints.flags = StateHint;
+ 	XSetWMHints(GDK_DISPLAY(), GDK_WINDOW_XWINDOW(window->window), &hints);
+ 
+-	icon_win = gtk_window_new(GTK_WINDOW_DIALOG);
++	icon_win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+ 	gtk_widget_set_app_paintable(icon_win, TRUE);
+ 	gtk_widget_set_uposition(icon_win, 0, 0);
+ 	gtk_widget_set_usize(icon_win, 64, 64);
+@@ -635,7 +631,7 @@
+ 
+ 	pixmap = gdk_pixmap_create_from_xpm_d(window->window, &mask, NULL, xmms_dock_master_xpm);
+ 
+-	leader = gdk_window_foreign_new(gdk_leader_window);
++	leader = gdk_window_foreign_new((GdkNativeWindow)gdk_x11_get_default_root_xwindow());
+ 	gdk_window_set_icon(leader, icon_win->window, NULL, NULL);
+ 	gdk_window_reparent(icon_win->window, leader, 0, 0);
+ 
+diff -Nur xmms-1.2.7.orig/xmms/about.c xmms-1.2.7.chng/xmms/about.c
+--- xmms-1.2.7.orig/xmms/about.c	Mon Jul 14 12:00:34 2003
++++ xmms-1.2.7.chng/xmms/about.c	Mon Jul 14 12:43:49 2003
+@@ -220,7 +220,7 @@
+ 	if (about_window)
+ 		return;
+ 	
+-	about_window = gtk_window_new(GTK_WINDOW_DIALOG);
++	about_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+ 	gtk_window_set_title(GTK_WINDOW(about_window), _("About XMMS"));
+ 	gtk_window_set_policy(GTK_WINDOW(about_window), FALSE, TRUE, FALSE);
+ 	gtk_container_set_border_width(GTK_CONTAINER(about_window), 10);
+diff -Nur xmms-1.2.7.orig/xmms/equalizer.c xmms-1.2.7.chng/xmms/equalizer.c
+--- xmms-1.2.7.orig/xmms/equalizer.c	Wed Jan 16 15:11:56 2002
++++ xmms-1.2.7.chng/xmms/equalizer.c	Mon Jul 14 12:44:12 2003
+@@ -651,7 +651,7 @@
+ 
+ static void equalizerwin_create_gtk(void)
+ {
+-	equalizerwin = gtk_window_new(GTK_WINDOW_DIALOG);
++	equalizerwin = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+ 	dock_add_window(dock_window_list, equalizerwin);
+ 	gtk_widget_set_app_paintable(equalizerwin, TRUE);
+ 	gtk_window_set_policy(GTK_WINDOW(equalizerwin), FALSE, FALSE, TRUE);
+@@ -1193,7 +1193,7 @@
+ 	char *preset_text[1];
+ 	GList *node;
+ 
+-	*window = gtk_window_new(GTK_WINDOW_DIALOG);
++	*window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+ 	gtk_signal_connect(GTK_OBJECT(*window), "destroy",
+ 			   GTK_SIGNAL_FUNC(gtk_widget_destroyed), window);
+ 	gtk_window_set_transient_for(GTK_WINDOW(*window), GTK_WINDOW(equalizerwin));
+@@ -1545,7 +1545,7 @@
+ 	GtkWidget *vbox, *hbox, *instructions;
+ 	GtkWidget *ok, *cancel, *apply;
+ 
+-	window = gtk_window_new(GTK_WINDOW_DIALOG);
++	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+ 	gtk_window_set_title(GTK_WINDOW(window), _("Configure Equalizer"));
+ 	gtk_window_set_policy(GTK_WINDOW(window), FALSE, FALSE, FALSE);
+ 	gtk_window_set_transient_for(GTK_WINDOW(window), GTK_WINDOW(mainwin));
+diff -Nur xmms-1.2.7.orig/xmms/hints.c xmms-1.2.7.chng/xmms/hints.c
+--- xmms-1.2.7.orig/xmms/hints.c	Fri Sep  7 14:11:05 2001
++++ xmms-1.2.7.chng/xmms/hints.c	Mon Jul 14 13:49:21 2003
+@@ -106,15 +106,13 @@
+ static void gnome_wm_set_window_always(GtkWidget * window, gboolean always)
+ {
+ 	XEvent xev;
+-	int prev_error;
+ 	long layer = WIN_LAYER_ONTOP;
+ 	Atom xa_win_layer = gdk_atom_intern(XA_WIN_LAYER, FALSE);
+ 
+ 	if (always == FALSE)
+ 		layer = WIN_LAYER_NORMAL;
+ 
+-	prev_error = gdk_error_warnings;
+-	gdk_error_warnings = 0;
++	gdk_error_trap_push();	
+ 
+ 	if (GTK_WIDGET_MAPPED(window))
+ 	{
+@@ -138,22 +136,19 @@
+ 				xa_win_layer, XA_CARDINAL, 32, PropModeReplace,
+ 				(unsigned char *) data,	1);
+ 	}
+-	gdk_error_warnings = prev_error;
+-
++	gdk_error_trap_pop();
+ }
+ 
+ static void gnome_wm_set_window_sticky(GtkWidget * window, gboolean sticky)
+ {
+ 	XEvent xev;
+-	int prev_error;
+ 	long state = 0;
+ 	Atom xa_win_state = gdk_atom_intern(XA_WIN_STATE, FALSE);
+ 
+ 	if (sticky)
+ 		state = WIN_STATE_STICKY;
+ 
+-	prev_error = gdk_error_warnings;
+-	gdk_error_warnings = 0;
++	gdk_error_trap_push();
+ 
+ 	if (GTK_WIDGET_MAPPED(window))
+ 	{
+@@ -178,20 +173,18 @@
+ 				xa_win_state, XA_CARDINAL, 32, PropModeReplace,
+ 				(unsigned char *) data, 1);
+ 	}
+-	gdk_error_warnings = prev_error;
+-
++	gdk_error_trap_pop();
+ }
+ 
+ static gboolean gnome_wm_found(void)
+ {
+ 	Atom r_type, support_check;
+-	int r_format, prev_error, p;
++	int r_format, p;
+ 	unsigned long count, bytes_remain;
+ 	unsigned char *prop = NULL, *prop2 = NULL;
+ 	gboolean ret = FALSE;
+ 
+-	prev_error = gdk_error_warnings;
+-	gdk_error_warnings = 0;
++	gdk_error_trap_push();
+ 	support_check = gdk_atom_intern(XA_WIN_SUPPORTING_WM_CHECK, FALSE);
+ 	
+ 	p = XGetWindowProperty(GDK_DISPLAY(), GDK_ROOT_WINDOW(), support_check,
+@@ -216,20 +209,19 @@
+ 		XFree(prop);
+ 	if (prop2)
+ 		XFree(prop2);
+-	gdk_error_warnings = prev_error;
++	gdk_error_trap_pop();
+ 	return ret;
+ }
+ 
+ static gboolean net_wm_found(void)
+ {
+ 	Atom r_type, support_check;
+-	int r_format, prev_error, p;
++	int r_format, p;
+ 	unsigned long count, bytes_remain;
+ 	unsigned char *prop = NULL, *prop2 = NULL;
+ 	gboolean ret = FALSE;
+ 
+-	prev_error = gdk_error_warnings;
+-	gdk_error_warnings = 0;
++	gdk_error_trap_push();
+         support_check = gdk_atom_intern(XA_NET_SUPPORTING_WM_CHECK, FALSE);
+ 
+ 	p = XGetWindowProperty(GDK_DISPLAY(), GDK_ROOT_WINDOW(), support_check,
+@@ -254,14 +246,13 @@
+ 		XFree(prop);
+ 	if (prop2)
+ 		XFree(prop2);
+-	gdk_error_warnings = prev_error;
++	gdk_error_trap_pop();
+ 	return ret;
+ }
+ 
+ static void net_wm_set_property(GtkWidget * window, char *atom, gboolean state)
+ {
+ 	XEvent xev;
+-	gint prev_error;
+ 	int set = _NET_WM_STATE_ADD;
+ 	Atom type, property;
+ 
+@@ -271,8 +262,7 @@
+ 	type = gdk_atom_intern(XA_NET_WM_STATE, FALSE);
+ 	property = gdk_atom_intern(atom, FALSE);
+ 
+-	prev_error = gdk_error_warnings;
+-	gdk_error_warnings = 0;
++	gdk_error_trap_push();
+ 
+ 	xev.type = ClientMessage;
+ 	xev.xclient.type = ClientMessage;
+@@ -286,8 +276,7 @@
+ 	XSendEvent(GDK_DISPLAY(), GDK_ROOT_WINDOW(), False,
+ 		   SubstructureNotifyMask, (XEvent *) &xev);
+ 
+-	gdk_error_warnings = prev_error;
+-
++	gdk_error_trap_pop();
+ }
+ 
+ static void net_wm_set_window_always(GtkWidget * window, gboolean always)
+diff -Nur xmms-1.2.7.orig/xmms/input.c xmms-1.2.7.chng/xmms/input.c
+--- xmms-1.2.7.orig/xmms/input.c	Mon Jul 14 12:00:34 2003
++++ xmms-1.2.7.chng/xmms/input.c	Mon Jul 14 12:44:20 2003
+@@ -243,7 +243,7 @@
+ 		GtkWidget *check;
+ 		GtkWidget *vbox;
+ 
+-		unplayables_window = gtk_window_new(GTK_WINDOW_DIALOG);
++		unplayables_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+ 		gtk_window_set_default_size(GTK_WINDOW(unplayables_window), 300, 400);
+ 		gtk_window_set_title(GTK_WINDOW(unplayables_window), _("Unplayable files"));
+ 		gtk_window_set_policy(GTK_WINDOW(unplayables_window), FALSE, TRUE, FALSE);
+diff -Nur xmms-1.2.7.orig/xmms/main.c xmms-1.2.7.chng/xmms/main.c
+--- xmms-1.2.7.orig/xmms/main.c	Mon Jul 14 12:00:34 2003
++++ xmms-1.2.7.chng/xmms/main.c	Mon Jul 14 14:24:24 2003
+@@ -1404,7 +1404,7 @@
+ 	if (!get_input_playing())
+ 		return;
+ 
+-	mainwin_jtt = gtk_window_new(GTK_WINDOW_DIALOG);
++	mainwin_jtt = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+ 	gtk_window_set_title(GTK_WINDOW(mainwin_jtt), _("Jump to time"));
+ 	gtk_window_set_position(GTK_WINDOW(mainwin_jtt), GTK_WIN_POS_CENTER);
+ 	gtk_window_set_policy(GTK_WINDOW(mainwin_jtt), FALSE, FALSE, FALSE);
+@@ -1707,7 +1707,7 @@
+ 		return;
+ 	}
+ 
+-	mainwin_jtf = gtk_window_new(GTK_WINDOW_DIALOG);
++	mainwin_jtf = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+ 	gtk_window_set_title(GTK_WINDOW(mainwin_jtf), _("Jump to file"));
+ 	gtk_window_set_position(GTK_WINDOW(mainwin_jtf), GTK_WIN_POS_CENTER);
+ 	gtk_window_set_transient_for(GTK_WINDOW(mainwin_jtf), GTK_WINDOW(mainwin));
+@@ -3454,7 +3454,7 @@
+ 	mainwin_create();
+ 
+ 	filename = g_strconcat(g_get_home_dir(), "/.xmms/gtkrc", NULL);
+-	gtk_rc_init();
++/*	gtk_rc_init(); */
+ 	gtk_rc_parse(filename);
+ 	g_free(filename);
+ 
+diff -Nur xmms-1.2.7.orig/xmms/playlistwin.c xmms-1.2.7.chng/xmms/playlistwin.c
+--- xmms-1.2.7.orig/xmms/playlistwin.c	Mon Jan 21 15:22:39 2002
++++ xmms-1.2.7.chng/xmms/playlistwin.c	Mon Jul 14 12:44:40 2003
+@@ -1648,7 +1648,7 @@
+ 
+ static void playlistwin_create_gtk(void)
+ {
+-	playlistwin = gtk_window_new(GTK_WINDOW_DIALOG);
++	playlistwin = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+ 	dock_add_window(dock_window_list, playlistwin);
+ 	gtk_widget_set_app_paintable(playlistwin, TRUE);
+ 	if (cfg.show_wm_decorations)
+diff -Nur xmms-1.2.7.orig/xmms/prefswin.c xmms-1.2.7.chng/xmms/prefswin.c
+--- xmms-1.2.7.orig/xmms/prefswin.c	Mon Jul 14 12:00:34 2003
++++ xmms-1.2.7.chng/xmms/prefswin.c	Mon Jul 14 12:44:47 2003
+@@ -607,7 +607,7 @@
+ 
+ 	char *titles[1];
+ 
+-	prefswin = gtk_window_new(GTK_WINDOW_DIALOG);
++	prefswin = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+ 	gtk_window_set_title(GTK_WINDOW(prefswin), _("Preferences"));
+ /*  	gtk_window_set_position(GTK_WINDOW(prefswin), GTK_WIN_POS_CENTER); */
+ 	gtk_window_set_policy(GTK_WINDOW(prefswin), FALSE, FALSE, FALSE);
+diff -Nur xmms-1.2.7.orig/xmms/skinwin.c xmms-1.2.7.chng/xmms/skinwin.c
+--- xmms-1.2.7.orig/xmms/skinwin.c	Sun Jun 17 01:05:47 2001
++++ xmms-1.2.7.chng/xmms/skinwin.c	Mon Jul 14 12:44:53 2003
+@@ -46,7 +46,7 @@
+ 	char *titles[1];
+ 	GtkWidget *vbox, *hbox, *main_hbox, *separator, *scrolled_win, *checkbox;
+ 
+-	skinwin = gtk_window_new(GTK_WINDOW_DIALOG);
++	skinwin = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+ 	gtk_window_set_title(GTK_WINDOW(skinwin), _("Skin selector"));
+ 	gtk_window_set_transient_for(GTK_WINDOW(skinwin), GTK_WINDOW(mainwin));
+ 	gtk_signal_connect(GTK_OBJECT(skinwin), "delete_event", GTK_SIGNAL_FUNC(skinwin_delete_event), NULL);
+diff -Nur xmms-1.2.7.orig/xmms/util.c xmms-1.2.7.chng/xmms/util.c
+--- xmms-1.2.7.orig/xmms/util.c	Tue Jan  8 15:09:13 2002
++++ xmms-1.2.7.chng/xmms/util.c	Mon Jul 14 14:18:47 2003
+@@ -554,7 +554,7 @@
+ {
+ 	GtkWidget *win, *vbox, *bbox, *ok, *enqueue, *cancel, *combo;
+ 	
+-	win = gtk_window_new(GTK_WINDOW_DIALOG);
++	win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+ 	gtk_window_set_title(GTK_WINDOW(win), caption);
+ 	gtk_window_set_position(GTK_WINDOW(win), GTK_WIN_POS_MOUSE);
+ 	gtk_window_set_default_size(GTK_WINDOW(win), 400, -1);
+@@ -912,14 +912,14 @@
+ void util_dump_menu_rc(void)
+ {
+ 	char *filename = g_strconcat(g_get_home_dir(), "/.xmms/menurc", NULL);
+-	gtk_item_factory_dump_rc(filename, NULL, FALSE);
++	gtk_accel_map_save(filename);
+ 	g_free(filename);
+ }
+ 
+ void util_read_menu_rc(void)
+ {
+ 	char *filename = g_strconcat(g_get_home_dir(), "/.xmms/menurc", NULL);
+-	gtk_item_factory_parse_rc(filename);
++	gtk_accel_map_load(filename);
+ 	g_free(filename);
+ }
+ 
