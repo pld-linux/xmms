@@ -12,8 +12,11 @@ Source1:	xmms-icons.tar.gz
 Source2:	mp3license
 Source3:	xmms.desktop
 Source4:	wmxmms.desktop
+Source5:	xmms-skins.tar.bz2
+Source6:	xmms-gnome-mime-info
 Patch0:		xmms-0.9.5.1-cvs19991011.patch
 Patch1:		xmms-audio.patch
+Patch2:		xmms-skinspath.patch
 URL:		http://www.xmms.org/
 BuildRequires:	XFree86-devel
 BuildRequires:	glib-devel >= 1.2.2
@@ -99,6 +102,19 @@ Visualization plugins that use the Mesa3d library.
 %description mesa -l pl
 Wtyczki pozwalaj±ce wykorzystaæ bibliotekê Mesa3d.
 
+%package skins
+Summary:        XMMS - Skins
+Summary(pl):	XMMS - Skórki
+Group:          X11/Applications/Multimedia
+Group(pl):	X11/Aplikacje/Multimedia
+Requires: 	%{name} = %{version}
+
+%description skins
+Additional skins for xmms.
+
+%description skins -l pl
+Dodatkowe 'skórki' dla xmms.
+
 %package devel
 Summary:	XMMS - libraries and header files
 Summary(pl):	XMMS - biblioteki i pliki nag³ówkowe
@@ -126,9 +142,10 @@ Static libraries required for compiling xmms plugins.
 Biblioteki statyczne xmms.
 
 %prep
-%setup -q -a1
+%setup -q -a1 -a5
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 cp %{SOURCE2} .
 
@@ -145,13 +162,16 @@ make
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_applnkdir}/{Multimedia,DockApps}
+install -d $RPM_BUILD_ROOT%{_applnkdir}/{Multimedia,DockApps} \
+	$RPM_BUILD_ROOT%{_datadir}/{mime-info,xmms/Skins}
 
 make install DESTDIR=$RPM_BUILD_ROOT
 
 install %{SOURCE3} $RPM_BUILD_ROOT%{_applnkdir}/Multimedia
 install %{SOURCE4} $RPM_BUILD_ROOT%{_applnkdir}/DockApps
+install %{SOURCE6} $RPM_BUILD_ROOT%{_datadir}/mime-info/xmms.keys
 install icons/*    $RPM_BUILD_ROOT%{_datadir}/xmms
+install Skins/*	   $RPM_BUILD_ROOT%{_datadir}/xmms/Skins
 
 strip --strip-unneeded $RPM_BUILD_ROOT%{_libdir}/libxmms.so.*.* \
 	$RPM_BUILD_ROOT%{_libdir}/xmms/{Input,Output,General,Effect}/*.so \
@@ -204,9 +224,14 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/gnomexmms
 %{_sysconfdir}/CORBA/servers/*
 %{_datadir}/applets/Multimedia/*
+%{_datadir}/mime-info/xmms.keys
 
 %files mesa
 %attr(755,root,root) %{_libdir}/xmms/Visualization/libogl_spectrum*
+
+%files skins
+%defattr(644,root,root,755)
+%{_datadir}/xmms/Skins
 
 %files devel
 %defattr(644,root,root,755)
