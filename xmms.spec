@@ -42,6 +42,7 @@ BuildRequires:	libxml-devel >= 1.7.0
 BuildRequires:	zlib-devel
 Requires:	glib >= 1.2.2
 Requires:	gtk+ >= 1.2.2
+Requires:	xmms-output-plugin
 Obsoletes:	x11amp
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -129,6 +130,7 @@ Group(pl):	X11/Aplikacje/Multimedia
 Requires:	%{name} = %{version}
 Requires:	esound >= 0.2.8
 Obsoletes:	xmms-esd
+Provides:	xmms-output-plugin
 
 %description output-esd
 Output plugin for xmms for use with the esound package.
@@ -323,6 +325,7 @@ Group:		X11/Applications/Multimedia
 Group(de):	X11/Applikationen/Multimedia
 Group(pl):	X11/Aplikacje/Multimedia
 Requires:	%{name} >= %{version}
+Provides:	xmms-output-plugin
 
 %description output-OSS
 OSS output plugin for XMMS.
@@ -337,6 +340,7 @@ Group:		X11/Applications/Multimedia
 Group(de):	X11/Applikationen/Multimedia
 Group(pl):	X11/Aplikacje/Multimedia
 Requires:	%{name} >= %{version}
+Provides:	xmms-output-plugin
 
 %description output-disk
 disk-wirter output plugin for XMMS.
