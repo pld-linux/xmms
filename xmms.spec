@@ -494,7 +494,7 @@ export SED
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_applnkdir}/Multimedia,%{_pixmapsdir}} \
+install -d $RPM_BUILD_ROOT{%{_desktopdir},%{_pixmapsdir}} \
 	$RPM_BUILD_ROOT%{_datadir}/{mime-info,xmms/Skins}
 
 test -z $SED && SED=sed; export SED
@@ -503,8 +503,8 @@ test -z $SED && SED=sed; export SED
 	DESTDIR=$RPM_BUILD_ROOT \
 	m4datadir=%{_aclocaldir}
 
-install %{SOURCE3} $RPM_BUILD_ROOT%{_applnkdir}/Multimedia
-install %{SOURCE4} $RPM_BUILD_ROOT%{_applnkdir}/Multimedia
+install %{SOURCE3} $RPM_BUILD_ROOT%{_desktopdir}
+install %{SOURCE4} $RPM_BUILD_ROOT%{_desktopdir}
 install %{SOURCE6} $RPM_BUILD_ROOT%{_datadir}/mime-info/xmms.keys
 install icons/*    $RPM_BUILD_ROOT%{_datadir}/xmms
 install Skins/*    $RPM_BUILD_ROOT%{_datadir}/xmms/Skins
@@ -526,7 +526,6 @@ echo "to play."
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog NEWS README mp3license FAQ
-%{_applnkdir}/Multimedia/xmms.desktop
 %attr(755,root,root) %{_bindir}/xmms
 %dir %{_libdir}/xmms
 %dir %{_libdir}/xmms/General
@@ -538,19 +537,19 @@ echo "to play."
 %attr(755,root,root) %{_libdir}/xmms/Visualization/libsanalyzer*
 %dir %{_libdir}/xmms/Input
 %dir %{_libdir}/xmms/Output
-
 %dir %{_datadir}/xmms
 %dir %{_datadir}/xmms/Skins
 %{_datadir}/xmms/*gif
 %{_datadir}/xmms/x*xpm
-%{_mandir}/*/xmms*
+%{_desktopdir}/xmms.desktop
 %{_pixmapsdir}/xmms*
+%{_mandir}/*/xmms*
 
 %files wm
 %defattr(644,root,root,755)
-%{_applnkdir}/Multimedia/wmxmms.desktop
 %attr(755,root,root) %{_bindir}/wmxmms
 %{_datadir}/xmms/wmxmms*xpm
+%{_desktopdir}/wmxmms.desktop
 %{_mandir}/*/wmxmms*
 
 %if %{without gtk2}
