@@ -1,5 +1,7 @@
 Summary:	Sound player with the WinAmp GUI, for Unix-based systems
+Summary(es):	Editor de sonido con GUI semejante al de WinAmp
 Summary(pl):	Odtwarzacz d¼wiêku z interfejsem WinAmpa
+Summary(pt_BR):	Tocador de som com GUI semelhante ao do WinAmp
 Name:		xmms
 Version:	1.2.5
 Release:	5
@@ -54,14 +56,26 @@ GUI, it can use WinAmp skins, and play mp3s, mods, s3ms, and other
 formats. It now has support for input, output, and general plugins,
 and has also been GPL'd.
 
+%description -l es
+Editor de sonido con GUI semejante al de WinAmp.
+
 %description -l pl
 XMMS jest odtwarzaczem d¼wiêku napisanym od zera. Jako, ¿e
 wykorzystuje interfejs WinAmpa, mo¿e równie¿ u¿ywaæ jego 'skórek'.
 Odtwarza pliki w formatach mp3, mod, s3m i wielu innych.
 
+%description -l pt_BR
+XMMS é um sound player escrito a partir do zero. Como ele utiliza a
+interface do WinAmp, ele pode utilizar "skins" do WinAmp, e tocar
+arquivos .mp3, .mod, .s3m, e outros formatos. Agora ele suporta
+plugins de entrada, saída e outros plugins de uso geral, e sua licença
+se tornou GPL.
+
 %package input-mikmod
 Summary:	XMMS - Input plugin to play MODs
+Summary(es):	Login de entrada para que XMMS alcance MODs (.MOD,.XM,.S3M, etc)
 Summary(pl):	XMMS - wtyczka do odtwarzania MODów
+Summary(pt_BR):	Plugin de entrada para o XMMS tocar MODs (.MOD,.XM,.S3M, etc)
 Group:		X11/Applications/Multimedia
 Group(de):	X11/Applikationen/Multimedia
 Group(pl):	X11/Aplikacje/Multimedia
@@ -76,11 +90,17 @@ this plugin sucks (possibly due to quality of libmikmod) - it is
 unable to play correctly a lot of modules. Use xmms-input-modplug
 instaed.
 
-%description input-mikmod -l pl
+%description -l es input-mikmod
+Login de entrada para que XMMS alcance MODs (.MOD,.XM,.S3M, etc).
+
+%description -l pl input-mikmod
 Wtyczka dla XMMS do odtwarzania MODów (.MOD,.XM,.S3M, etc). Bo±d¼
 ¶wiadom ¿e ta wtyczka jest bardzo s³aba (byæ mo¿e z powodu jaki¶ci
 libmikmod) - nie potrafi odtworzyæ poprawnie wielu modu³ów. Zainstaluj
 lepiej xmms-input-modplug.
+
+%description -l pt_BR input-mikmod
+Plugin de entrada para o XMMS tocar MODs (.MOD,.XM,.S3M, etc).
 
 %package input-tonegen
 Summary:	XMMS - Input plugin to generate sound of given frequency
@@ -99,7 +119,9 @@ Wtyczka dla XMMS generuj±ca d¼wiêk o zadanej czêstotliwo¶ci.
 
 %package output-esd
 Summary:	XMMS - Output plugin for use with the esound package
+Summary(es):	Plugin de salida para XMMS para uso con el paquete eSound.
 Summary(pl):	XMMS - wtyczka umo¿liwiaj±ca korzystanie z esound
+Summary(pt_BR):	Plugin de saida para o XMMS para uso com o pacote eSound
 Group:		X11/Applications/Multimedia
 Group(de):	X11/Applikationen/Multimedia
 Group(pl):	X11/Aplikacje/Multimedia
@@ -110,9 +132,15 @@ Obsoletes:	xmms-esd
 %description output-esd
 Output plugin for xmms for use with the esound package.
 
+%description -l es output-esd
+Plugin de salida para XMMS para uso con el paquete eSound.
+
 %description output-esd -l pl
 Wtyczka dla XMMS umo¿liwiaj±ca wykorzystanie esound przy odtwarzaniu
 d¼wiêków.
+
+%description -l pt_BR output-esd
+Plugin de saída para o XMMS trabalhar com o esd.
 
 %package gnome
 Summary:	XMMS - applet for controlling xmms from the GNOME panel
@@ -161,7 +189,9 @@ Dodatkowe 'skórki' dla xmms.
 
 %package devel
 Summary:	XMMS - libraries and header files
+Summary(es):	Bibliotecas y archivos de inclusión, necesarios para compilar plugins de XMMS
 Summary(pl):	XMMS - biblioteki i pliki nag³ówkowe
+Summary(pt_BR):	Bibliotecas e arquivos de inclusão necessários para se compilar plugins do XMMS
 Group:		X11/Development/Libraries
 Group(de):	X11/Entwicklung/Libraries
 Group(es):	X11/Desarrollo/Bibliotecas
@@ -176,12 +206,22 @@ Requires:	%{name} = %{version}
 %description devel
 Libraries and header files required for compiling xmms plugins.
 
+%description -l es devel
+Bibliotecas y archivos de inclusión, necesarios para compilar plugins
+de XMMS.
+
 %description devel -l pl
 Biblioteki i pliki nag³ówkowe wymagane do budowania wtyczek xmms.
 
+%description -l pt_BR devel
+Bibliotecas e arquivos de inclusão necessários para se compilar
+plugins do XMMS.
+
 %package static
 Summary:	XMMS - static libraries
+Summary(es):	Static libraries for xmms development
 Summary(pl):	XMMS - biblioteki statyczne
+Summary(pt_BR):	Bibliotecas estáticas para desenvolvimento com xmms
 Group:		X11/Development/Libraries
 Group(de):	X11/Entwicklung/Libraries
 Group(es):	X11/Desarrollo/Bibliotecas
@@ -195,8 +235,14 @@ Requires:	%{name}-devel = %{version}
 %description static
 Static libraries required for compiling xmms plugins.
 
+%description -l es static
+Static libraries for xmms development.
+
 %description static -l pl
 Biblioteki statyczne xmms.
+
+%description -l pt_BR static
+Bibliotecas estáticas para desenvolvimento com o xmms.
 
 %package input-vorbis
 Summary:	XMMS - cdaudio input plugin
