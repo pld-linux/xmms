@@ -5,6 +5,7 @@
 Summary:	Sound player with the WinAmp GUI, for Unix-based systems
 Summary(es):	Editor de sonido con GUI semejante al de WinAmp
 Summary(ja):	XMMS - X Window System¾å¤ÇÆ°ºî¤¹¤ë¥Ş¥ë¥Á¥á¥Ç¥£¥¢¥×¥ì¡¼¥ä¡¼
+Summary(ko):	Unix º£ÀÌ½º ½Ã½ºÅÛÀ» À§ÇÑ winamp ¸ğ¾çÀÇ À½¾Ç ¿¬ÁÖ±â
 Summary(pl):	Odtwarzacz d¼wiêku z interfejsem WinAmpa
 Summary(pt_BR):	Tocador de som com GUI semelhante ao do WinAmp
 Summary(ru):	ğÒÏÉÇÒÙ×ÁÔÅÌØ ÍÕÚÙËÉ Ó WinAmp GUI
@@ -29,6 +30,7 @@ Patch1:		%{name}-m4.patch
 Patch2:		%{name}-libogg_libvorbis_1.0_ac_fix.patch
 Patch3:		%{name}-warn_about_unplayables.patch
 Patch4:		%{name}-configure.patch
+Patch5:		%{name}-patch.czech.patch
 URL:		http://www.xmms.org/
 BuildRequires:	OpenGL-devel
 BuildRequires:	autoconf
@@ -152,6 +154,7 @@ Biblioteka XMMS.
 Summary:	XMMS - libraries and header files
 Summary(es):	Bibliotecas y archivos de inclusión, necesarios para compilar plugins de XMMS
 Summary(ja):	XMMS - ³«È¯ÍÑ¥Õ¥¡¥¤¥ë
+Summary(ko):	XMMS - ¶óÀÌºê·¯¸®¿Í Çì´õ ÆÄÀÏµé
 Summary(pl):	XMMS - biblioteki i pliki nag³ówkowe
 Summary(pt_BR):	Bibliotecas e arquivos de inclusão necessários para se compilar plugins do XMMS
 Summary(uk):	.h-ÆÁÊÌÉ ÄÌÑ xmms
@@ -401,6 +404,7 @@ OpenGL.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 cp -f %{SOURCE2} .
 
