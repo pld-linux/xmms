@@ -96,7 +96,7 @@ instaed.
 Login de entrada para que XMMS alcance MODs (.MOD,.XM,.S3M, etc).
 
 %description input-mikmod -l pl
-Wtyczka dla XMMS do odtwarzania MODów (.MOD,.XM,.S3M, etc). B±d¼
+Wtyczka dla XMMS-a do odtwarzania MODów (.MOD,.XM,.S3M, etc). B±d¼
 ¶wiadom, ¿e ta wtyczka jest bardzo s³aba (byæ mo¿e z powodu jako¶ci
 libmikmod) - nie potrafi odtworzyæ poprawnie wielu modu³ów. Zainstaluj
 lepiej xmms-input-modplug.
@@ -117,7 +117,7 @@ Obsoletes:	xmms-tonegen
 Input plugin for XMMS to generate sound of given frequency.
 
 %description input-tonegen -l pl
-Wtyczka dla XMMS generuj±ca d¼wiêk o zadanej czêstotliwo¶ci.
+Wtyczka dla XMMS-a generuj±ca d¼wiêk o zadanej czêstotliwo¶ci.
 
 %package output-esd
 Summary:	XMMS - Output plugin for use with the esound package
@@ -133,21 +133,21 @@ Obsoletes:	xmms-esd
 Provides:	xmms-output-plugin
 
 %description output-esd
-Output plugin for xmms for use with the esound package.
+Output plugin for XMMS for use with the esound package.
 
 %description output-esd -l es
 Plugin de salida para XMMS para uso con el paquete eSound.
 
 %description output-esd -l pl
-Wtyczka dla XMMS umo¿liwiaj±ca wykorzystanie esound przy odtwarzaniu
+Wtyczka dla XMMS-a umo¿liwiaj±ca wykorzystanie esound przy odtwarzaniu
 d¼wiêków.
 
 %description output-esd -l pt_BR
 Plugin de saída para o XMMS trabalhar com o esd.
 
 %package gnome
-Summary:	XMMS - applet for controlling xmms from the GNOME panel
-Summary(pl):	XMMS - aplet umo¿liwiaj±cy sterowanie xmmsem z panelu GNOME
+Summary:	XMMS - applet for controlling XMMS from the GNOME panel
+Summary(pl):	XMMS - aplet umo¿liwiaj±cy sterowanie XMMS-em z panelu GNOME
 Group:		X11/Applications/Multimedia
 Group(de):	X11/Applikationen/Multimedia
 Group(pl):	X11/Aplikacje/Multimedia
@@ -155,10 +155,10 @@ Requires:	%{name} = %{version}
 Requires:	gnome-libs >= 1.0.0
 
 %description gnome
-GNOME applet for controlling xmms from the GNOME panel.
+GNOME applet for controlling XMMS from the GNOME panel.
 
 %description gnome -l pl
-Aplet GNOME umo¿liwiaj±cy sterowanie xmms z panelu GNOME.
+Aplet GNOME umo¿liwiaj±cy sterowanie XMMS-em z panelu GNOME.
 
 %package visualization-GL
 Summary:	XMMS - OpenGL visualization plugins
@@ -186,10 +186,10 @@ Requires:	%{name} >= %{version}
 Requires:	unzip
 
 %description skins
-Additional skins for xmms.
+Additional skins for XMMS.
 
 %description skins -l pl
-Dodatkowe 'skórki' dla xmmsa.
+Dodatkowe 'skórki' dla XMMS-a.
 
 %package devel
 Summary:	XMMS - libraries and header files
@@ -208,14 +208,15 @@ Requires:	gtk+-devel
 Requires:	%{name} = %{version}
 
 %description devel
-Libraries and header files required for compiling xmms plugins.
+Libraries and header files required for compiling XMMS plugins.
 
 %description devel -l es
 Bibliotecas y archivos de inclusión, necesarios para compilar plugins
 de XMMS.
 
 %description devel -l pl
-Biblioteki i pliki nag³ówkowe wymagane do budowania wtyczek xmms.
+Biblioteki i pliki nag³ówkowe wymagane do budowania wtyczek dla
+XMMS-a.
 
 %description devel -l pt_BR
 Bibliotecas e arquivos de inclusão necessários para se compilar
@@ -223,9 +224,9 @@ plugins do XMMS.
 
 %package static
 Summary:	XMMS - static libraries
-Summary(es):	Static libraries for xmms development
+Summary(es):	Static libraries for XMMS development
 Summary(pl):	XMMS - biblioteki statyczne
-Summary(pt_BR):	Bibliotecas estáticas para desenvolvimento com xmms
+Summary(pt_BR):	Bibliotecas estáticas para desenvolvimento com XMMS
 Group:		X11/Development/Libraries
 Group(de):	X11/Entwicklung/Libraries
 Group(es):	X11/Desarrollo/Bibliotecas
@@ -237,16 +238,16 @@ Group(uk):	X11/òÏÚÒÏÂËÁ/â¦ÂÌ¦ÏÔÅËÉ
 Requires:	%{name}-devel = %{version}
 
 %description static
-Static libraries required for compiling xmms plugins.
+Static libraries required for compiling XMMS plugins.
 
 %description static -l es
-Static libraries for xmms development.
+Static libraries for XMMS development.
 
 %description static -l pl
-Biblioteki statyczne xmms.
+Biblioteki statyczne XMMS-a.
 
 %description static -l pt_BR
-Bibliotecas estáticas para desenvolvimento com o xmms.
+Bibliotecas estáticas para desenvolvimento com o XMMS.
 
 %package input-vorbis
 Summary:	XMMS - cdaudio input plugin
@@ -288,7 +289,7 @@ Requires:	%{name} >= %{version}
 idcin input plugin for XMMS.
 
 %description input-idcin -l pl
-Wtyczka dla XMMSa do obs³ugi formatu idcin.
+Wtyczka dla XMMS-a do obs³ugi formatu idcin.
 
 %package input-mpg123
 Summary:	XMMS - mpg123 input plugin
@@ -302,7 +303,7 @@ Requires:	%{name} >= %{version}
 mpg123 input plugin for XMMS.
 
 %description input-mpg123 -l pl
-Wtyczka do XMMSa do obs³ugi mpg123.
+Wtyczka dla XMMS-a do obs³ugi mpg123.
 
 %package input-wav
 Summary:	XMMS - wav input plugin
@@ -316,7 +317,7 @@ Requires:	%{name} >= %{version}
 wav input plugin for XMMS.
 
 %description input-wav -l pl
-Wtyczka do XMMSa do obs³ugi plików wav.
+Wtyczka dla XMMS-a do obs³ugi plików wav.
 
 %package output-OSS
 Summary:	XMMS - OSS output plugin
@@ -331,7 +332,7 @@ Provides:	xmms-output-plugin
 OSS output plugin for XMMS.
 
 %description output-OSS -l pl
-Obs³uga sterowników OSS dla XMMS.
+Obs³uga sterowników OSS dla XMMS-a.
 
 %package output-disk
 Summary:	XMMS - disk-writer output plugin
@@ -346,7 +347,7 @@ Provides:	xmms-output-plugin
 disk-wirter output plugin for XMMS.
 
 %description output-disk -l pl
-Wtyczka dla XMMS zapisuj±ca dane wyj¶ciowe na dysk.
+Wtyczka dla XMMS-a zapisuj±ca dane wyj¶ciowe na dysk.
 
 %prep
 %setup -q -a1 -a5
