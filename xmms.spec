@@ -65,6 +65,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_noautoreqdep	libGL.so.1 libGLU.so.1
 %define		_sysconfdir	/etc/X11/GNOME
+%define		_prefix		/usr/X11R6
 %if %{without gtk2}
 %{?with_gnome:%define		_appletsdir	%(gnome-config --datadir)/applets}
 %endif
