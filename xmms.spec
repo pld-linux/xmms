@@ -3,7 +3,7 @@
 # gnome		- build gnome subpackage
 # gtk2		- with gtk+2 (and without gnome :( )
 #
-%bcond_without gnome
+%bcond_with gnome
 %bcond_with gtk2
 
 Summary:	Sound player with the WinAmp GUI, for Unix-based systems
@@ -16,13 +16,13 @@ Summary(ru):	ðÒÏÉÇÒÙ×ÁÔÅÌØ ÍÕÚÙËÉ Ó WinAmp GUI
 Summary(uk):	ðÒÏÇÒÁ×ÁÞ ÍÕÚÉËÉ Ú WinAmp GUI
 Summary(zh_CN):	XMMS - X ¶Ë¶àÃ½Ìå²¥·ÅÆ÷
 Name:		xmms
-Version:	1.2.7
-Release:	16
+Version:	1.2.8
+Release:	0.1
 Epoch:		2
 License:	GPL v2+
 Group:		X11/Applications/Sound
 Source0:	ftp://ftp.xmms.org/pub/xmms/1.2.x/%{name}-%{version}.tar.bz2
-# Source0-md5:	9bec488842920df359516b7d062d15dc
+# Source0-md5:	d523735b59232f0eedd45dc2b7a4f5ad
 Source1:	%{name}-icons.tar.gz
 # Source1-md5:	14fc5a0bb3679daf1c3900e3a30674e9
 Source2:	mp3license
@@ -33,21 +33,20 @@ Source5:	%{name}-skins.tar.bz2
 Source6:	%{name}-gnome-mime-info
 Source7:	%{name}.png
 Patch0:		%{name}-amfix.patch
-Patch1:		%{name}-m4.patch
+#Patch1:		%{name}-m4.patch
 Patch2:		%{name}-libogg_libvorbis_1.0_ac_fix.patch
 Patch3:		%{name}-warn_about_unplayables.patch
 Patch4:		%{name}-configure.patch
-Patch5:		%{name}-patch.czech.patch
-#Patch6:		%{name}-ass-20020303.patch
+#Patch5:		%{name}-patch.czech.patch
 Patch7:		%{name}-gtk2.patch
 # Original location:
-#Patch8		http://members.jcom.home.ne.jp/jacobi/linux/etc/xmms-1.2.7-mmx.patch.gz
-Patch8:		%{name}-%{version}-mmx.patch
+#Patch8:		%{name}-%{version}-mmx.patch
 URL:		http://www.xmms.org/
 BuildRequires:	OpenGL-devel
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	esound-devel
+BuildRequires:	alsa-lib-devel >= 0.9.5
 BuildRequires:	gettext-devel
 BuildRequires:	libmikmod-devel > 3.1.7
 BuildRequires:	libogg-devel
@@ -302,18 +301,6 @@ CD audio input plugin for XMMS.
 %description input-cdaudio -l pl
 Wtyczka do odtwarzania p³yt CD-audio.
 
-%package input-idcin
-Summary:	XMMS - idcin input plugin
-Summary(pl):	XMMS - wtyczka do obs³ugi formatu idcin
-Group:		X11/Applications/Sound
-Requires:	%{name} >= %{epoch}:%{version}
-
-%description input-idcin
-idcin input plugin for XMMS.
-
-%description input-idcin -l pl
-Wtyczka dla XMMS-a do obs³ugi formatu idcin.
-
 %package input-mpg123
 Summary:	XMMS - mpg123 input plugin
 Summary(pl):	XMMS - wtyczka do odtwarzania plikow mp3
@@ -350,6 +337,20 @@ OSS output plugin for XMMS.
 
 %description output-OSS -l pl
 Obs³uga sterowników OSS dla XMMS-a.
+
+%package output-ALSA
+Summary:	XMMS - ALSA output plugin
+Summary(pl):	XMMS - plugin obs³ugi sterowników Alsa
+Group:		X11/Applications/Sound
+Requires:	%{name} >= %{epoch}:%{version}
+Obsoletes:	xmms-output-alsa
+Provides:	xmms-output-plugin
+
+%description output-ALSA
+ALSA output plugin for XMMS.
+
+%description output-ALSA -l pl
+Obs³uga sterowników ALSA dla XMMS-a.
 
 %package output-esd
 Summary:	XMMS - Output plugin for use with the esound package
@@ -419,12 +420,12 @@ OpenGL.
 %prep
 %setup -q -a1 -a5
 %patch0 -p1
-%patch1 -p1
+#%%patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%patch5 -p1
-#%patch6 -p1
+#%%patch5 -p1
+#%%patch6 -p1
 
 cp -f %{SOURCE2} .
 
@@ -439,6 +440,7 @@ do
 	iso-8859-1|ISO-8859-1) E=ISO8859-1 ; ;;
 	iso-8859-2|ISO-8859-2) E=ISO8859-2 ; ;;
 	iso-8859-3) E=ISO8859-3 ; ;;
+	iso-8859-5) E=ISO8859-5 ; ;;
 	ISO-8859-7) E=ISO8859-7 ; ;;
 	ISO-8859-9) E=ISO8859-9 ; ;;
 	ISO-8859-11) E=ISO8859-11 ; ;;
@@ -460,11 +462,11 @@ do
     fi
 done
 %endif
-%patch8 -p1
+#%%patch8 -p1
 
 %build
 rm -f missing
-%{__gettextize}
+#%%{__gettextize}
 %{__libtoolize}
 %{__aclocal}
 %{__autoconf}
@@ -602,10 +604,6 @@ echo "to play."
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/xmms/Input/libvorbis*
 
-%files input-idcin
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/xmms/Input/libidcin*
-
 %files input-mpg123
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/xmms/Input/libmpg123*
@@ -617,6 +615,10 @@ echo "to play."
 %files output-OSS
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/xmms/Output/libOSS*
+
+%files output-ALSA
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/xmms/Output/libALSA*
 
 %files output-esd
 %defattr(644,root,root,755)
