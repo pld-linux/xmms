@@ -1,5 +1,5 @@
 [Desktop Entry]
-Name=xmms
+Name=Xmms
 Comment=X Multimedia System
 Comment[bg]=X Ìóëòèìåäèéíà ñèñòåìà
 Comment[ca]=Sistema multimèdia X
@@ -23,7 +23,7 @@ Comment[lt]=X Multimedijos Sistema
 Comment[mk]=MP3 репродукција
 Comment[nl]=X Multimedia Systeem
 Comment[no]=X Multimedia-system
-Comment[pl]=System multimediów X Window
+Comment[pl]=System multimediów dla X11
 Comment[pt]=Sistema Multimédia X
 Comment[pt_BR]=Sistema de Multimídia X
 Comment[ro]=Winamp pentru Linux
