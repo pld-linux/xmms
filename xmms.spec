@@ -22,7 +22,7 @@ BuildRequires:	gtk+-devel >= 1.2.2
 BuildRequires:	esound-devel
 BuildRequires:	gnome-libs-devel
 BuildRequires:	gnome-core-devel
-BuildRequires:	Mesa-devel >= 3.1
+BuildRequires:	OpenGL
 BuildRequires:	libmikmod-devel > 3.1.7
 Requires:	glib >= 1.2.2
 Requires:	gtk+ >= 1.2.2
