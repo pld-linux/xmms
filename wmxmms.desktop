@@ -6,5 +6,5 @@ Comment[pl]=Odtwarzacz MP3 Xmms
 Exec=wmxmms
 Terminal=false
 Type=Application
-Categories=AudioVideo
+Categories=AudioVideo;
 # vi: encoding=utf-8
