@@ -1,11 +1,9 @@
 #
 # Conditional build:
-# gnome		- build gnome subpackage
-# gtk2		- with gtk+2 (and without gnome :( )
+%bcond_with	gnome	# build gnome (1.x) version
+%bcond_with	gtk2	# experimental GTK+2 port (and probably broken/incomplete)
+#			  (deprecated - many plugins won't work, use beep instead)
 #
-%bcond_with gnome
-%bcond_with gtk2
-
 Summary:	Sound player with the WinAmp GUI, for Unix-based systems
 Summary(es):	Editor de sonido con GUI semejante al de WinAmp
 Summary(ja):	XMMS - X Window System¾å¤ÇÆ°ºî¤¹¤ë¥Ş¥ë¥Á¥á¥Ç¥£¥¢¥×¥ì¡¼¥ä¡¼
@@ -52,14 +50,16 @@ BuildRequires:	libtool
 BuildRequires:	libvorbis-devel >= 1:1.0
 BuildRequires:	libxml-devel >= 1.7.0
 BuildRequires:	zlib-devel
-%if %{without gtk2}
+%if %{with gtk2}
+BuildRequires:	gtk+2-devel >= 2.2.0
+# broken/incomplete patch? links with both GTK+ versions
+BuildRequires:	gtk+-devel >= 1.2.2
+%else
 %{?with_gnome:BuildRequires:	gnome-core-devel}
 %{?with_gnome:BuildRequires:	gnome-libs-devel}
 BuildRequires:	gtk+-devel >= 1.2.2
 Requires:	glib >= 1.2.2
 Requires:	gtk+ >= 1.2.2
-%else
-BuildRequires:	gtk+2-devel >= 2.2.0
 %endif
 Requires:	xmms-output-plugin
 Obsoletes:	x11amp
@@ -177,9 +177,8 @@ Summary(uk):	.h-ÆÁÊÌÉ ÄÌÑ XMMS
 Summary(ru):	.h-ÆÁÊÌÙ ÄÌÑ XMMS
 Summary(zh_CN):	XMMS - ¿ª·¢¿â
 Group:		X11/Development/Libraries
-%if %{without gtk2}
+# broken/incomplete gtk2 patch? libxmms is still linked with old GTK+
 Requires:	gtk+-devel
-%endif
 Requires:	%{name}-libs = %{epoch}:%{version}
 
 %description devel
