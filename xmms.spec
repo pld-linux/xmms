@@ -16,7 +16,7 @@ Summary(zh_CN):	XMMS - X ¶Ë¶àÃ½Ìå²¥·ÅÆ÷
 Name:		xmms
 Version:	1.2.7
 Release:	14
-Epoch:		1
+Epoch:		2
 License:	GPL v2+
 Group:		X11/Applications/Sound
 Source0:	http://www.xmms.org/files/1.2.x/%{name}-%{version}.tar.bz2
