@@ -48,4 +48,5 @@ TerminalOptions=
 Type=Application
 X-BinaryPattern=
 X-MapNotify=
+Categories=AudioVideo
 # vi: encoding=utf-8
