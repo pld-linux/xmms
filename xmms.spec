@@ -4,7 +4,7 @@ Summary(pl):	Odtwarzacz d¼wiêku z interfejsem WinAmpa
 Summary(pt_BR):	Tocador de som com GUI semelhante ao do WinAmp
 Name:		xmms
 Version:	1.2.6
-Release:	2
+Release:	3
 Epoch:		2
 License:	GPL
 Group:		X11/Applications/Multimedia
@@ -17,10 +17,8 @@ Source3:	%{name}.desktop
 Source4:	wm%{name}.desktop
 Source5:	%{name}-skins.tar.bz2
 Source6:	%{name}-gnome-mime-info
-Patch0:		%{name}-small.patch
-Patch1:		%{name}-workaround.patch
-Patch2:		%{name}-amfix.patch
-Patch3:		%{name}-m4.patch
+Patch0:		%{name}-amfix.patch
+Patch1:		%{name}-m4.patch
 URL:		http://www.xmms.org/
 BuildRequires:	OpenGL
 BuildRequires:	OpenGL-devel
@@ -364,8 +362,6 @@ Wtyczki graficzne wykorzystuj±ce bibliotekê Mesa3d.
 %setup -q -a1 -a5
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
 
 cp -f %{SOURCE2} .
 
