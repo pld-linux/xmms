@@ -31,6 +31,7 @@ Source7:	%{name}.png
 Patch0:		%{name}-warn_about_unplayables.patch
 Patch1:		%{name}-am18.patch
 Patch2:		%{name}-gtk2.patch
+Patch3:		%{name}-gcc34.patch
 URL:		http://www.xmms.org/
 BuildRequires:	OpenGL-devel
 BuildRequires:	alsa-lib-devel >= 0.9.5
@@ -398,6 +399,8 @@ OpenGL.
 %setup -q -a1 -a5
 %patch0 -p1
 %patch1 -p1
+#patch2 -p1
+%patch3 -p1
 
 cp -f %{SOURCE2} .
 
