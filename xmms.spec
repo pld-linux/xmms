@@ -46,7 +46,7 @@ BuildRequires:	libvorbis-devel >= 1:1.0
 BuildRequires:	libxml-devel >= 1.7.0
 BuildRequires:	zlib-devel
 %if %{with gtk2}
-BuildRequires:	gtk+2-devel >= 2.2.0
+BuildRequires:	gtk+2-devel >= 2:2.2.0
 # broken/incomplete patch? links with both GTK+ versions
 BuildRequires:	gtk+-devel >= 1.2.2
 %else
