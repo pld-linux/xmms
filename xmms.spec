@@ -92,7 +92,7 @@ Summary(pl):	XMMS - wtyczki OpenGL
 Group:		X11/Applications/Multimedia
 Group(pl):	X11/Aplikacje/Multimedia
 Requires:	%{name} = %{version}
-Requires:	Mesa >= 3.0
+Requires:	OpenGL
 
 %description mesa
 Visualization plugins that use the Mesa3d library.
