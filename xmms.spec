@@ -1,38 +1,30 @@
 Summary:	Sound player with the WinAmp GUI, for Unix-based systems
 Summary(pl):	Odtwarzacz d¼wiêku z interfejsem WinAmpa
 Name:		xmms
-Version:	1.2.4
-Release:	10
+Version:	1.2.5
+Release:	1
 Epoch:		2
 License:	GPL
 Group:		X11/Applications/Multimedia
 Group(de):	X11/Applikationen/Multimedia
 Group(pl):	X11/Aplikacje/Multimedia
-Source0:	ftp://ftp.xmms.org/xmms/1.2.x/%{name}-%{version}.tar.gz
+Source0:	http://www.xmms.org/files/1.2.x/%{name}-%{version}.tar.bz2
 Source1:	%{name}-icons.tar.gz
 Source2:	mp3license
 Source3:	%{name}.desktop
 Source4:	wm%{name}.desktop
 Source5:	%{name}-skins.tar.bz2
 Source6:	%{name}-gnome-mime-info
-Source7:	vorbis_nightly_cvs.tgz
 Patch0:		%{name}-opt-flags.patch
 Patch1:		%{name}-pluggedup.patch
-Patch2:		%{name}-gettext.patch
-Patch3:		%{name}-icon.patch
-Patch4:		%{name}-small.patch
-Patch5:		%{name}-lazy.patch
-Patch6:		%{name}-workaround.patch
-Patch7:		%{name}-jp.patch
-Patch8:		%{name}-mb.patch
-Patch9:		%{name}-it.patch
-Patch10:	%{name}-downsample-vis.patch
-Patch11:	%{name}-audio.patch
-Patch12:	%{name}-istereo.patch
-Patch13:	%{name}-tmpdir.patch
+Patch2:		%{name}-small.patch
+Patch3:		%{name}-lazy.patch
+Patch4:		%{name}-workaround.patch
+Patch5:		%{name}-audio.patch
 URL:		http://www.xmms.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
+BuildRequires:	libtool
 BuildRequires:	gettext-devel
 BuildRequires:	gtk+-devel >= 1.2.2
 BuildRequires:	esound-devel
@@ -40,9 +32,11 @@ BuildRequires:	gnome-libs-devel
 BuildRequires:	gnome-core-devel
 BuildRequires:	OpenGL
 BuildRequires:	libmikmod-devel > 3.1.7
-BuildRequires:	libxml-devel
+BuildRequires:	libxml-devel >= 1.7.0
 BuildRequires:	zlib-devel
 BuildRequires:	OpenGL-devel
+BuildRequires:	libogg-devel
+BuildRequires:	libvorbis-devel
 Requires:	glib >= 1.2.2
 Requires:	gtk+ >= 1.2.2
 Obsoletes:	x11amp
@@ -50,6 +44,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define 	_noautoreqdep	libGL.so.1 libGLU.so.1
 %define		_prefix		/usr/X11R6
+%define		_mandi		%{_prefix}/man
 %define		_sysconfdir	/etc/X11/GNOME
 
 %description
@@ -75,14 +70,16 @@ Obsoletes:	xmms-mikmod
 Obsoletes:	xmms-input-modplug
 
 %description input-mikmod
-Input plugin for XMMS to play MODs (.MOD,.XM,.S3M, etc). Be aware that this
-plugin sucks (possibly due to quality of libmikmod) - it is unable to play
-correctly a lot of modules. Use xmms-input-modplug instaed.
+Input plugin for XMMS to play MODs (.MOD,.XM,.S3M, etc). Be aware that
+this plugin sucks (possibly due to quality of libmikmod) - it is
+unable to play correctly a lot of modules. Use xmms-input-modplug
+instaed.
 
 %description input-mikmod -l pl
-Wtyczka dla XMMS do odtwarzania MODów (.MOD,.XM,.S3M, etc). Bo±d¼ ¶wiadom ¿e ta
-wtyczka jest bardzo s³aba (byæ mo¿e z powodu jaki¶ci libmikmod) - nie potrafi
-odtworzyæ poprawnie wielu modu³ów. Zainstaluj lepiej xmms-input-modplug.
+Wtyczka dla XMMS do odtwarzania MODów (.MOD,.XM,.S3M, etc). Bo±d¼
+¶wiadom ¿e ta wtyczka jest bardzo s³aba (byæ mo¿e z powodu jaki¶ci
+libmikmod) - nie potrafi odtworzyæ poprawnie wielu modu³ów. Zainstaluj
+lepiej xmms-input-modplug.
 
 %package input-tonegen
 Summary:	XMMS - Input plugin to generate sound of given frequency
@@ -190,6 +187,20 @@ Static libraries required for compiling xmms plugins.
 %description static -l pl
 Biblioteki statyczne xmms.
 
+%package input-vorbis
+Summary:	XMMS - cdaudio input plugin
+Summary(pl):	XMMS - wtyczka do odtwarzania plików vorbis
+Group:		X11/Applications/Multimedia
+Group(de):	X11/Applikationen/Multimedia
+Group(pl):	X11/Aplikacje/Multimedia
+Requires:	%{name} >= %{version}
+
+%description input-vorbis
+OGG Vorbis input plugin for XMMS.
+
+%description -l pl input-vorbis
+Wtyczna do odtwarzania plików w formacie OGG Vorbis.
+
 %package input-cdaudio
 Summary:	XMMS - cdaudio input plugin
 Summary(pl):	XMMS - wtyczka do odtwarzania plyt CD-audio
@@ -201,8 +212,12 @@ Requires:	%{name} >= %{version}
 %description input-cdaudio
 CD audio input plugin for XMMS.
 
+%description -l pl input-cdaudio
+Wtyczka do odtwarzania p³yt CD-audio.
+
 %package input-idcin
 Summary:	XMMS - idcin input plugin
+Summary(pl):	XMMS - wtyczka do obs³ugi formatu idcin
 Group:		X11/Applications/Multimedia
 Group(de):	X11/Applikationen/Multimedia
 Group(pl):	X11/Aplikacje/Multimedia
@@ -210,6 +225,9 @@ Requires:	%{name} >= %{version}
 
 %description input-idcin
 idcin input plugin for XMMS.
+
+%description -l pl input-idcin
+Wtyczka dla XMMSa do obs³ugi formatu idcin.
 
 %package input-mpg123
 Summary:	XMMS - mpg123 input plugin
@@ -222,6 +240,9 @@ Requires:	%{name} >= %{version}
 %description input-mpg123
 mpg123 input plugin for XMMS.
 
+%description -l pl input-mpg123
+Wtyczka do XMMSa do obs³ugi mpg123.
+
 %package input-wav
 Summary:	XMMS - wav input plugin
 Summary(pl):	XMMS - wtyczka do odtwarzania plikow *.wav
@@ -233,8 +254,12 @@ Requires:	%{name} >= %{version}
 %description input-wav
 wav input plugin for XMMS.
 
+%description -l pl input-wav
+Wtyczka do XMMSa do obs³ugi plików wav.
+
 %package output-OSS
 Summary:	XMMS - OSS output plugin
+Summary(pl):	XMMS - plugin obs³ugi sterowników OSS
 Group:		X11/Applications/Multimedia
 Group(de):	X11/Applikationen/Multimedia
 Group(pl):	X11/Aplikacje/Multimedia
@@ -243,8 +268,12 @@ Requires:	%{name} >= %{version}
 %description output-OSS
 OSS output plugin for XMMS.
 
+%description -l pl output-OSS
+Obs³uga sterowników OSS dla XMMS.
+
 %package output-disk
 Summary:	XMMS - disk-writer output plugin
+Summary(pl):	XMMS - wtyczka zapisywania danych na dysk.
 Group:		X11/Applications/Multimedia
 Group(de):	X11/Applikationen/Multimedia
 Group(pl):	X11/Aplikacje/Multimedia
@@ -253,31 +282,34 @@ Requires:	%{name} >= %{version}
 %description output-disk
 disk-wirter output plugin for XMMS.
 
+%description -l pl output-disk
+Wtyczka dla XMMS zapisuj±ca dane wyj¶ciowe na dysk.
+
 %prep
-%setup -q -a1 -a5 -a7
+%setup -q -a1 -a5
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-%patch9 -p1
-%patch10 -p1
-%patch11 -p1
-%patch12 -p1
-%patch13 -p1
 
 cp %{SOURCE2} .
 
 %build
+rm missing
+gettextize --copy --force
+libtoolize --copy --force
 aclocal
 autoconf
 automake -a -c
-(cd libxmms; aclocal; autoconf; automake -a -c)
-gettextize --copy --force
+
+cd libxmms
+libtoolize --copy --force
+aclocal
+autoconf
+automake -a -c
+cd ..
 
 %configure
 %{__make}
@@ -372,6 +404,10 @@ rm -rf $RPM_BUILD_ROOT
 %files input-cdaudio
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/xmms/Input/libcdaudio*
+
+%files input-vorbis
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/xmms/Input/libvorbis*
 
 %files input-idcin
 %defattr(644,root,root,755)
