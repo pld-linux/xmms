@@ -44,7 +44,9 @@ BuildRequires:	OpenGL-devel
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	esound-devel
+%ifnarch  sparc
 BuildRequires:	alsa-lib-devel >= 0.9.5
+%endif
 BuildRequires:	gettext-devel
 BuildRequires:	libmikmod-devel > 3.1.7
 BuildRequires:	libogg-devel
@@ -338,6 +340,7 @@ OSS output plugin for XMMS.
 %description output-OSS -l pl
 Obs³uga sterowników OSS dla XMMS-a.
 
+%ifnarch sparc
 %package output-ALSA
 Summary:	XMMS - ALSA output plugin
 Summary(pl):	XMMS - plugin obs³ugi sterowników Alsa
@@ -351,6 +354,7 @@ ALSA output plugin for XMMS.
 
 %description output-ALSA -l pl
 Obs³uga sterowników ALSA dla XMMS-a.
+%endif
 
 %package output-esd
 Summary:	XMMS - Output plugin for use with the esound package
@@ -611,9 +615,11 @@ echo "to play."
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/xmms/Output/libOSS*
 
+%ifnarch sparc
 %files output-ALSA
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/xmms/Output/libALSA*
+%endif
 
 %files output-esd
 %defattr(644,root,root,755)
