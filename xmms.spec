@@ -4,7 +4,7 @@ Summary(pl):	Odtwarzacz d¼wiêku z interfejsem WinAmpa
 Summary(pt_BR):	Tocador de som com GUI semelhante ao do WinAmp
 Name:		xmms
 Version:	1.2.6
-Release:	4
+Release:	5
 Epoch:		2
 License:	GPL
 Group:		X11/Applications/Multimedia
@@ -17,6 +17,7 @@ Source3:	%{name}.desktop
 Source4:	wm%{name}.desktop
 Source5:	%{name}-skins.tar.bz2
 Source6:	%{name}-gnome-mime-info
+Source7:	xmms.xpm
 Patch0:		%{name}-amfix.patch
 Patch1:		%{name}-m4.patch
 URL:		http://www.xmms.org/
@@ -385,7 +386,7 @@ cd ..
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_applnkdir}/Multimedia \
+install -d $RPM_BUILD_ROOT{%{_applnkdir}/Multimedia,%{_pixmapsdir}} \
 	$RPM_BUILD_ROOT%{_datadir}/{mime-info,xmms/Skins}
 
 %{__make} install \
@@ -397,7 +398,7 @@ install %{SOURCE4} $RPM_BUILD_ROOT%{_applnkdir}/Multimedia
 install %{SOURCE6} $RPM_BUILD_ROOT%{_datadir}/mime-info/xmms.keys
 install icons/*    $RPM_BUILD_ROOT%{_datadir}/xmms
 install Skins/*    $RPM_BUILD_ROOT%{_datadir}/xmms/Skins
-
+install %{SOURCE7} $RPM_BUILD_ROOT%{_pixmapsdir}
 gzip -9nf AUTHORS ChangeLog NEWS README mp3license FAQ
 
 %find_lang %{name}
@@ -429,6 +430,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/xmms/*gif
 %{_datadir}/xmms/x*xpm
 %{_mandir}/*/xmms*
+%{_pixmapsdir}/xmms.xpm
 
 %files wm
 %defattr(644,root,root,755)
