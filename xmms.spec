@@ -20,6 +20,7 @@ Source6:	%{name}-gnome-mime-info
 Patch0:		%{name}-small.patch
 Patch1:		%{name}-workaround.patch
 Patch2:		%{name}-amfix.patch
+Patch3:		%{name}-m4.patch
 URL:		http://www.xmms.org/
 BuildRequires:	OpenGL
 BuildRequires:	OpenGL-devel
@@ -364,6 +365,7 @@ Wtyczki graficzne wykorzystuj±ce bibliotekê Mesa3d.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 cp -f %{SOURCE2} .
 
