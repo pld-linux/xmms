@@ -3,7 +3,7 @@
 %bcond_with	gnome	# build gnome (1.x) version
 %bcond_with	gtk2	# experimental GTK+2 port (and probably broken/incomplete)
 #			  (deprecated - many plugins won't work, use beep instead)
-#
+%define		_rel pre1
 Summary:	Sound player with the WinAmp GUI, for Unix-based systems
 Summary(es):	Editor de sonido con GUI semejante al de WinAmp
 Summary(ja):	XMMS - X Window System╬Е╓гф╟╨Н╓╧╓К╔ч╔К╔а╔А╔г╔ё╔╒╔в╔Л║╪╔Д║╪
@@ -14,13 +14,13 @@ Summary(ru):	Проигрыватель музыки с WinAmp GUI
 Summary(uk):	Програвач музики з WinAmp GUI
 Summary(zh_CN):	XMMS - X ╤к╤Юц╫лЕ╡╔╥ефВ
 Name:		xmms
-Version:	1.2.8
-Release:	2
+Version:	1.2.9
+Release:	0.%{_rel}.1
 Epoch:		2
 License:	GPL v2+
 Group:		X11/Applications/Sound
-Source0:	ftp://ftp.xmms.org/pub/xmms/1.2.x/%{name}-%{version}.tar.bz2
-# Source0-md5:	d523735b59232f0eedd45dc2b7a4f5ad
+Source0:	http://www.xmms.org/files/1.2.x/%{name}-%{version}-%{_rel}.tar.bz2
+# Source0-md5:	6427625f618b8f7a3b5dfa8ff268d330
 Source1:	%{name}-icons.tar.gz
 # Source1-md5:	14fc5a0bb3679daf1c3900e3a30674e9
 Source2:	mp3license
@@ -30,10 +30,9 @@ Source5:	%{name}-skins.tar.bz2
 # Source5-md5:	39d6de4bf2c37c17b868df3596871c59
 Source6:	%{name}-gnome-mime-info
 Source7:	%{name}.png
-Patch0:		%{name}-libogg_libvorbis_1.0_ac_fix.patch
-Patch1:		%{name}-warn_about_unplayables.patch
-Patch2:		%{name}-am18.patch
-Patch3:		%{name}-gtk2.patch
+Patch0:		%{name}-warn_about_unplayables.patch
+Patch1:		%{name}-am18.patch
+Patch2:		%{name}-gtk2.patch
 URL:		http://www.xmms.org/
 BuildRequires:	OpenGL-devel
 BuildRequires:	autoconf
@@ -414,15 +413,14 @@ XMMS - п╕д'╓днуван╕ модул╕ в╕зуал╕зац╕╖, як╕ використовують б╕бл╕отеку
 OpenGL.
 
 %prep
-%setup -q -a1 -a5
+%setup -qn %{name}-%{version}-%{_rel} -a1 -a5
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
 
 cp -f %{SOURCE2} .
 
 %if %{with gtk2}
-%patch3 -p1
+%patch2 -p1
 
 rm -f po/*.gmo
 for F in po/*.po
@@ -547,6 +545,7 @@ echo "to play."
 %dir %{_datadir}/xmms/Skins
 %{_datadir}/xmms/*gif
 %{_datadir}/xmms/x*xpm
+%{_datadir}/mime-info/xmms.keys
 %{_desktopdir}/xmms.desktop
 %{_pixmapsdir}/xmms*
 %{_mandir}/*/xmms*
