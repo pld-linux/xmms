@@ -1,8 +1,8 @@
 Summary:	Sound player with the WinAmp GUI, for Unix-based systems
 Summary(pl):	Odtwarzacz d¼wiêku z interfejsem WinAmpa
 Name:		xmms
-Version:	1.2.3
-Release:	6
+Version:	1.2.4
+Release:	1
 Epoch:		2
 License:	GPL
 Group:		X11/Applications/Multimedia
@@ -16,10 +16,9 @@ Source4:	wm%{name}.desktop
 Source5:	%{name}-skins.tar.bz2
 Source6:	%{name}-gnome-mime-info
 Source7:	vorbis_nightly_cvs.tgz
-Patch0:		%{name}-audio.patch
-Patch1:		%{name}-opt-flags.patch
-Patch2:		%{name}-pluggedup.patch
-Patch3:		%{name}-gettext.patch
+Patch0:		%{name}-opt-flags.patch
+Patch1:		%{name}-pluggedup.patch
+Patch2:		%{name}-gettext.patch
 URL:		http://www.xmms.org/
 BuildRequires:	gettext-devel
 BuildRequires:	gtk+-devel >= 1.2.2
@@ -110,19 +109,19 @@ GNOME applet for controlling xmms from the GNOME panel.
 %description gnome -l pl
 Aplet GNOME umo¿liwiaj±cy sterowanie xmms z panelu GNOME.
 
-%package mesa
+%package visualization-GL
 Summary:	XMMS - OpenGL visualization plugins
 Summary(pl):	XMMS - wtyczki OpenGL
 Group:		X11/Applications/Multimedia
 Group(de):	X11/Applikationen/Multimedia
 Group(pl):	X11/Aplikacje/Multimedia
 Requires:	%{name} = %{version}
-Requires:	OpenGL
+Obsoletes:	xmms-mesa
 
-%description visualization-mesa
+%description visualization-GL
 Visualization plugins that use the Mesa3d library.
 
-%description visualization-mesa -l pl
+%description visualization-GL -l pl
 Wtyczki graficzne wykorzystuj±ce bibliotekê Mesa3d.
 
 %package skins
@@ -312,7 +311,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/applets/Multimedia/*
 %{_datadir}/mime-info/xmms.keys
 
-%files visualization-mesa
+%files visualization-GL
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/xmms/Visualization/libogl_spectrum*
 
