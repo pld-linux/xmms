@@ -3,20 +3,20 @@ Summary(pl):	Odtwarzacz d¼wiêku z interfejsem WinAmpa
 Name:		xmms
 Version:	1.2.2
 Release:	1
-#Serial:		2
+Epoch:		2
 License:	GPL
 Group:		X11/Applications/Multimedia
 Group(pl):	X11/Aplikacje/Multimedia
 Source0:	ftp://ftp.xmms.org/xmms/1.2.x/%{name}-%{version}.tar.gz
-Source1:	xmms-icons.tar.gz
+Source1:	%{name}-icons.tar.gz
 Source2:	mp3license
-Source3:	xmms.desktop
-Source4:	wmxmms.desktop
-Source5:	xmms-skins.tar.bz2
-Source6:	xmms-gnome-mime-info
-Patch0:		xmms-audio.patch
-Patch1:		xmms-opt-flags.patch
-Patch2:		xmms-pluggedup.patch
+Source3:	%{name}.desktop
+Source4:	wm%{name}.desktop
+Source5:	%{name}-skins.tar.bz2
+Source6:	%{name}-gnome-mime-info
+Patch0:		%{name}-audio.patch
+Patch1:		%{name}-opt-flags.patch
+Patch2:		%{name}-pluggedup.patch
 URL:		http://www.xmms.org/
 BuildRequires:	gettext-devel
 BuildRequires:	gtk+-devel >= 1.2.2
@@ -169,9 +169,9 @@ aclocal; autoconf; automake
 (cd libxmms; aclocal; autoconf; automake)
 gettextize --copy --force
 
-CFLAGS="$RPM_OPT_FLAGS -I%{_prefix}/include"
-CPPFLAGS="$RPM_OPT_FLAGS -I%{_prefix}/include"
-LDFLAGS="-s -L%{_prefix}/lib"
+CFLAGS="$RPM_OPT_FLAGS -I/usr/X11R6/include"
+CPPFLAGS="$RPM_OPT_FLAGS -I/usr/X11R6/include"
+LDFLAGS="-s -L/usr/X11R6/lib"
 export CFLAGS CPPFLAGS LDFLAGS
 %configure
 
