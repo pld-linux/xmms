@@ -33,12 +33,10 @@ Source5:	%{name}-skins.tar.bz2
 Source6:	%{name}-gnome-mime-info
 Source7:	%{name}.png
 Patch0:		%{name}-amfix.patch
-#Patch1:		%{name}-m4.patch
-Patch2:		%{name}-libogg_libvorbis_1.0_ac_fix.patch
-Patch3:		%{name}-warn_about_unplayables.patch
-Patch4:		%{name}-configure.patch
-#Patch5:		%{name}-patch.czech.patch
-Patch7:		%{name}-gtk2.patch
+Patch1:		%{name}-libogg_libvorbis_1.0_ac_fix.patch
+Patch2:		%{name}-warn_about_unplayables.patch
+Patch3:		%{name}-configure.patch
+Patch4:		%{name}-gtk2.patch
 # Original location:
 #Patch8:		%{name}-%{version}-mmx.patch
 URL:		http://www.xmms.org/
@@ -60,6 +58,8 @@ BuildRequires:	zlib-devel
 BuildRequires:	gtk+-devel >= 1.2.2
 Requires:	glib >= 1.2.2
 Requires:	gtk+ >= 1.2.2
+%else
+BuildRequires:	gtk+2-devel >= 2.2.0
 %endif
 Requires:	xmms-output-plugin
 Obsoletes:	x11amp
@@ -420,17 +420,14 @@ OpenGL.
 %prep
 %setup -q -a1 -a5
 %patch0 -p1
-#%%patch1 -p1
+%patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
-#%%patch5 -p1
-#%%patch6 -p1
 
 cp -f %{SOURCE2} .
 
 %if %{with gtk2}
-%patch7 -p1
+%patch4 -p1
 
 rm -f po/*.gmo
 for F in po/*.po
