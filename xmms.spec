@@ -12,7 +12,7 @@ Summary(uk):	Програвач музики з WinAmp GUI
 Summary(zh_CN):	XMMS - X ╤к╤Юц╫лЕ╡╔╥ефВ.
 Name:		xmms
 Version:	1.2.7
-Release:	6
+Release:	7
 Epoch:		2
 License:	GPL
 Group:		X11/Applications/Multimedia
@@ -451,7 +451,7 @@ rm -rf $RPM_BUILD_ROOT
 %post
 /sbin/ldconfig
 
-echo "Remember to install apropriate xmms-input-* packages for files you want"
+echo "Remember to install appropriate xmms-input-* packages for files you want"
 echo "to play."
 
 %postun -p /sbin/ldconfig
