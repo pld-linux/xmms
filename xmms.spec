@@ -15,7 +15,7 @@ Summary(uk):	ðÒÏÇÒÁ×ÁÞ ÍÕÚÉËÉ Ú WinAmp GUI
 Summary(zh_CN):	XMMS - X ¶Ë¶àÃ½Ìå²¥·ÅÆ÷
 Name:		xmms
 Version:	1.2.8
-Release:	1
+Release:	2
 Epoch:		2
 License:	GPL v2+
 Group:		X11/Applications/Sound
@@ -30,13 +30,10 @@ Source5:	%{name}-skins.tar.bz2
 # Source5-md5:	39d6de4bf2c37c17b868df3596871c59
 Source6:	%{name}-gnome-mime-info
 Source7:	%{name}.png
-Patch0:		%{name}-amfix.patch
-Patch1:		%{name}-libogg_libvorbis_1.0_ac_fix.patch
-Patch2:		%{name}-warn_about_unplayables.patch
-Patch3:		%{name}-configure.patch
-Patch4:		%{name}-gtk2.patch
-# Original location:
-#Patch8:		%{name}-%{version}-mmx.patch
+Patch0:		%{name}-libogg_libvorbis_1.0_ac_fix.patch
+Patch1:		%{name}-warn_about_unplayables.patch
+Patch2:		%{name}-am18.patch
+Patch3:		%{name}-gtk2.patch
 URL:		http://www.xmms.org/
 BuildRequires:	OpenGL-devel
 BuildRequires:	autoconf
@@ -421,12 +418,11 @@ OpenGL.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 
 cp -f %{SOURCE2} .
 
 %if %{with gtk2}
-%patch4 -p1
+%patch3 -p1
 
 rm -f po/*.gmo
 for F in po/*.po
@@ -459,20 +455,35 @@ do
     fi
 done
 %endif
-#%%patch8 -p1
+
+install -d m4
+# get only XMMS_FUNC_POSIX
+head -n39 libxmms/acinclude.m4 > m4/xmms-func-posix.m4
+
+%if %{without gnome}
+cat > m4/fakegnome.m4 <<EOF
+AC_DEFUN([GNOME_INIT_HOOK],[])
+EOF
+%endif
 
 %build
-#%%{__gettextize}
+# kill copies of many macros
+rm -f acinclude.m4
+%{__gettextize}
 %{__libtoolize}
-%{__aclocal}
+%{__aclocal} -I m4 %{?with_gnome:-I%{_aclocaldir}/gnome}
 %{__autoconf}
+%{__autoheader}
 %{__automake}
 
 cd libxmms
-%{__libtoolize}
-%{__aclocal}
+# kill old libtool.m4
+rm -f acinclude.m4
+%{__aclocal} -I ../m4
 %{__autoconf}
-%{__automake}
+%{__autoheader}
+# don't use --force here
+automake -a -c --foreign
 cd ..
 
 GNOMEOPT=""
@@ -481,22 +492,19 @@ GNOMEOPT=""
 %endif
 
 %configure \
-	--disable-vorbistest $GNOMEOPT \
+	--disable-vorbistest \
+	$GNOMEOPT \
 %ifarch %{ix86}
 	--enable-simd
 %endif
 
-test -z $SED && SED=sed
-export SED
-
-%{__make} AS="%{__cc}"
+%{__make} \
+	AS="%{__cc}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_desktopdir},%{_pixmapsdir}} \
 	$RPM_BUILD_ROOT%{_datadir}/{mime-info,xmms/Skins}
-
-test -z $SED && SED=sed; export SED
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT \
@@ -550,8 +558,7 @@ echo "to play."
 %{_desktopdir}/wmxmms.desktop
 %{_mandir}/*/wmxmms*
 
-%if %{without gtk2}
-%if %{with gnome}
+%if %{with gnome} && %{without gtk2}
 %files gnome
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/gnomexmms
@@ -559,7 +566,6 @@ echo "to play."
 %{_appletsdir}/Multimedia/*
 %{_datadir}/mime-info/xmms.keys
 %{_mandir}/*/gnomexmms*
-%endif
 %endif
 
 %files skins
