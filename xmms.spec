@@ -156,7 +156,7 @@ LDFLAGS="-s -L%{_prefix}/lib"
 export CFLAGS CPPFLAGS LDFLAGS
 %configure
 
-make
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
