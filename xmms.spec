@@ -15,7 +15,7 @@ Version:	1.2.7
 Release:	8
 Epoch:		2
 License:	GPL v2+
-Group:		X11/Applications/Multimedia
+Group:		X11/Applications/Sound
 Source0:	http://www.xmms.org/files/1.2.x/%{name}-%{version}.tar.bz2
 Source1:	%{name}-icons.tar.gz
 Source2:	mp3license
@@ -91,7 +91,7 @@ s3m ÔÁ ¦ÎÛ¦ ÆÏÒÍÁÔÉ. ôÅÐÅÒ ×¦Î Ð¦ÄÔÒÉÍÕ¤ Ð¦Ä'¤ÄÎÕ×ÁÎ¦ ÍÏÄÕÌ¦ ÏÂÒÏÂËÉ
 %package wm
 Summary:	XMMS applet for WindowMaker
 Summary(pl):	Aplet XMMS dla WindowMakera
-Group:		X11/Applications/Multimedia
+Group:		X11/Applications/Sound
 Requires:	%{name} = %{version}
 
 %description wm
@@ -107,7 +107,7 @@ Summary(pl):	XMMS - aplet umo¿liwiaj±cy sterowanie XMMS-em z panelu GNOME
 Summary(ru):	áÐÐÌÅÔ ÐÁÎÅÌÉ GNOME ÄÌÑ xmms
 Summary(uk):	áÐÌÅÔ ÐÁÎÅÌ¦ GNOME ÄÌÑ xmms
 Summary(zh_CN):	XMMS - GNOME Æ½Ì¨ÉÏµÄ XMMS ¿ØÖÆ³ÌÐò
-Group:		X11/Applications/Multimedia
+Group:		X11/Applications/Sound
 Requires:	%{name} = %{version}
 Requires:	gnome-libs >= 1.0.0
 
@@ -128,7 +128,7 @@ Aplet GNOME umo¿liwiaj±cy sterowanie XMMS-em z panelu GNOME.
 %package skins
 Summary:	XMMS - Skins
 Summary(pl):	XMMS - Skórki
-Group:		X11/Applications/Multimedia
+Group:		X11/Applications/Sound
 Requires:	%{name} >= %{version}
 Requires:	unzip
 
@@ -141,7 +141,7 @@ Dodatkowe 'skórki' dla XMMS-a.
 %package libs
 Summary:	XMMS library
 Summary(pl):	Biblioteka XMMS
-Group:		X11/Applications/Multimedia
+Group:		X11/Applications/Sound
 
 %description libs
 XMMS library.
@@ -218,7 +218,7 @@ Summary(ja):	XMMS - MODs¤òºÆÀ¸¤¹¤ë¤¿¤á¤ÎÆþÎÏ¥×¥é¥°¥¤¥ó
 Summary(pl):	XMMS - wtyczka do odtwarzania MODów
 Summary(pt_BR):	Plugin de entrada para o XMMS tocar MODs (.MOD,.XM,.S3M, etc)
 Summary(zh_CN):	XMMS - ²¥·Å M0Ds ÎÄ¼þµÄÊäÈë²å¼þ
-Group:		X11/Applications/Multimedia
+Group:		X11/Applications/Sound
 Requires:	%{name} = %{version}
 Requires:	libmikmod >= 3.1.7
 Obsoletes:	xmms-input-modplug
@@ -245,7 +245,7 @@ Plugin de entrada para o XMMS tocar MODs (.MOD,.XM,.S3M, etc).
 %package input-tonegen
 Summary:	XMMS - Input plugin to generate sound of given frequency
 Summary(pl):	XMMS - wtyczka generuj±ca d¼wiêk o zadanej czêstotliwo¶ci
-Group:		X11/Applications/Multimedia
+Group:		X11/Applications/Sound
 Requires:	%{name} = %{version}
 Obsoletes:	xmms-tonegen
 
@@ -256,11 +256,11 @@ Input plugin for XMMS to generate sound of given frequency.
 Wtyczka dla XMMS-a generuj±ca d¼wiêk o zadanej czêstotliwo¶ci.
 
 %package input-vorbis
-Summary:	XMMS - cdaudio input plugin
+Summary:	XMMS - OGG Vorbis input plugin
 Summary(ja):	XMMS - OGGs¤òºÆÀ¸¤¹¤ë¤¿¤á¤ÎÆþÎÏ¥×¥é¥°¥¤¥ó
-Summary(pl):	XMMS - wtyczka do odtwarzania plików vorbis
+Summary(pl):	XMMS - wtyczka do odtwarzania plików OGG Vorbis
 Summary(zh_CN):	XMMS - ²¥·Å 0GGs ±àÂëÎÄ¼þµÄÊäÈë²å¼þ
-Group:		X11/Applications/Multimedia
+Group:		X11/Applications/Sound
 Requires:	%{name} >= %{version}
 
 %description input-vorbis
@@ -272,7 +272,7 @@ Wtyczka do odtwarzania plików w formacie OGG Vorbis.
 %package input-cdaudio
 Summary:	XMMS - cdaudio input plugin
 Summary(pl):	XMMS - wtyczka do odtwarzania plyt CD-audio
-Group:		X11/Applications/Multimedia
+Group:		X11/Applications/Sound
 Requires:	%{name} >= %{version}
 
 %description input-cdaudio
@@ -284,7 +284,7 @@ Wtyczka do odtwarzania p³yt CD-audio.
 %package input-idcin
 Summary:	XMMS - idcin input plugin
 Summary(pl):	XMMS - wtyczka do obs³ugi formatu idcin
-Group:		X11/Applications/Multimedia
+Group:		X11/Applications/Sound
 Requires:	%{name} >= %{version}
 
 %description input-idcin
@@ -296,7 +296,7 @@ Wtyczka dla XMMS-a do obs³ugi formatu idcin.
 %package input-mpg123
 Summary:	XMMS - mpg123 input plugin
 Summary(pl):	XMMS - wtyczka do odtwarzania plikow mp3
-Group:		X11/Applications/Multimedia
+Group:		X11/Applications/Sound
 Requires:	%{name} >= %{version}
 
 %description input-mpg123
@@ -308,7 +308,7 @@ Wtyczka dla XMMS-a do obs³ugi mpg123.
 %package input-wav
 Summary:	XMMS - wav input plugin
 Summary(pl):	XMMS - wtyczka do odtwarzania plikow wav
-Group:		X11/Applications/Multimedia
+Group:		X11/Applications/Sound
 Requires:	%{name} >= %{version}
 
 %description input-wav
@@ -320,7 +320,7 @@ Wtyczka dla XMMS-a do obs³ugi plików wav.
 %package output-OSS
 Summary:	XMMS - OSS output plugin
 Summary(pl):	XMMS - plugin obs³ugi sterowników OSS
-Group:		X11/Applications/Multimedia
+Group:		X11/Applications/Sound
 Requires:	%{name} >= %{version}
 Provides:	xmms-output-plugin
 
@@ -337,7 +337,7 @@ Summary(ja):	XMMS - esound¤òÍøÍÑ¤¹¤ë½ÐÎÏ¥×¥é¥°¥¤¥ó
 Summary(pl):	XMMS - wtyczka umo¿liwiaj±ca korzystanie z esound
 Summary(pt_BR):	Plugin de saida para o XMMS para uso com o pacote eSound
 Summary(zh_CN):	XMMS - Óë esound Èí¼þ°üÒ»ÆðÊ¹ÓÃµÄÊä³ö²å¼þ
-Group:		X11/Applications/Multimedia
+Group:		X11/Applications/Sound
 Requires:	%{name} = %{version}
 Requires:	esound >= 0.2.8
 Obsoletes:	xmms-esd
@@ -359,7 +359,7 @@ Plugin de saída para o XMMS trabalhar com o esd.
 %package output-disk
 Summary:	XMMS - disk-writer output plugin
 Summary(pl):	XMMS - wtyczka do zapisywania danych na dysk
-Group:		X11/Applications/Multimedia
+Group:		X11/Applications/Sound
 Requires:	%{name} >= %{version}
 Provides:	xmms-output-plugin
 
