@@ -1,11 +1,12 @@
 Summary:	Sound player with the WinAmp GUI, for Unix-based systems
 Summary(pl):	Odtwarzacz d¼wiêku z interfejsem WinAmpa
 Name:		xmms
-Version:	1.2.2
-Release:	3
+Version:	1.2.3
+Release:	1
 Epoch:		2
 License:	GPL
 Group:		X11/Applications/Multimedia
+Group(de):	X11/Applikationen/Multimedia
 Group(pl):	X11/Aplikacje/Multimedia
 Source0:	ftp://ftp.xmms.org/xmms/1.2.x/%{name}-%{version}.tar.gz
 Source1:	%{name}-icons.tar.gz
@@ -52,6 +53,7 @@ Odtwarza pliki w formatach mp3, mod, s3m i wielu innych.
 Summary:	XMMS - Input plugin to play MODs
 Summary(pl):	XMMS - wtyczka do odtwarzania MODów
 Group:		X11/Applications/Multimedia
+Group(de):	X11/Applikationen/Multimedia
 Group(pl):	X11/Aplikacje/Multimedia
 Requires:	%{name} = %{version}
 Requires:	libmikmod >= 3.1.7
@@ -66,6 +68,7 @@ Wtyczka dla XMMS do odtwarzania MODów (.MOD,.XM,.S3M, etc)
 Summary:	XMMS - Input plugin to generate sound of given frequency
 Summary(pl):	XMMS - wtyczka generuj±ca d¼wiêk o zadanej czêstotliwo¶ci
 Group:		X11/Applications/Multimedia
+Group(de):	X11/Applikationen/Multimedia
 Group(pl):	X11/Aplikacje/Multimedia
 Requires:	%{name} = %{version}
 
@@ -79,6 +82,7 @@ Wtyczka dla XMMS generuj±ca d¼wiêk o zadanej czêstotliwo¶ci.
 Summary:	XMMS - Output plugin for use with the esound package
 Summary(pl):	XMMS - wtyczka umo¿liwiaj±ca korzystanie z esound
 Group:		X11/Applications/Multimedia
+Group(de):	X11/Applikationen/Multimedia
 Group(pl):	X11/Aplikacje/Multimedia
 Requires:	%{name} = %{version}
 Requires:	esound >= 0.2.8
@@ -94,6 +98,7 @@ d¼wiêków.
 Summary:	XMMS - applet for controlling xmms from the GNOME panel
 Summary(pl):	XMMS - aplet umo¿liwiaj±cy sterowanie xmms z panelu GNOME
 Group:		X11/Applications/Multimedia
+Group(de):	X11/Applikationen/Multimedia
 Group(pl):	X11/Aplikacje/Multimedia
 Requires:	%{name} = %{version}
 Requires:	gnome-libs >= 1.0.0
@@ -108,6 +113,7 @@ Aplet GNOME umo¿liwiaj±cy sterowanie xmms z panelu GNOME.
 Summary:	XMMS - OpenGL visualization plugins
 Summary(pl):	XMMS - wtyczki OpenGL
 Group:		X11/Applications/Multimedia
+Group(de):	X11/Applikationen/Multimedia
 Group(pl):	X11/Aplikacje/Multimedia
 Requires:	%{name} = %{version}
 Requires:	OpenGL
@@ -122,6 +128,7 @@ Wtyczki graficzne wykorzystuj±ce bibliotekê Mesa3d.
 Summary:	XMMS - Skins
 Summary(pl):	XMMS - Skórki
 Group:		X11/Applications/Multimedia
+Group(de):	X11/Applikationen/Multimedia
 Group(pl):	X11/Aplikacje/Multimedia
 Requires:	%{name} = %{version}
 
@@ -135,6 +142,7 @@ Dodatkowe 'skórki' dla xmms.
 Summary:	XMMS - libraries and header files
 Summary(pl):	XMMS - biblioteki i pliki nag³ówkowe
 Group:		X11/Development/Libraries
+Group(de):	X11/Entwicklung/Libraries
 Group(pl):	X11/Programowanie/Biblioteki
 Requires:	%{name} = %{version}
 
@@ -148,6 +156,7 @@ Biblioteki i pliki nag³ówkowe wymagane do budowania wtyczek xmms.
 Summary:	XMMS - static libraries
 Summary(pl):	XMMS - biblioteki statyczne
 Group:		X11/Development/Libraries
+Group(de):	X11/Entwicklung/Libraries
 Group(pl):	X11/Programowanie/Biblioteki
 Requires:	%{name}-devel = %{version}
 
@@ -170,12 +179,7 @@ aclocal; autoconf; automake
 (cd libxmms; aclocal; autoconf; automake)
 gettextize --copy --force
 
-CFLAGS="$RPM_OPT_FLAGS -I/usr/X11R6/include"
-CPPFLAGS="$RPM_OPT_FLAGS -I/usr/X11R6/include"
-LDFLAGS="-s -L/usr/X11R6/lib"
-export CFLAGS CPPFLAGS LDFLAGS
 %configure
-
 %{__make}
 
 %install
