@@ -399,6 +399,11 @@ OpenGL.
 
 cp -f %{SOURCE2} .
 
+mv -f po/{no,nb}.po
+%{__perl} -pi -e 's/ no / nb /' po/LINGUAS
+# allow (re)building, incl. nb.gmo
+rm -f po/stamp-po
+
 %if %{with gtk2}
 %patch2 -p1
 
@@ -437,10 +442,6 @@ done
 install -d m4
 # get only XMMS_FUNC_POSIX
 head -n39 libxmms/acinclude.m4 > m4/xmms-func-posix.m4
-
-cat > m4/fakegnome.m4 <<EOF
-AC_DEFUN([GNOME_INIT_HOOK],[])
-EOF
 
 %build
 # kill copies of many macros
