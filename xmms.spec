@@ -1,9 +1,7 @@
 #
 # Conditional build:
-%bcond_with	gnome	# build gnome (1.x) version
 %bcond_with	gtk2	# experimental GTK+2 port (and probably broken/incomplete)
 #			  (deprecated - many plugins won't work, use beep instead)
-#
 Summary:	Sound player with the WinAmp GUI, for Unix-based systems
 Summary(es):	Editor de sonido con GUI semejante al de WinAmp
 Summary(ja):	XMMS - X Window System¾å¤ÇÆ°ºî¤¹¤ë¥Þ¥ë¥Á¥á¥Ç¥£¥¢¥×¥ì¡¼¥ä¡¼
@@ -14,13 +12,13 @@ Summary(ru):	ðÒÏÉÇÒÙ×ÁÔÅÌØ ÍÕÚÙËÉ Ó WinAmp GUI
 Summary(uk):	ðÒÏÇÒÁ×ÁÞ ÍÕÚÉËÉ Ú WinAmp GUI
 Summary(zh_CN):	XMMS - X ¶Ë¶àÃ½Ìå²¥·ÅÆ÷
 Name:		xmms
-Version:	1.2.8
-Release:	2
+Version:	1.2.9
+Release:	0.1
 Epoch:		2
 License:	GPL v2+
 Group:		X11/Applications/Sound
-Source0:	ftp://ftp.xmms.org/pub/xmms/1.2.x/%{name}-%{version}.tar.bz2
-# Source0-md5:	d523735b59232f0eedd45dc2b7a4f5ad
+Source0:	http://www.xmms.org/files/1.2.x/%{name}-%{version}.tar.bz2
+# Source0-md5:	428084b80a6ee936f57a6703a610f039
 Source1:	%{name}-icons.tar.gz
 # Source1-md5:	14fc5a0bb3679daf1c3900e3a30674e9
 Source2:	mp3license
@@ -30,16 +28,15 @@ Source5:	%{name}-skins.tar.bz2
 # Source5-md5:	39d6de4bf2c37c17b868df3596871c59
 Source6:	%{name}-gnome-mime-info
 Source7:	%{name}.png
-Patch0:		%{name}-libogg_libvorbis_1.0_ac_fix.patch
-Patch1:		%{name}-warn_about_unplayables.patch
-Patch2:		%{name}-am18.patch
-Patch3:		%{name}-gtk2.patch
+Patch0:		%{name}-warn_about_unplayables.patch
+Patch1:		%{name}-am18.patch
+Patch2:		%{name}-gtk2.patch
 URL:		http://www.xmms.org/
 BuildRequires:	OpenGL-devel
+BuildRequires:	alsa-lib-devel >= 0.9.5
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	esound-devel
-BuildRequires:	alsa-lib-devel >= 0.9.5
 BuildRequires:	gettext-devel
 BuildRequires:	libmikmod-devel > 3.1.7
 BuildRequires:	libogg-devel
@@ -52,21 +49,16 @@ BuildRequires:	gtk+2-devel >= 2.2.0
 # broken/incomplete patch? links with both GTK+ versions
 BuildRequires:	gtk+-devel >= 1.2.2
 %else
-%{?with_gnome:BuildRequires:	gnome-core-devel}
-%{?with_gnome:BuildRequires:	gnome-libs-devel}
 BuildRequires:	gtk+-devel >= 1.2.2
 Requires:	glib >= 1.2.2
 Requires:	gtk+ >= 1.2.2
 %endif
 Requires:	xmms-output-plugin
 Obsoletes:	x11amp
+Obsoletes:	xmms-gnome
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_noautoreqdep	libGL.so.1 libGLU.so.1
-%define		_sysconfdir	/etc/X11/GNOME
-%if %{without gtk2}
-%{?with_gnome:%define		_appletsdir	%(gnome-config --datadir)/applets}
-%endif
 
 %description
 XMMS is a sound player written from scratch. Since it uses the WinAmp
@@ -113,31 +105,6 @@ XMMS applet for WindowMaker.
 
 %description wm -l pl
 Aplet XMMS dla WindowMakera.
-
-%package gnome
-Summary:	XMMS - applet for controlling XMMS from the GNOME panel
-Summary(ja):	XMMS - GNOME¥Ñ¥Í¥ëÍÑ¤ÎXMMS¥¢¥×¥ì¥Ã¥È
-Summary(pl):	XMMS - aplet umo¿liwiaj±cy sterowanie XMMS-em z panelu GNOME
-Summary(ru):	áÐÐÌÅÔ ÐÁÎÅÌÉ GNOME ÄÌÑ xmms
-Summary(uk):	áÐÌÅÔ ÐÁÎÅÌ¦ GNOME ÄÌÑ xmms
-Summary(zh_CN):	XMMS - GNOME Æ½Ì¨ÉÏµÄ XMMS ¿ØÖÆ³ÌÐò
-Group:		X11/Applications/Sound
-Requires:	%{name} = %{epoch}:%{version}
-Requires:	gnome-libs >= 1.0.0
-
-%description gnome
-GNOME applet for controlling XMMS from the GNOME panel.
-
-%description gnome -l pl
-Aplet GNOME umo¿liwiaj±cy sterowanie XMMS-em z panelu GNOME.
-
-%description gnome -l ru
-ðÁËÅÔ xmms-gnome ÓÏÄÅÒÖÉÔ ÁÐÐÌÅÔ ÐÁÎÅÌÉ GNOME, ÄÁÀÝÉÊ ×ÏÚÍÏÖÎÏÓÔØ
-ÕÐÒÁ×ÌÑÔØ xmms.
-
-%description gnome -l uk
-ðÁËÅÔ xmms-gnome Í¦ÓÔÉÔØ ÁÐÌÅÔ ÐÁÎÅÌ¦ GNOME, ÑËÉÊ ÄÁ¤ ÍÏÖÌÉ×¦ÓÔØ
-ÕÐÒÁ×ÌÑÔÉ xmms.
 
 %package skins
 Summary:	XMMS - Skins
@@ -226,6 +193,18 @@ Bibliotecas estáticas para desenvolvimento com o XMMS.
 
 %description static -l uk
 óÔÁÔÉÞÎ¦ Â¦ÂÌ¦ÏÔÅËÉ ÄÌÑ ÐÏÂÕÄÏ×É Ð¦Ä'¤ÄÎÕ×ÁÎÉÈ ÍÏÄÕÌ¦× ÄÌÑ XMMS.
+
+%package gnome-mime-info
+Summary:	MIME functions for GNOME
+Summary(pl):	Funkcje MIME dla GNOME
+Group:		X11/Applications
+Requires:	gnome-mime-data
+
+%description gnome-mime-info
+MIME functions for GNOME.
+
+%description gnome-mime-info -l pl
+Funkcje MIME dla GNOME.
 
 %package input-mikmod
 Summary:	XMMS - Input plugin to play MODs
@@ -417,12 +396,11 @@ OpenGL.
 %setup -q -a1 -a5
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
 
 cp -f %{SOURCE2} .
 
 %if %{with gtk2}
-%patch3 -p1
+%patch2 -p1
 
 rm -f po/*.gmo
 for F in po/*.po
@@ -460,18 +438,16 @@ install -d m4
 # get only XMMS_FUNC_POSIX
 head -n39 libxmms/acinclude.m4 > m4/xmms-func-posix.m4
 
-%if %{without gnome}
 cat > m4/fakegnome.m4 <<EOF
 AC_DEFUN([GNOME_INIT_HOOK],[])
 EOF
-%endif
 
 %build
 # kill copies of many macros
 rm -f acinclude.m4
 %{__gettextize}
 %{__libtoolize}
-%{__aclocal} -I m4 %{?with_gnome:-I%{_aclocaldir}/gnome}
+%{__aclocal} -I m4
 %{__autoconf}
 %{__autoheader}
 %{__automake}
@@ -486,14 +462,8 @@ rm -f acinclude.m4
 automake -a -c --foreign
 cd ..
 
-GNOMEOPT=""
-%if %{without gtk2}
-%{?with_gnome:GNOMEOPT=--with-gnome}
-%endif
-
 %configure \
 	--disable-vorbistest \
-	$GNOMEOPT \
 %ifarch %{ix86}
 	--enable-simd
 %endif
@@ -512,9 +482,9 @@ install -d $RPM_BUILD_ROOT{%{_desktopdir},%{_pixmapsdir}} \
 
 install %{SOURCE3} $RPM_BUILD_ROOT%{_desktopdir}
 install %{SOURCE4} $RPM_BUILD_ROOT%{_desktopdir}
-install %{SOURCE6} $RPM_BUILD_ROOT%{_datadir}/mime-info/xmms.keys
 install icons/*    $RPM_BUILD_ROOT%{_datadir}/xmms
 install Skins/*    $RPM_BUILD_ROOT%{_datadir}/xmms/Skins
+install %{SOURCE6} $RPM_BUILD_ROOT%{_datadir}/mime-info/xmms.keys
 install %{SOURCE7} $RPM_BUILD_ROOT%{_pixmapsdir}
 
 %find_lang %{name}
@@ -533,23 +503,23 @@ echo "to play."
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog NEWS README mp3license FAQ
 %attr(755,root,root) %{_bindir}/xmms
-%dir %{_libdir}/xmms
-%dir %{_libdir}/xmms/General
-%attr(755,root,root) %{_libdir}/xmms/General/*
-%dir %{_libdir}/xmms/Effect
 %attr(755,root,root) %{_libdir}/xmms/Effect/*
-%dir %{_libdir}/xmms/Visualization
+%attr(755,root,root) %{_libdir}/xmms/General/*
 %attr(755,root,root) %{_libdir}/xmms/Visualization/libbscope*
 %attr(755,root,root) %{_libdir}/xmms/Visualization/libsanalyzer*
-%dir %{_libdir}/xmms/Input
-%dir %{_libdir}/xmms/Output
 %dir %{_datadir}/xmms
 %dir %{_datadir}/xmms/Skins
+%dir %{_libdir}/xmms
+%dir %{_libdir}/xmms/Effect
+%dir %{_libdir}/xmms/General
+%dir %{_libdir}/xmms/Input
+%dir %{_libdir}/xmms/Output
+%dir %{_libdir}/xmms/Visualization
 %{_datadir}/xmms/*gif
 %{_datadir}/xmms/x*xpm
 %{_desktopdir}/xmms.desktop
-%{_pixmapsdir}/xmms*
 %{_mandir}/*/xmms*
+%{_pixmapsdir}/xmms*
 
 %files wm
 %defattr(644,root,root,755)
@@ -557,16 +527,6 @@ echo "to play."
 %{_datadir}/xmms/wmxmms*xpm
 %{_desktopdir}/wmxmms.desktop
 %{_mandir}/*/wmxmms*
-
-%if %{with gnome} && %{without gtk2}
-%files gnome
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/gnomexmms
-%{_sysconfdir}/CORBA/servers/*
-%{_appletsdir}/Multimedia/*
-%{_datadir}/mime-info/xmms.keys
-%{_mandir}/*/gnomexmms*
-%endif
 
 %files skins
 %defattr(644,root,root,755)
@@ -587,6 +547,10 @@ echo "to play."
 %files static
 %defattr(644,root,root,755)
 %attr(644,root,root) %{_libdir}/lib*.a
+
+%files gnome-mime-info
+%defattr(644,root,root,755)
+%{_datadir}/mime-info/xmms.keys
 
 %files input-mikmod
 %defattr(644,root,root,755)
