@@ -25,27 +25,27 @@ Patch4:		%{name}-workaround.patch
 Patch5:		%{name}-audio.patch
 Patch6:		%{name}-amfix.patch
 URL:		http://www.xmms.org/
+BuildRequires:	OpenGL
+BuildRequires:	OpenGL-devel
 BuildRequires:	autoconf
 BuildRequires:	automake
-BuildRequires:	libtool
-BuildRequires:	gettext-devel
-BuildRequires:	gtk+-devel >= 1.2.2
 BuildRequires:	esound-devel
-BuildRequires:	gnome-libs-devel
+BuildRequires:	gettext-devel
 BuildRequires:	gnome-core-devel
-BuildRequires:	OpenGL
+BuildRequires:	gnome-libs-devel
+BuildRequires:	gtk+-devel >= 1.2.2
 BuildRequires:	libmikmod-devel > 3.1.7
+BuildRequires:	libogg-devel
+BuildRequires:	libtool
+BuildRequires:	libvorbis-devel
 BuildRequires:	libxml-devel >= 1.7.0
 BuildRequires:	zlib-devel
-BuildRequires:	OpenGL-devel
-BuildRequires:	libogg-devel
-BuildRequires:	libvorbis-devel
 Requires:	glib >= 1.2.2
 Requires:	gtk+ >= 1.2.2
 Obsoletes:	x11amp
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define 	_noautoreqdep	libGL.so.1 libGLU.so.1
+%define		_noautoreqdep	libGL.so.1 libGLU.so.1
 %define		_prefix		/usr/X11R6
 %define		_mandi		%{_prefix}/man
 %define		_sysconfdir	/etc/X11/GNOME
@@ -60,9 +60,10 @@ and has also been GPL'd.
 Editor de sonido con GUI semejante al de WinAmp.
 
 %description -l pl
-XMMS jest odtwarzaczem d¼wiêku napisanym od zera. Jako, ¿e
-wykorzystuje interfejs WinAmpa, mo¿e równie¿ u¿ywaæ jego 'skórek'.
-Odtwarza pliki w formatach mp3, mod, s3m i wielu innych.
+XMMS jest odtwarzaczem d¼wiêku napisanym od zera. Jako ¿e wykorzystuje
+interfejs WinAmpa, mo¿e równie¿ u¿ywaæ jego 'skórek'. Odtwarza pliki w
+formatach mp3, mod, s3m i wielu innych. Teraz obs³uguje tak¿e pluginy
+do wej¶cia, wyj¶cia oraz ogólne; zosta³ tak¿e zGPL-izowany.
 
 %description -l pt_BR
 XMMS é um sound player escrito a partir do zero. Como ele utiliza a
@@ -81,8 +82,8 @@ Group(de):	X11/Applikationen/Multimedia
 Group(pl):	X11/Aplikacje/Multimedia
 Requires:	%{name} = %{version}
 Requires:	libmikmod >= 3.1.7
-Obsoletes:	xmms-mikmod
 Obsoletes:	xmms-input-modplug
+Obsoletes:	xmms-mikmod
 
 %description input-mikmod
 Input plugin for XMMS to play MODs (.MOD,.XM,.S3M, etc). Be aware that
@@ -90,16 +91,16 @@ this plugin sucks (possibly due to quality of libmikmod) - it is
 unable to play correctly a lot of modules. Use xmms-input-modplug
 instaed.
 
-%description -l es input-mikmod
+%description input-mikmod -l es
 Login de entrada para que XMMS alcance MODs (.MOD,.XM,.S3M, etc).
 
-%description -l pl input-mikmod
-Wtyczka dla XMMS do odtwarzania MODów (.MOD,.XM,.S3M, etc). Bo±d¼
-¶wiadom ¿e ta wtyczka jest bardzo s³aba (byæ mo¿e z powodu jaki¶ci
+%description input-mikmod -l pl
+Wtyczka dla XMMS do odtwarzania MODów (.MOD,.XM,.S3M, etc). B±d¼
+¶wiadom, ¿e ta wtyczka jest bardzo s³aba (byæ mo¿e z powodu jako¶ci
 libmikmod) - nie potrafi odtworzyæ poprawnie wielu modu³ów. Zainstaluj
 lepiej xmms-input-modplug.
 
-%description -l pt_BR input-mikmod
+%description input-mikmod -l pt_BR
 Plugin de entrada para o XMMS tocar MODs (.MOD,.XM,.S3M, etc).
 
 %package input-tonegen
@@ -132,19 +133,19 @@ Obsoletes:	xmms-esd
 %description output-esd
 Output plugin for xmms for use with the esound package.
 
-%description -l es output-esd
+%description output-esd -l es
 Plugin de salida para XMMS para uso con el paquete eSound.
 
 %description output-esd -l pl
 Wtyczka dla XMMS umo¿liwiaj±ca wykorzystanie esound przy odtwarzaniu
 d¼wiêków.
 
-%description -l pt_BR output-esd
+%description output-esd -l pt_BR
 Plugin de saída para o XMMS trabalhar com o esd.
 
 %package gnome
 Summary:	XMMS - applet for controlling xmms from the GNOME panel
-Summary(pl):	XMMS - aplet umo¿liwiaj±cy sterowanie xmms z panelu GNOME
+Summary(pl):	XMMS - aplet umo¿liwiaj±cy sterowanie xmmsem z panelu GNOME
 Group:		X11/Applications/Multimedia
 Group(de):	X11/Applikationen/Multimedia
 Group(pl):	X11/Aplikacje/Multimedia
@@ -180,12 +181,13 @@ Group:		X11/Applications/Multimedia
 Group(de):	X11/Applikationen/Multimedia
 Group(pl):	X11/Aplikacje/Multimedia
 Requires:	%{name} >= %{version}
+Requires:	unzip
 
 %description skins
 Additional skins for xmms.
 
 %description skins -l pl
-Dodatkowe 'skórki' dla xmms.
+Dodatkowe 'skórki' dla xmmsa.
 
 %package devel
 Summary:	XMMS - libraries and header files
@@ -206,14 +208,14 @@ Requires:	%{name} = %{version}
 %description devel
 Libraries and header files required for compiling xmms plugins.
 
-%description -l es devel
+%description devel -l es
 Bibliotecas y archivos de inclusión, necesarios para compilar plugins
 de XMMS.
 
 %description devel -l pl
 Biblioteki i pliki nag³ówkowe wymagane do budowania wtyczek xmms.
 
-%description -l pt_BR devel
+%description devel -l pt_BR
 Bibliotecas e arquivos de inclusão necessários para se compilar
 plugins do XMMS.
 
@@ -235,13 +237,13 @@ Requires:	%{name}-devel = %{version}
 %description static
 Static libraries required for compiling xmms plugins.
 
-%description -l es static
+%description static -l es
 Static libraries for xmms development.
 
 %description static -l pl
 Biblioteki statyczne xmms.
 
-%description -l pt_BR static
+%description static -l pt_BR
 Bibliotecas estáticas para desenvolvimento com o xmms.
 
 %package input-vorbis
@@ -255,8 +257,8 @@ Requires:	%{name} >= %{version}
 %description input-vorbis
 OGG Vorbis input plugin for XMMS.
 
-%description -l pl input-vorbis
-Wtyczna do odtwarzania plików w formacie OGG Vorbis.
+%description input-vorbis -l pl
+Wtyczka do odtwarzania plików w formacie OGG Vorbis.
 
 %package input-cdaudio
 Summary:	XMMS - cdaudio input plugin
@@ -269,7 +271,7 @@ Requires:	%{name} >= %{version}
 %description input-cdaudio
 CD audio input plugin for XMMS.
 
-%description -l pl input-cdaudio
+%description input-cdaudio -l pl
 Wtyczka do odtwarzania p³yt CD-audio.
 
 %package input-idcin
@@ -283,12 +285,12 @@ Requires:	%{name} >= %{version}
 %description input-idcin
 idcin input plugin for XMMS.
 
-%description -l pl input-idcin
+%description input-idcin -l pl
 Wtyczka dla XMMSa do obs³ugi formatu idcin.
 
 %package input-mpg123
 Summary:	XMMS - mpg123 input plugin
-Summary(pl):	XMMS - wtyczka do odtwarzania plikow *.mp3
+Summary(pl):	XMMS - wtyczka do odtwarzania plikow mp3
 Group:		X11/Applications/Multimedia
 Group(de):	X11/Applikationen/Multimedia
 Group(pl):	X11/Aplikacje/Multimedia
@@ -297,12 +299,12 @@ Requires:	%{name} >= %{version}
 %description input-mpg123
 mpg123 input plugin for XMMS.
 
-%description -l pl input-mpg123
+%description input-mpg123 -l pl
 Wtyczka do XMMSa do obs³ugi mpg123.
 
 %package input-wav
 Summary:	XMMS - wav input plugin
-Summary(pl):	XMMS - wtyczka do odtwarzania plikow *.wav
+Summary(pl):	XMMS - wtyczka do odtwarzania plikow wav
 Group:		X11/Applications/Multimedia
 Group(de):	X11/Applikationen/Multimedia
 Group(pl):	X11/Aplikacje/Multimedia
@@ -311,7 +313,7 @@ Requires:	%{name} >= %{version}
 %description input-wav
 wav input plugin for XMMS.
 
-%description -l pl input-wav
+%description input-wav -l pl
 Wtyczka do XMMSa do obs³ugi plików wav.
 
 %package output-OSS
@@ -325,12 +327,12 @@ Requires:	%{name} >= %{version}
 %description output-OSS
 OSS output plugin for XMMS.
 
-%description -l pl output-OSS
+%description output-OSS -l pl
 Obs³uga sterowników OSS dla XMMS.
 
 %package output-disk
 Summary:	XMMS - disk-writer output plugin
-Summary(pl):	XMMS - wtyczka zapisywania danych na dysk.
+Summary(pl):	XMMS - wtyczka do zapisywania danych na dysk
 Group:		X11/Applications/Multimedia
 Group(de):	X11/Applikationen/Multimedia
 Group(pl):	X11/Aplikacje/Multimedia
@@ -339,7 +341,7 @@ Requires:	%{name} >= %{version}
 %description output-disk
 disk-wirter output plugin for XMMS.
 
-%description -l pl output-disk
+%description output-disk -l pl
 Wtyczka dla XMMS zapisuj±ca dane wyj¶ciowe na dysk.
 
 %prep
@@ -385,7 +387,7 @@ install %{SOURCE3} $RPM_BUILD_ROOT%{_applnkdir}/Multimedia
 install %{SOURCE4} $RPM_BUILD_ROOT%{_applnkdir}/Amusements
 install %{SOURCE6} $RPM_BUILD_ROOT%{_datadir}/mime-info/xmms.keys
 install icons/*    $RPM_BUILD_ROOT%{_datadir}/xmms
-install Skins/*	   $RPM_BUILD_ROOT%{_datadir}/xmms/Skins
+install Skins/*    $RPM_BUILD_ROOT%{_datadir}/xmms/Skins
 
 gzip -9nf AUTHORS ChangeLog NEWS README mp3license FAQ
 
