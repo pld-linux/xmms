@@ -8,11 +8,11 @@ Vendor:		Peter Alm, Mikael Alm, Olle Hällnäs, Thomas Nilsson and others.
 Url:		http://www.xmms.org/
 Source:		http://www.xmms.org/xmms-%{version}.tar.gz
 BuildRoot:	/tmp/%{name}-%{version}-root
-BuildPrereq:	glib-devel
-BuildPrereq:	gtk+-devel
-BuildPrereq:	esound-devel
-BuildPrereq:	gnome-libs-devel
-BuildPrereq:	mikmod-devel
+BuildRequires:	glib-devel
+BuildRequires:	gtk+-devel
+BuildRequires:	esound-devel
+BuildRequires:	gnome-libs-devel
+BuildRequires:	mikmod-devel
 Requires:	glib >= 1.2.2
 Requires:	gtk+ >= 1.2.2
 
