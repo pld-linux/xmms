@@ -9,8 +9,9 @@ Group:		X11/Applications/Multimedia
 Group(pl):	X11/Aplikacje/Multimedia
 Source0:	http://www.xmms.org/xmms-%{version}.tar.gz
 Source1:	xmms-icons.tar.gz
-Source2:	xmms.desktop
-Source3:	mp3license
+Source2:	mp3license
+Source3:	xmms.desktop
+Source4:	wmxmms.desktop
 Patch0:		xmms-0.9.5.1-cvs19991011.patch
 Patch1:		xmms-audio.patch
 URL:		http://www.xmms.org/
@@ -129,7 +130,7 @@ Biblioteki statyczne xmms.
 %patch0 -p1
 %patch1 -p1
 
-cp %{SOURCE3} .
+cp %{SOURCE2} .
 
 %build
 aclocal; autoconf; automake
@@ -144,11 +145,12 @@ make
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_applnkdir}/Multimedia
+install -d $RPM_BUILD_ROOT%{_applnkdir}/{Multimedia,DockApps}
 
 make install DESTDIR=$RPM_BUILD_ROOT
 
-install %{SOURCE2} $RPM_BUILD_ROOT%{_applnkdir}/Multimedia
+install %{SOURCE3} $RPM_BUILD_ROOT%{_applnkdir}/Multimedia
+install %{SOURCE4} $RPM_BUILD_ROOT%{_applnkdir}/DockApps
 install icons/*    $RPM_BUILD_ROOT%{_datadir}/xmms
 
 strip --strip-unneeded $RPM_BUILD_ROOT%{_libdir}/libxmms.so.*.* \
@@ -167,6 +169,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc *.gz
 %{_applnkdir}/Multimedia/xmms.desktop
+%{_applnkdir}/DockApps/wmxmms.desktop
 %attr(755,root,root) %{_bindir}/xmms
 %attr(755,root,root) %{_bindir}/wmxmms
 %attr(755,root,root) %{_libdir}/libxmms.so.*.*
