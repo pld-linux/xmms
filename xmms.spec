@@ -15,7 +15,7 @@ Summary(uk):	Програвач музики з WinAmp GUI
 Summary(zh_CN):	XMMS - X ╤к╤Юц╫лЕ╡╔╥ефВ
 Name:		xmms
 Version:	1.2.7
-Release:	15
+Release:	16
 Epoch:		2
 License:	GPL v2+
 Group:		X11/Applications/Sound
@@ -482,7 +482,10 @@ GNOMEOPT=""
 %endif
 
 %configure \
-	--disable-vorbistest $GNOMEOPT
+	--disable-vorbistest $GNOMEOPT \
+%ifarch %{ix86}
+	--enable-simd
+%endif
 
 test -z $SED && SED=sed
 export SED
