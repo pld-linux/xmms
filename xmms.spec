@@ -2,7 +2,7 @@ Summary:	Sound player with the WinAmp GUI, for Unix-based systems
 Summary(pl):	Odtwarzacz d¼wiêku z interfejsem WinAmpa
 Name:		xmms
 Version:	1.2.3
-Release:	3
+Release:	4
 Epoch:		2
 License:	GPL
 Group:		X11/Applications/Multimedia
@@ -20,7 +20,6 @@ Patch0:		%{name}-audio.patch
 Patch1:		%{name}-opt-flags.patch
 Patch2:		%{name}-pluggedup.patch
 Patch3:		%{name}-gettext.patch
-Patch4:		%{name}-vorbis-make.patch
 URL:		http://www.xmms.org/
 BuildRequires:	gettext-devel
 BuildRequires:	gtk+-devel >= 1.2.2
@@ -32,7 +31,6 @@ BuildRequires:	libmikmod-devel > 3.1.7
 BuildRequires:	libxml-devel
 BuildRequires:	zlib-devel
 BuildRequires:	OpenGL-devel
-BuildRequires:	libvorbis-static
 Requires:	glib >= 1.2.2
 Requires:	gtk+ >= 1.2.2
 Obsoletes:	x11amp
@@ -169,12 +167,74 @@ Static libraries required for compiling xmms plugins.
 %description static -l pl
 Biblioteki statyczne xmms.
 
+%package input-cdaudio
+Summary:	XMMS - cdaudio input plugin
+Summary(pl):	XMMS - wtyczka do odtwarzania plyt CD-audio
+Group:		X11/Applications/Multimedia
+Group(de):	X11/Applikationen/Multimedia
+Group(pl):	X11/Aplikacje/Multimedia
+Requires:	%{name} >= %{version}
+
+%description input-cdaudio
+CD audio input plugin for XMMS
+
+%package input-idcin
+Summary:	XMMS - idcin input plugin
+Group:		X11/Applications/Multimedia
+Group(de):	X11/Applikationen/Multimedia
+Group(pl):	X11/Aplikacje/Multimedia
+Requires:	%{name} >= %{version}
+
+%description input-idcin
+idcin input plugin for XMMS
+
+%package input-mpg123
+Summary:	XMMS - mpg123 input plugin
+Summary(pl):	XMMS - wtyczka do odtwarzania plikow *.mp3
+Group:		X11/Applications/Multimedia
+Group(de):	X11/Applikationen/Multimedia
+Group(pl):	X11/Aplikacje/Multimedia
+Requires:	%{name} >= %{version}
+
+%description input-mpg123
+mpg123 input plugin for XMMS
+
+%package input-wav
+Summary:	XMMS - wav input plugin
+Summary(pl):	XMMS - wtyczka do odtwarzania plikow *.wav
+Group:		X11/Applications/Multimedia
+Group(de):	X11/Applikationen/Multimedia
+Group(pl):	X11/Aplikacje/Multimedia
+Requires:	%{name} >= %{version}
+
+%description input-wav
+wav input plugin for XMMS
+
+%package output-OSS
+Summary:	XMMS - OSS output plugin
+Group:		X11/Applications/Multimedia
+Group(de):	X11/Applikationen/Multimedia
+Group(pl):	X11/Aplikacje/Multimedia
+Requires:	%{name} >= %{version}
+
+%description output-OSS
+OSS output plugin for XMMS
+
+%package output-disk
+Summary:	XMMS - disk-writer output plugin
+Group:		X11/Applications/Multimedia
+Group(de):	X11/Applikationen/Multimedia
+Group(pl):	X11/Aplikacje/Multimedia
+Requires:	%{name} >= %{version}
+
+%description output-disk
+disk-wirter output plugin for XMMS
+
 %prep
 %setup -q -a1 -a5 -a7
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch4 -p1
 
 cp %{SOURCE2} .
 
@@ -219,17 +279,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/xmms
 %attr(755,root,root) %{_bindir}/wmxmms
 %attr(755,root,root) %{_libdir}/libxmms.so.*.*
-
 %dir %{_libdir}/xmms
-%dir %{_libdir}/xmms/Input
-%attr(755,root,root) %{_libdir}/xmms/Input/libcdaudio*
-%attr(755,root,root) %{_libdir}/xmms/Input/libmpg123*
-%attr(755,root,root) %{_libdir}/xmms/Input/libwav*
-%attr(755,root,root) %{_libdir}/xmms/Input/libidcin*
-%attr(755,root,root) %{_libdir}/xmms/Input/libvorbis*
-%dir %{_libdir}/xmms/Output
-%attr(755,root,root) %{_libdir}/xmms/Output/libOSS*
-%attr(755,root,root) %{_libdir}/xmms/Output/libdisk_writer*
 %dir %{_libdir}/xmms/General
 %attr(755,root,root) %{_libdir}/xmms/General/*
 %dir %{_libdir}/xmms/Effect
@@ -280,3 +330,33 @@ rm -rf $RPM_BUILD_ROOT
 %files static
 %defattr(644,root,root,755)
 %attr(644,root,root) %{_libdir}/lib*.a
+
+%files input-cdaudio
+%defattr(644,root,root,755)
+%dir %{_libdir}/xmms/Input
+%attr(755,root,root) %{_libdir}/xmms/Input/libcdaudio*
+
+%files input-idcin
+%defattr(644,root,root,755)
+%dir %{_libdir}/xmms/Input
+%attr(755,root,root) %{_libdir}/xmms/Input/libidcin*
+
+%files input-mpg123
+%defattr(644,root,root,755)
+%dir %{_libdir}/xmms/Input
+%attr(755,root,root) %{_libdir}/xmms/Input/libmpg123*
+
+%files input-wav
+%defattr(644,root,root,755)
+%dir %{_libdir}/xmms/Input
+%attr(755,root,root) %{_libdir}/xmms/Input/libwav*
+
+%files output-OSS
+%defattr(644,root,root,755)
+%dir %{_libdir}/xmms/Output
+%attr(755,root,root) %{_libdir}/xmms/Output/libOSS*
+
+%files output-disk
+%defattr(644,root,root,755)
+%dir %{_libdir}/xmms/Output
+%attr(755,root,root) %{_libdir}/xmms/Output/libdisk_writer*
