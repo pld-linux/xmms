@@ -10,7 +10,7 @@ Summary(ru):	Проигрыватель музыки с WinAmp GUI
 Summary(uk):	Програвач музики з WinAmp GUI
 Name:		xmms
 Version:	1.2.7
-Release:	4
+Release:	5
 Epoch:		2
 License:	GPL
 Group:		X11/Applications/Multimedia
@@ -25,6 +25,7 @@ Source7:	%{name}.png
 Patch0:		%{name}-amfix.patch
 Patch1:		%{name}-m4.patch
 Patch2:		%{name}-libogg_libvorbis_1.0_ac_fix.patch
+Patch3:		%{name}-warn_about_unplayables.patch
 URL:		http://www.xmms.org/
 BuildRequires:	OpenGL-devel
 BuildRequires:	autoconf
@@ -374,6 +375,7 @@ OpenGL.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 cp -f %{SOURCE2} .
 
@@ -421,7 +423,14 @@ install %{SOURCE7} $RPM_BUILD_ROOT%{_pixmapsdir}
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post   -p /sbin/ldconfig
+%post
+/sbin/ldconfig
+
+echo
+echo "Remember to install apropriate xmms-input-* packages for files you want"
+echo "to play."
+echo
+
 %postun -p /sbin/ldconfig
 
 %files -f %{name}.lang
