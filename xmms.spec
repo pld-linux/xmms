@@ -455,14 +455,14 @@ do
     esac
     if [ "$E" != "" ]; then
 	mv $F tmp.po
-	cat tmp.po | egrep -v '^#\.' | iconv -f $E -t UTF-8 -o $F
+	cat tmp.po | egrep -v '^#\.' | sed -e "s/\(charset=\)$ENC/\1UTF-8/" | \
+		iconv -f $E -t UTF-8 -o $F
     fi
 done
 %endif
 #%%patch8 -p1
 
 %build
-rm -f missing
 #%%{__gettextize}
 %{__libtoolize}
 %{__aclocal}
