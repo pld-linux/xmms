@@ -9,7 +9,7 @@ Summary(pl):	Odtwarzacz d╪wiЙku z interfejsem WinAmpa
 Summary(pt_BR):	Tocador de som com GUI semelhante ao do WinAmp
 Summary(ru):	Проигрыватель музыки с WinAmp GUI
 Summary(uk):	Програвач музики з WinAmp GUI
-Summary(zh_CN):	XMMS - X ╤к╤Юц╫лЕ╡╔╥ефВ.
+Summary(zh_CN):	XMMS - X ╤к╤Юц╫лЕ╡╔╥ефВ
 Name:		xmms
 Version:	1.2.7
 Release:	8
@@ -106,7 +106,7 @@ Summary(ja):	XMMS - GNOME╔я╔м╔Кмя╓нXMMS╔╒╔в╔Л╔ц╔х
 Summary(pl):	XMMS - aplet umo©liwiaj╠cy sterowanie XMMS-em z panelu GNOME
 Summary(ru):	Апплет панели GNOME для xmms
 Summary(uk):	Аплет панел╕ GNOME для xmms
-Summary(zh_CN):	XMMS - GNOME ф╫л╗ио╣д XMMS ©ьжфЁлпР.
+Summary(zh_CN):	XMMS - GNOME ф╫л╗ио╣д XMMS ©ьжфЁлпР
 Group:		X11/Applications/Multimedia
 Requires:	%{name} = %{version}
 Requires:	gnome-libs >= 1.0.0
@@ -157,7 +157,7 @@ Summary(pl):	XMMS - biblioteki i pliki nagЁСwkowe
 Summary(pt_BR):	Bibliotecas e arquivos de inclusЦo necessАrios para se compilar plugins do XMMS
 Summary(uk):	.h-файли для xmms
 Summary(ru):	.h-файлы для xmms
-Summary(zh_CN):	XMMS - ©╙╥╒©Б.
+Summary(zh_CN):	XMMS - ©╙╥╒©Б
 Group:		X11/Development/Libraries
 Requires:	gtk+-devel
 Requires:	%{name}-libs = %{version}
@@ -217,7 +217,7 @@ Summary(es):	Login de entrada para que XMMS alcance MODs (.MOD,.XM,.S3M, etc)
 Summary(ja):	XMMS - MODs╓Р╨фю╦╓╧╓К╓©╓А╓нфЧно╔в╔И╔╟╔╓╔С
 Summary(pl):	XMMS - wtyczka do odtwarzania MODСw
 Summary(pt_BR):	Plugin de entrada para o XMMS tocar MODs (.MOD,.XM,.S3M, etc)
-Summary(zh_CN):	XMMS - ╡╔╥е M0Ds нд╪Ч╣дйДхК╡Е╪Ч.
+Summary(zh_CN):	XMMS - ╡╔╥е M0Ds нд╪Ч╣дйДхК╡Е╪Ч
 Group:		X11/Applications/Multimedia
 Requires:	%{name} = %{version}
 Requires:	libmikmod >= 3.1.7
@@ -259,7 +259,7 @@ Wtyczka dla XMMS-a generuj╠ca d╪wiЙk o zadanej czЙstotliwo╤ci.
 Summary:	XMMS - cdaudio input plugin
 Summary(ja):	XMMS - OGGs╓Р╨фю╦╓╧╓К╓©╓А╓нфЧно╔в╔И╔╟╔╓╔С
 Summary(pl):	XMMS - wtyczka do odtwarzania plikСw vorbis
-Summary(zh_CN):	XMMS - ╡╔╥е 0GGs ╠ЮбКнд╪Ч╣дйДхК╡Е╪Ч.
+Summary(zh_CN):	XMMS - ╡╔╥е 0GGs ╠ЮбКнд╪Ч╣дйДхК╡Е╪Ч
 Group:		X11/Applications/Multimedia
 Requires:	%{name} >= %{version}
 
@@ -332,11 +332,11 @@ ObsЁuga sterownikСw OSS dla XMMS-a.
 
 %package output-esd
 Summary:	XMMS - Output plugin for use with the esound package
-Summary(es):	Plugin de salida para XMMS para uso con el paquete eSound.
+Summary(es):	Plugin de salida para XMMS para uso con el paquete eSound
 Summary(ja):	XMMS - esound╓РмЬмя╓╧╓К╫пно╔в╔И╔╟╔╓╔С
 Summary(pl):	XMMS - wtyczka umo©liwiaj╠ca korzystanie z esound
 Summary(pt_BR):	Plugin de saida para o XMMS para uso com o pacote eSound
-Summary(zh_CN):	XMMS - сК esound хМ╪Ч╟Эр╩фПй╧сц╣дйДЁЖ╡Е╪Ч.
+Summary(zh_CN):	XMMS - сК esound хМ╪Ч╟Эр╩фПй╧сц╣дйДЁЖ╡Е╪Ч
 Group:		X11/Applications/Multimedia
 Requires:	%{name} = %{version}
 Requires:	esound >= 0.2.8
@@ -375,7 +375,7 @@ Summary(ja):	XMMS - OpenGL╓РмЬмя╓╥╓©╔╟╔И╔у╔ё╔╚╔К╓й╩КЁп╡╫╔в╔И╔╟╔╓╔С
 Summary(pl):	XMMS - wtyczki do wizualizacji z u©yciem OpenGL
 Summary(ru):	XMMS - подключаемые модули визуализации, использующие библиотеку OenGL
 Summary(uk):	XMMS - п╕д'╓днуван╕ модул╕ в╕зуал╕зац╕╖, як╕ використовують б╕бл╕отеку OpenGL
-Summary(zh_CN):	XMMS - ©ийс╩╞╡Е╪Ч.
+Summary(zh_CN):	XMMS - ©ийс╩╞╡Е╪Ч
 Group:		X11/Applications/Multimedia
 Requires:	%{name} = %{version}
 Requires:	OpenGL
