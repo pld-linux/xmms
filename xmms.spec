@@ -12,7 +12,7 @@ Summary(uk):	Програвач музики з WinAmp GUI
 Summary(zh_CN):	XMMS - X ╤к╤Юц╫лЕ╡╔╥ефВ
 Name:		xmms
 Version:	1.2.7
-Release:	8
+Release:	9
 Epoch:		2
 License:	GPL v2+
 Group:		X11/Applications/Sound
@@ -28,6 +28,7 @@ Patch0:		%{name}-amfix.patch
 Patch1:		%{name}-m4.patch
 Patch2:		%{name}-libogg_libvorbis_1.0_ac_fix.patch
 Patch3:		%{name}-warn_about_unplayables.patch
+Patch4:		%{name}-configure.patch
 URL:		http://www.xmms.org/
 BuildRequires:	OpenGL-devel
 BuildRequires:	autoconf
@@ -399,6 +400,7 @@ OpenGL.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 cp -f %{SOURCE2} .
 
@@ -415,13 +417,14 @@ cd libxmms
 %{__aclocal}
 %{__autoconf}
 %{__automake}
-# for some reason ltmain.sh is missing - run libtoolize once more
-%{__libtoolize}
 cd ..
 
 %configure \
 	--disable-vorbistest \
 	%{?_without_gnome:--without-gnome}
+
+test -z $SED && SED=sed
+export SED
 
 %{__make} AS="%{__cc}"
 
@@ -429,6 +432,9 @@ cd ..
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_applnkdir}/Multimedia,%{_pixmapsdir}} \
 	$RPM_BUILD_ROOT%{_datadir}/{mime-info,xmms/Skins}
+
+test -z $SED && SED=sed
+export SED
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT \
