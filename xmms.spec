@@ -424,7 +424,9 @@ OpenGL.
 %patch4 -p1
 %patch5 -p1
 #%patch6 -p1
+%ifarch %{ix86}
 %patch8 -p1
+%endif
 
 cp -f %{SOURCE2} .
 
