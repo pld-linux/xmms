@@ -1,3 +1,7 @@
+#
+# Conditional build:
+# _without_gnome	- without gnome subpackage
+#
 Summary:	Sound player with the WinAmp GUI, for Unix-based systems
 Summary(es):	Editor de sonido con GUI semejante al de WinAmp
 Summary(pl):	Odtwarzacz d╪wiЙku z interfejsem WinAmpa
@@ -21,14 +25,13 @@ Source7:	%{name}.png
 Patch0:		%{name}-amfix.patch
 Patch1:		%{name}-m4.patch
 URL:		http://www.xmms.org/
-BuildRequires:	OpenGL
 BuildRequires:	OpenGL-devel
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	esound-devel
 BuildRequires:	gettext-devel
-BuildRequires:	gnome-core-devel
-BuildRequires:	gnome-libs-devel
+%{!?_without_gnome:BuildRequires:	gnome-core-devel}
+%{!?_without_gnome:BuildRequires:	gnome-libs-devel}
 BuildRequires:	gtk+-devel >= 1.2.2
 BuildRequires:	libmikmod-devel > 3.1.7
 BuildRequires:	libogg-devel
@@ -343,10 +346,9 @@ Wtyczka dla XMMS-a zapisuj╠ca dane wyj╤ciowe na dysk.
 
 %package visualization-GL
 Summary:	XMMS - Visualization plugins that use the OenGL library
-Summary:	XMMS - OpenGL visualization plugins
-Summary(pl):	XMMS - wtyczki do wizulalizacji OpenGL
-Summary(uk):	XMMS - п╕д'╓днуван╕ модул╕ в╕зуал╕зац╕╖, як╕ використовують б╕бл╕отеку OpenGL
+Summary(pl):	XMMS - wtyczki do wizualizacji z u©yciem OpenGL
 Summary(ru):	XMMS - подключаемые модули визуализации, использующие библиотеку OenGL
+Summary(uk):	XMMS - п╕д'╓днуван╕ модул╕ в╕зуал╕зац╕╖, як╕ використовують б╕бл╕отеку OpenGL
 Group:		X11/Applications/Multimedia
 Requires:	%{name} = %{version}
 Requires:	OpenGL
@@ -358,12 +360,12 @@ XMMS - Visualization plugins that use the OpenGL library.
 %description visualization-GL -l pl
 Wtyczki graficzne wykorzystuj╠ce bibliotekЙ OpenGL.
 
-%description visualization-GL -l uk
-XMMS - п╕д'╓днуван╕ модул╕ в╕зуал╕зац╕╖, як╕ використовують б╕бл╕отеку
-OpenGL.
-
 %description visualization-GL -l ru
 XMMS - подключаемые модули визуализации, использующие библиотеку
+OpenGL.
+
+%description visualization-GL -l uk
+XMMS - п╕д'╓днуван╕ модул╕ в╕зуал╕зац╕╖, як╕ використовують б╕бл╕отеку
 OpenGL.
 
 %prep
@@ -375,20 +377,24 @@ cp -f %{SOURCE2} .
 
 %build
 rm -f missing
-gettextize --copy --force
-libtoolize --copy --force
+%{__gettextize}
+%{__libtoolize}
 aclocal
 %{__autoconf}
 %{__automake}
 
 cd libxmms
-libtoolize --copy --force
+%{__libtoolize}
 aclocal
 %{__autoconf}
 %{__automake}
+# for some reason ltmain.sh is missing - run libtoolize once more
+%{__libtoolize}
 cd ..
 
-%configure
+%configure \
+	%{?_without_gnome:--without-gnome}
+
 %{__make} AS="%{__cc}"
 
 %install
@@ -406,7 +412,6 @@ install %{SOURCE6} $RPM_BUILD_ROOT%{_datadir}/mime-info/xmms.keys
 install icons/*    $RPM_BUILD_ROOT%{_datadir}/xmms
 install Skins/*    $RPM_BUILD_ROOT%{_datadir}/xmms/Skins
 install %{SOURCE7} $RPM_BUILD_ROOT%{_pixmapsdir}
-gzip -9nf AUTHORS ChangeLog NEWS README mp3license FAQ
 
 %find_lang %{name}
 
@@ -418,7 +423,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc {AUTHORS,ChangeLog,NEWS,README,mp3license,FAQ}.gz
+%doc AUTHORS ChangeLog NEWS README mp3license FAQ
 %{_applnkdir}/Multimedia/xmms.desktop
 %attr(755,root,root) %{_bindir}/xmms
 %attr(755,root,root) %{_libdir}/libxmms.so.*.*
@@ -447,6 +452,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/xmms/wmxmms*xpm
 %{_mandir}/*/wmxmms*
 
+%if %{?_without_gnome:0}%{!?_without_gnome:1}
 %files gnome
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/gnomexmms
@@ -454,6 +460,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/applets/Multimedia/*
 %{_datadir}/mime-info/xmms.keys
 %{_mandir}/*/gnomexmms*
+%endif
 
 %files skins
 %defattr(644,root,root,755)
