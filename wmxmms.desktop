@@ -1,9 +1,10 @@
 [Desktop Entry]
+Encoding=UTF-8
 Name=WmXmms
 Comment=Xmms Mp3 player
 Comment[pl]=Odtwarzacz MP3 Xmms
 Exec=wmxmms
-Terminal=0
+Terminal=false
 Type=Application
 Categories=AudioVideo
 # vi: encoding=utf-8
