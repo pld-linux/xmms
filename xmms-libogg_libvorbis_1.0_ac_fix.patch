@@ -1,0 +1,13 @@
+--- xmms-1.2.7/configure.in~	Sun Jul 21 20:42:09 2002
++++ xmms-1.2.7/configure.in	Sun Jul 21 20:42:09 2002
+@@ -211,8 +211,8 @@
+ 		enable_vorbis="yes")
+ 
+ if test "x$enable_vorbis" = xyes; then
+-	AM_PATH_OGG(have_ogg=yes, have_ogg=no)
+-	AM_PATH_VORBIS(have_vorbis=yes, have_vorbis=no)
++	XIPH_PATH_OGG(have_ogg=yes, have_ogg=no)
++	XIPH_PATH_VORBIS(have_vorbis=yes, have_vorbis=no)
+ 	if test "x$have_vorbis" = xyes; then
+ 	  AC_MSG_CHECKING(if vorbis is sufficiently new)
+ 	  CFLAGS_save=$CFLAGS
