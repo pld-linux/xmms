@@ -328,13 +328,13 @@ gettextize --copy --force
 libtoolize --copy --force
 aclocal
 autoconf
-automake -a -c
+automake -a -c -f
 
 cd libxmms
 libtoolize --copy --force
 aclocal
 autoconf
-automake -a -c
+automake -a -c -f
 cd ..
 
 %configure
