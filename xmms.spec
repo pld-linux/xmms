@@ -1,13 +1,13 @@
 Summary:	Sound player with the WinAmp GUI, for Unix-based systems
 Summary(pl):	Odtwarzacz d¼wiêku z interfejsem WinAmpa
 Name:		xmms
-Version:	1.0.1
-Release:	6
-Serial:		2
+Version:	1.2.2
+Release:	1
+#Serial:		2
 License:	GPL
 Group:		X11/Applications/Multimedia
 Group(pl):	X11/Aplikacje/Multimedia
-Source0:	http://www.xmms.org/files/%{name}-%{version}.tar.gz
+Source0:	ftp://ftp.xmms.org/xmms/1.2.x/%{name}-%{version}.tar.gz
 Source1:	xmms-icons.tar.gz
 Source2:	mp3license
 Source3:	xmms.desktop
@@ -15,15 +15,19 @@ Source4:	wmxmms.desktop
 Source5:	xmms-skins.tar.bz2
 Source6:	xmms-gnome-mime-info
 Patch0:		xmms-audio.patch
-Patch1:		xmms-gtk-locale.patch
+Patch1:		xmms-opt-flags.patch
 Patch2:		xmms-pluggedup.patch
 URL:		http://www.xmms.org/
+BuildRequires:	gettext-devel
 BuildRequires:	gtk+-devel >= 1.2.2
 BuildRequires:	esound-devel
 BuildRequires:	gnome-libs-devel
 BuildRequires:	gnome-core-devel
 BuildRequires:	OpenGL
 BuildRequires:	libmikmod-devel > 3.1.7
+BuildRequires:	libxml-devel
+BuildRequires:	zlib-devel
+BuildRequires:	OpenGL-devel
 Requires:	glib >= 1.2.2
 Requires:	gtk+ >= 1.2.2
 Obsoletes:	x11amp
@@ -56,6 +60,19 @@ Input plugin for XMMS to play MODs (.MOD,.XM,.S3M, etc)
 
 %description mikmod -l pl
 Wtyczka dla XMMS do odtwarzania MODów (.MOD,.XM,.S3M, etc)
+
+%package tonegen
+Summary:	XMMS - Input plugin to generate sound of given frequency
+Summary(pl):	XMMS - wtyczka generuj±ca d¼wiêk o zadanej czêstotliwo¶ci
+Group:		X11/Applications/Multimedia
+Group(pl):	X11/Aplikacje/Multimedia
+Requires:	%{name} = %{version}
+
+%description tonegen
+Input plugin for XMMS to generate sound of given frequency.
+
+%description tonegen -l pl
+Wtyczka dla XMMS generuj±ca d¼wiêk o zadanej czêstotliwo¶ci.
 
 %package esd
 Summary:	XMMS - Output plugin for use with the esound package
@@ -150,6 +167,8 @@ cp %{SOURCE2} .
 %build
 aclocal; autoconf; automake
 (cd libxmms; aclocal; autoconf; automake)
+gettextize --copy --force
+
 CFLAGS="$RPM_OPT_FLAGS -I%{_prefix}/include"
 CPPFLAGS="$RPM_OPT_FLAGS -I%{_prefix}/include"
 LDFLAGS="-s -L%{_prefix}/lib"
@@ -211,11 +230,17 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/xmms/Visualization/libbscope*
 %attr(755,root,root) %{_libdir}/xmms/Visualization/libsanalyzer*
 
-%{_datadir}/xmms
+%dir %{_datadir}/xmms
+%{_datadir}/xmms/*gif
+%{_datadir}/xmms/*xpm
 
 %files mikmod
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/xmms/Input/libmikmod*
+
+%files tonegen
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/xmms/Input/libtonegen*
 
 %files esd
 %defattr(644,root,root,755)
