@@ -15,7 +15,7 @@ diff -Nuard xmms-1.2.8.orig/acinclude.m4 xmms-1.2.8/acinclude.m4
  	        AC_MSG_RESULT(no)
  	        no_gnome_config="yes"
 +		AM_CONDITIONAL(HAVE_ORBIT,false)
-+		AM_CONDITIONAL(HABE_GNORBA,false)
++		AM_CONDITIONAL(HAVE_GNORBA,false)
                fi
              fi
  
