@@ -45,6 +45,7 @@ BuildRequires:	libogg-devel
 BuildRequires:	libtool
 BuildRequires:	libvorbis-devel >= 1:1.0
 BuildRequires:	libxml-devel >= 1.7.0
+BuildRequires:	perl-base
 BuildRequires:	zlib-devel
 %if %{with gtk2}
 BuildRequires:	gtk+2-devel >= 2:2.2.0
