@@ -1,0 +1,5 @@
+- start update to 1.2.6 (new stable version with many changes and fixes),
+- removed obsoleted patches,
+- fixed %define for %{mandor} so man pages will be now installed in proper
+  path.
+  NOTE: builds correctly but %files need update.
