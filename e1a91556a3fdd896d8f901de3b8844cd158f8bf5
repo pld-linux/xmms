@@ -1,0 +1,5 @@
+- up to 1.2.9
+- removed gnome1 stuff (dropped from xmms)
+- added gnome-mime-info for gnome1 and gnome
+- %files and BRs sorted
+  note: this will be moved to HEAD shortly after some testing
