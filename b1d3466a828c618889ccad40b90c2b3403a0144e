@@ -1,0 +1,11 @@
+- updated to latest 0.9.5.1 cvs version (19991011)
+- added xmms-audio.patch (from rawhide)
+- added more xmms icons
+- Obsoletes: x11amp
+- added more BuildRequires rules
+- added pl translation
+- modified %build to allow build with OpenGL support
+- added mesa subpackage
+- more fixes in %files
+- added stripping shared libraries
+- other minor changes
