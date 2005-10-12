@@ -548,13 +548,13 @@ umask 022
 
 %files libs
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/xmms-config
 %attr(755,root,root) %{_libdir}/libxmms.so.*.*
 %dir %{_libdir}/xmms
 %dir %{_libdir}/xmms/Input
 
 %files devel
 %defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/xmms-config
 %attr(755,root,root) %{_libdir}/lib*.so
 %{_libdir}/lib*.la
 %{_includedir}/*
