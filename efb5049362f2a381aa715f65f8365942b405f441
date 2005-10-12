@@ -1,0 +1,4 @@
+- Release 3.
+- xmms-input-mikmod Obsoletes: xmms-input-modplug.
+- Cleaned mess with plugin directories ownership: "plugins/{Input,Output}" and
+  others are now owned by "xmms" package (%dir), not by every single plugin.
