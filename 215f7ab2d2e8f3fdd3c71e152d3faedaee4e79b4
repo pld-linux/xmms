@@ -1,0 +1,6 @@
+- Added missing manuals.
+- WM applet moved from amusements to multimedia menu (in which gnome
+  applet already is present).
+- Changed order of subpackages in spec: first "normal", then plugins.
+  They were mixed.
+  NOTE: Didn't try to rebuild package (it's 3am here), but hope it's OK.
