@@ -1,0 +1,5 @@
+- added configure patch (added AC_CONFIG_AUX_DIR(.) to libxmms/configure.in, so
+  ltmain.sh is installed correctly)
+- removed duplicated %{__libtoolize}
+- set $$SED variable (libtool doesn't work without this)
+- rel. 9
