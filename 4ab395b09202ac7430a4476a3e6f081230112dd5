@@ -1,0 +1,1 @@
+- make gnme applets path %{_prefix} independent.
