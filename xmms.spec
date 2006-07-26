@@ -140,8 +140,8 @@ Summary(ja):	XMMS - ³«È¯ÍÑ¥Õ¥¡¥¤¥ë
 Summary(ko):	XMMS - ¶óÀÌºê·¯¸®¿Í Çì´õ ÆÄÀÏµé
 Summary(pl):	XMMS - biblioteki i pliki nag³ówkowe
 Summary(pt_BR):	Bibliotecas e arquivos de inclusão necessários para se compilar plugins do XMMS
-Summary(uk):	.h-ÆÁÊÌÉ ÄÌÑ XMMS
 Summary(ru):	.h-ÆÁÊÌÙ ÄÌÑ XMMS
+Summary(uk):	.h-ÆÁÊÌÉ ÄÌÑ XMMS
 Summary(zh_CN):	XMMS - ¿ª·¢¿â
 Group:		X11/Development/Libraries
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
@@ -323,8 +323,8 @@ Summary(pl):	XMMS - plugin obs³ugi sterowników Alsa
 Group:		X11/Applications/Sound
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 Provides:	xmms-output-plugin
-Obsoletes:	xmms-output-alsa
 Obsoletes:	xmms-output-aalsa
+Obsoletes:	xmms-output-alsa
 
 %description output-ALSA
 ALSA output plugin for XMMS.
@@ -562,7 +562,7 @@ umask 022
 
 %files static
 %defattr(644,root,root,755)
-%attr(644,root,root) %{_libdir}/lib*.a
+%{_libdir}/lib*.a
 
 %files gnome-mime-info
 %defattr(644,root,root,755)
