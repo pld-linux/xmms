@@ -1,7 +1,8 @@
 #
 # Conditional build:
 %bcond_with	gtk2	# experimental GTK+2 port (and probably broken/incomplete)
-			# (deprecated - many plugins won't work, use beep instead)
+			# (deprecated - many plugins won't work, use xmms2 or bmp/bmpx/audacious instead)
+#
 Summary:	Sound player with the WinAmp GUI, for Unix-based systems
 Summary(es):	Editor de sonido con GUI semejante al de WinAmp
 Summary(ja):	XMMS - X Window System╬Е╓гф╟╨Н╓╧╓К╔ч╔К╔а╔А╔г╔ё╔╒╔в╔Л║╪╔Д║╪
@@ -46,6 +47,8 @@ BuildRequires:	libtool
 BuildRequires:	libvorbis-devel >= 1:1.0
 BuildRequires:	libxml-devel >= 1.7.0
 BuildRequires:	perl-base
+BuildRequires:	xorg-lib-libSM-devel
+BuildRequires:	xorg-lib-libXxf86vm-devel
 BuildRequires:	zlib-devel
 %if %{with gtk2}
 BuildRequires:	gtk+2-devel >= 2:2.2.0
@@ -380,7 +383,6 @@ Summary(uk):	XMMS - п╕д'╓днуван╕ модул╕ в╕зуал╕зац╕╖, як╕ використовують б╕бл╕от
 Summary(zh_CN):	XMMS - ©ийс╩╞╡Е╪Ч
 Group:		X11/Applications/Multimedia
 Requires:	%{name} = %{epoch}:%{version}-%{release}
-Requires:	OpenGL
 Obsoletes:	xmms-mesa
 
 %description visualization-GL
