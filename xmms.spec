@@ -3,14 +3,14 @@
 %bcond_with	gtk2	# experimental GTK+2 port (and probably broken/incomplete)
 #			  (deprecated - many plugins won't work, use beep instead)
 Summary:	Sound player with the WinAmp GUI, for Unix-based systems
-Summary(es):	Editor de sonido con GUI semejante al de WinAmp
-Summary(ja):	XMMS - X Window System╬Е╓гф╟╨Н╓╧╓К╔ч╔К╔а╔А╔г╔ё╔╒╔в╔Л║╪╔Д║╪
-Summary(ko):	Unix ╨ёюл╫╨ ╫ц╫╨ешю╩ ю╖гя winamp ╦П╬Гюг ю╫╬г ©╛аж╠Б
-Summary(pl):	Odtwarzacz d╪wiЙku z interfejsem WinAmpa
-Summary(pt_BR):	Tocador de som com GUI semelhante ao do WinAmp
-Summary(ru):	Проигрыватель музыки с WinAmp GUI
-Summary(uk):	Програвач музики з WinAmp GUI
-Summary(zh_CN):	XMMS - X ╤к╤Юц╫лЕ╡╔╥ефВ
+Summary(es.UTF-8):   Editor de sonido con GUI semejante al de WinAmp
+Summary(ja.UTF-8):   XMMS - X Window SystemД╦┼Ц│╖Е▀∙Д╫°Ц│≥Ц┌▀Ц┐·Ц┐╚Ц┐│Ц┐║Ц┐┤Ц┌ёЦ┌╒Ц┐≈Ц┐╛Ц┐╪Ц┐╓Ц┐╪
+Summary(ko.UTF-8):   Unix К╡═Л²╢Л┼╓ Л▀°Л┼╓М┘°Л²└ Л°└М∙° winamp К╙╗Л√▒Л²≤ Л²▄Л∙┘ Л≈╟Лё╪Й╦╟
+Summary(pl.UTF-8):   Odtwarzacz dе╨wiд≥ku z interfejsem WinAmpa
+Summary(pt_BR.UTF-8):   Tocador de som com GUI semelhante ao do WinAmp
+Summary(ru.UTF-8):   п÷я─п╬п╦пЁя─я▀п╡п╟я┌п╣п╩я▄ п╪я┐п╥я▀п╨п╦ я│ WinAmp GUI
+Summary(uk.UTF-8):   п÷я─п╬пЁя─п╟п╡п╟я┤ п╪я┐п╥п╦п╨п╦ п╥ WinAmp GUI
+Summary(zh_CN.UTF-8):   XMMS - X Г╚╞Е╓ Е╙▓Д╫⌠Ф▓╜Ф■╬Е≥╗
 Name:		xmms
 Version:	1.2.9
 Release:	0.1
@@ -66,49 +66,49 @@ GUI, it can use WinAmp skins, and play mp3s, mods, s3ms, and other
 formats. It now has support for input, output, and general plugins,
 and has also been GPL'd.
 
-%description -l es
+%description -l es.UTF-8
 Editor de sonido con GUI semejante al de WinAmp.
 
-%description -l pl
-XMMS jest odtwarzaczem d╪wiЙku napisanym od zera. Jako ©e wykorzystuje
-interfejs WinAmpa, mo©e rСwnie© u©ywaФ jego 'skСrek'. Odtwarza pliki w
-formatach mp3, mod, s3m i wielu innych. Teraz obsЁuguje tak©e pluginy
-do wej╤cia, wyj╤cia oraz ogСlne; zostaЁ tak©e zGPL-izowany.
+%description -l pl.UTF-8
+XMMS jest odtwarzaczem dе╨wiд≥ku napisanym od zera. Jako е╪e wykorzystuje
+interfejs WinAmpa, moе╪e rцЁwnieе╪ uе╪ywaд┤ jego 'skцЁrek'. Odtwarza pliki w
+formatach mp3, mod, s3m i wielu innych. Teraz obsе┌uguje takе╪e pluginy
+do wejе⌡cia, wyjе⌡cia oraz ogцЁlne; zostaе┌ takе╪e zGPL-izowany.
 
-%description -l pt_BR
-XMMS И um sound player escrito a partir do zero. Como ele utiliza a
+%description -l pt_BR.UTF-8
+XMMS ц╘ um sound player escrito a partir do zero. Como ele utiliza a
 interface do WinAmp, ele pode utilizar "skins" do WinAmp, e tocar
 arquivos .mp3, .mod, .s3m, e outros formatos. Agora ele suporta
-plugins de entrada, saМda e outros plugins de uso geral, e sua licenГa
+plugins de entrada, saц╜da e outros plugins de uso geral, e sua licenц╖a
 se tornou GPL.
 
-%description -l ru
-XMMS - проигрыватель музыки с графическим интерфейсом, напоминающим
-интерфейс WinAmp. Он может использовать "скины" WinAmp, проигрывать
-mp3, mod, s3m и другие форматы. Теперь он поддерживает подключаемые
-модули для обработки ввода, вывода, общего назначения и визуализации.
+%description -l ru.UTF-8
+XMMS - п©я─п╬п╦пЁя─я▀п╡п╟я┌п╣п╩я▄ п╪я┐п╥я▀п╨п╦ я│ пЁя─п╟я└п╦я┤п╣я│п╨п╦п╪ п╦п╫я┌п╣я─я└п╣п╧я│п╬п╪, п╫п╟п©п╬п╪п╦п╫п╟я▌я┴п╦п╪
+п╦п╫я┌п╣я─я└п╣п╧я│ WinAmp. п·п╫ п╪п╬п╤п╣я┌ п╦я│п©п╬п╩я▄п╥п╬п╡п╟я┌я▄ "я│п╨п╦п╫я▀" WinAmp, п©я─п╬п╦пЁя─я▀п╡п╟я┌я▄
+mp3, mod, s3m п╦ п╢я─я┐пЁп╦п╣ я└п╬я─п╪п╟я┌я▀. п╒п╣п©п╣я─я▄ п╬п╫ п©п╬п╢п╢п╣я─п╤п╦п╡п╟п╣я┌ п©п╬п╢п╨п╩я▌я┤п╟п╣п╪я▀п╣
+п╪п╬п╢я┐п╩п╦ п╢п╩я▐ п╬п╠я─п╟п╠п╬я┌п╨п╦ п╡п╡п╬п╢п╟, п╡я▀п╡п╬п╢п╟, п╬п╠я┴п╣пЁп╬ п╫п╟п╥п╫п╟я┤п╣п╫п╦я▐ п╦ п╡п╦п╥я┐п╟п╩п╦п╥п╟я├п╦п╦.
 
-%description -l uk
-XMMS - програвач музики з граф╕чним ╕нтерфейсом, що нагаду╓ ╕нтерфейс
-WinAmp. В╕н може використовувати" ск╕ни" WinAmp, програвати mp3, mod,
-s3m та ╕нш╕ формати. Тепер в╕н п╕дтриму╓ п╕д'╓днуван╕ модул╕ обробки
-вводу, виводу, модул╕ загального призначення та в╕зуал╕зац╕╖.
+%description -l uk.UTF-8
+XMMS - п©я─п╬пЁя─п╟п╡п╟я┤ п╪я┐п╥п╦п╨п╦ п╥ пЁя─п╟я└я√я┤п╫п╦п╪ я√п╫я┌п╣я─я└п╣п╧я│п╬п╪, я┴п╬ п╫п╟пЁп╟п╢я┐я■ я√п╫я┌п╣я─я└п╣п╧я│
+WinAmp. п▓я√п╫ п╪п╬п╤п╣ п╡п╦п╨п╬я─п╦я│я┌п╬п╡я┐п╡п╟я┌п╦" я│п╨я√п╫п╦" WinAmp, п©я─п╬пЁя─п╟п╡п╟я┌п╦ mp3, mod,
+s3m я┌п╟ я√п╫я┬я√ я└п╬я─п╪п╟я┌п╦. п╒п╣п©п╣я─ п╡я√п╫ п©я√п╢я┌я─п╦п╪я┐я■ п©я√п╢'я■п╢п╫я┐п╡п╟п╫я√ п╪п╬п╢я┐п╩я√ п╬п╠я─п╬п╠п╨п╦
+п╡п╡п╬п╢я┐, п╡п╦п╡п╬п╢я┐, п╪п╬п╢я┐п╩я√ п╥п╟пЁп╟п╩я▄п╫п╬пЁп╬ п©я─п╦п╥п╫п╟я┤п╣п╫п╫я▐ я┌п╟ п╡я√п╥я┐п╟п╩я√п╥п╟я├я√я≈.
 
 %package wm
 Summary:	XMMS applet for WindowMaker
-Summary(pl):	Aplet XMMS dla WindowMakera
+Summary(pl.UTF-8):   Aplet XMMS dla WindowMakera
 Group:		X11/Applications/Sound
 Requires:	%{name} = %{epoch}:%{version}
 
 %description wm
 XMMS applet for WindowMaker.
 
-%description wm -l pl
+%description wm -l pl.UTF-8
 Aplet XMMS dla WindowMakera.
 
 %package skins
 Summary:	XMMS - Skins
-Summary(pl):	XMMS - SkСrki
+Summary(pl.UTF-8):   XMMS - SkцЁrki
 Group:		X11/Applications/Sound
 Requires:	%{name} >= %{epoch}:%{version}
 Requires:	unzip
@@ -116,30 +116,30 @@ Requires:	unzip
 %description skins
 Additional skins for XMMS.
 
-%description skins -l pl
-Dodatkowe 'skСrki' dla XMMS-a.
+%description skins -l pl.UTF-8
+Dodatkowe 'skцЁrki' dla XMMS-a.
 
 %package libs
 Summary:	XMMS library
-Summary(pl):	Biblioteka XMMS
+Summary(pl.UTF-8):   Biblioteka XMMS
 Group:		X11/Applications/Sound
 
 %description libs
 XMMS library.
 
-%description libs -l pl
+%description libs -l pl.UTF-8
 Biblioteka XMMS.
 
 %package devel
 Summary:	XMMS - libraries and header files
-Summary(es):	Bibliotecas y archivos de inclusiСn, necesarios para compilar plugins de XMMS
-Summary(ja):	XMMS - Ё╚х╞мя╔у╔║╔╓╔К
-Summary(ko):	XMMS - ╤Сюл╨Й╥╞╦╝©м гЛ╢У фдюо╣И
-Summary(pl):	XMMS - biblioteki i pliki nagЁСwkowe
-Summary(pt_BR):	Bibliotecas e arquivos de inclusЦo necessАrios para se compilar plugins do XMMS
-Summary(uk):	.h-файли для XMMS
-Summary(ru):	.h-файлы для XMMS
-Summary(zh_CN):	XMMS - ©╙╥╒©Б
+Summary(es.UTF-8):   Bibliotecas y archivos de inclusiцЁn, necesarios para compilar plugins de XMMS
+Summary(ja.UTF-8):   XMMS - И√▀Г≥╨Г■╗Ц┐∙Ц┌║Ц┌╓Ц┐╚
+Summary(ko.UTF-8):   XMMS - К²╪Л²╢К╦▄К÷╛К╕╛Л≥─ М≈╓К█■ М▄▄Л²╪К⌠╓
+Summary(pl.UTF-8):   XMMS - biblioteki i pliki nagе┌цЁwkowe
+Summary(pt_BR.UTF-8):   Bibliotecas e arquivos de inclusцёo necessц║rios para se compilar plugins do XMMS
+Summary(uk.UTF-8):   .h-я└п╟п╧п╩п╦ п╢п╩я▐ XMMS
+Summary(ru.UTF-8):   .h-я└п╟п╧п╩я▀ п╢п╩я▐ XMMS
+Summary(zh_CN.UTF-8):   XMMS - Е╪─Е▐▒Е╨⌠
 Group:		X11/Development/Libraries
 # broken/incomplete gtk2 patch? libxmms is still linked with old GTK+
 Requires:	gtk+-devel
@@ -148,71 +148,71 @@ Requires:	%{name}-libs = %{epoch}:%{version}
 %description devel
 Libraries and header files required for compiling XMMS plugins.
 
-%description devel -l es
-Bibliotecas y archivos de inclusiСn, necesarios para compilar plugins
+%description devel -l es.UTF-8
+Bibliotecas y archivos de inclusiцЁn, necesarios para compilar plugins
 de XMMS.
 
-%description devel -l pl
-Biblioteki i pliki nagЁСwkowe wymagane do budowania wtyczek dla
+%description devel -l pl.UTF-8
+Biblioteki i pliki nagе┌цЁwkowe wymagane do budowania wtyczek dla
 XMMS-a.
 
-%description devel -l pt_BR
-Bibliotecas e arquivos de inclusЦo necessАrios para se compilar
+%description devel -l pt_BR.UTF-8
+Bibliotecas e arquivos de inclusцёo necessц║rios para se compilar
 plugins do XMMS.
 
-%description devel -l ru
-.h-файлы для построения подключаемых модулей для XMMS.
+%description devel -l ru.UTF-8
+.h-я└п╟п╧п╩я▀ п╢п╩я▐ п©п╬я│я┌я─п╬п╣п╫п╦я▐ п©п╬п╢п╨п╩я▌я┤п╟п╣п╪я▀я┘ п╪п╬п╢я┐п╩п╣п╧ п╢п╩я▐ XMMS.
 
-%description devel -l uk
-.h-файли для побудови п╕д'╓днуваних модул╕в для XMMS.
+%description devel -l uk.UTF-8
+.h-я└п╟п╧п╩п╦ п╢п╩я▐ п©п╬п╠я┐п╢п╬п╡п╦ п©я√п╢'я■п╢п╫я┐п╡п╟п╫п╦я┘ п╪п╬п╢я┐п╩я√п╡ п╢п╩я▐ XMMS.
 
 %package static
 Summary:	XMMS - static libraries
-Summary(es):	Static libraries for XMMS development
-Summary(pl):	XMMS - biblioteki statyczne
-Summary(pt_BR):	Bibliotecas estАticas para desenvolvimento com XMMS
-Summary(ru):	Статические библиотеки для XMMS
-Summary(uk):	Статичн╕ б╕бл╕отеки для XMMS
+Summary(es.UTF-8):   Static libraries for XMMS development
+Summary(pl.UTF-8):   XMMS - biblioteki statyczne
+Summary(pt_BR.UTF-8):   Bibliotecas estц║ticas para desenvolvimento com XMMS
+Summary(ru.UTF-8):   п║я┌п╟я┌п╦я┤п╣я│п╨п╦п╣ п╠п╦п╠п╩п╦п╬я┌п╣п╨п╦ п╢п╩я▐ XMMS
+Summary(uk.UTF-8):   п║я┌п╟я┌п╦я┤п╫я√ п╠я√п╠п╩я√п╬я┌п╣п╨п╦ п╢п╩я▐ XMMS
 Group:		X11/Development/Libraries
 Requires:	%{name}-devel = %{epoch}:%{version}
 
 %description static
 Static libraries required for compiling XMMS plugins.
 
-%description static -l es
+%description static -l es.UTF-8
 Static libraries for XMMS development.
 
-%description static -l pl
+%description static -l pl.UTF-8
 Biblioteki statyczne XMMS-a.
 
-%description static -l pt_BR
-Bibliotecas estАticas para desenvolvimento com o XMMS.
+%description static -l pt_BR.UTF-8
+Bibliotecas estц║ticas para desenvolvimento com o XMMS.
 
-%description static -l ru
-Статические библиотеки для построения подключаемых модулей для XMMS.
+%description static -l ru.UTF-8
+п║я┌п╟я┌п╦я┤п╣я│п╨п╦п╣ п╠п╦п╠п╩п╦п╬я┌п╣п╨п╦ п╢п╩я▐ п©п╬я│я┌я─п╬п╣п╫п╦я▐ п©п╬п╢п╨п╩я▌я┤п╟п╣п╪я▀я┘ п╪п╬п╢я┐п╩п╣п╧ п╢п╩я▐ XMMS.
 
-%description static -l uk
-Статичн╕ б╕бл╕отеки для побудови п╕д'╓днуваних модул╕в для XMMS.
+%description static -l uk.UTF-8
+п║я┌п╟я┌п╦я┤п╫я√ п╠я√п╠п╩я√п╬я┌п╣п╨п╦ п╢п╩я▐ п©п╬п╠я┐п╢п╬п╡п╦ п©я√п╢'я■п╢п╫я┐п╡п╟п╫п╦я┘ п╪п╬п╢я┐п╩я√п╡ п╢п╩я▐ XMMS.
 
 %package gnome-mime-info
 Summary:	MIME functions for GNOME
-Summary(pl):	Funkcje MIME dla GNOME
+Summary(pl.UTF-8):   Funkcje MIME dla GNOME
 Group:		X11/Applications
 Requires:	gnome-mime-data
 
 %description gnome-mime-info
 MIME functions for GNOME.
 
-%description gnome-mime-info -l pl
+%description gnome-mime-info -l pl.UTF-8
 Funkcje MIME dla GNOME.
 
 %package input-mikmod
 Summary:	XMMS - Input plugin to play MODs
-Summary(es):	Login de entrada para que XMMS alcance MODs (.MOD,.XM,.S3M, etc)
-Summary(ja):	XMMS - MODs╓Р╨фю╦╓╧╓К╓©╓А╓нфЧно╔в╔И╔╟╔╓╔С
-Summary(pl):	XMMS - wtyczka do odtwarzania MODСw
-Summary(pt_BR):	Plugin de entrada para o XMMS tocar MODs (.MOD,.XM,.S3M, etc)
-Summary(zh_CN):	XMMS - ╡╔╥е M0Ds нд╪Ч╣дйДхК╡Е╪Ч
+Summary(es.UTF-8):   Login de entrada para que XMMS alcance MODs (.MOD,.XM,.S3M, etc)
+Summary(ja.UTF-8):   XMMS - MODsЦ┌▓Е├█Г■÷Ц│≥Ц┌▀Ц│÷Ц┌│Ц│╝Е┘╔Е┼⌡Ц┐≈Ц┐╘Ц┌╟Ц┌╓Ц┐Ё
+Summary(pl.UTF-8):   XMMS - wtyczka do odtwarzania MODцЁw
+Summary(pt_BR.UTF-8):   Plugin de entrada para o XMMS tocar MODs (.MOD,.XM,.S3M, etc)
+Summary(zh_CN.UTF-8):   XMMS - Ф▓╜Ф■╬ M0Ds Ф√┤Д╩╤Г └Х╬⌠Е┘╔Ф▐▓Д╩╤
 Group:		X11/Applications/Sound
 Requires:	%{name} = %{epoch}:%{version}
 Requires:	libmikmod >= 3.1.7
@@ -225,21 +225,21 @@ this plugin sucks (possibly due to quality of libmikmod) - it is
 unable to play correctly a lot of modules. Use xmms-input-modplug
 instaed.
 
-%description input-mikmod -l es
+%description input-mikmod -l es.UTF-8
 Login de entrada para que XMMS alcance MODs (.MOD,.XM,.S3M, etc).
 
-%description input-mikmod -l pl
-Wtyczka dla XMMS-a do odtwarzania MODСw (.MOD,.XM,.S3M, etc). B╠d╪
-╤wiadom, ©e ta wtyczka jest bardzo sЁaba (byФ mo©e z powodu jako╤ci
-libmikmod) - nie potrafi odtworzyФ poprawnie wielu moduЁСw. Zainstaluj
+%description input-mikmod -l pl.UTF-8
+Wtyczka dla XMMS-a do odtwarzania MODцЁw (.MOD,.XM,.S3M, etc). Bд┘dе╨
+е⌡wiadom, е╪e ta wtyczka jest bardzo sе┌aba (byд┤ moе╪e z powodu jakoе⌡ci
+libmikmod) - nie potrafi odtworzyд┤ poprawnie wielu moduе┌цЁw. Zainstaluj
 lepiej xmms-input-modplug.
 
-%description input-mikmod -l pt_BR
+%description input-mikmod -l pt_BR.UTF-8
 Plugin de entrada para o XMMS tocar MODs (.MOD,.XM,.S3M, etc).
 
 %package input-tonegen
 Summary:	XMMS - Input plugin to generate sound of given frequency
-Summary(pl):	XMMS - wtyczka generuj╠ca d╪wiЙk o zadanej czЙstotliwo╤ci
+Summary(pl.UTF-8):   XMMS - wtyczka generujд┘ca dе╨wiд≥k o zadanej czд≥stotliwoе⌡ci
 Group:		X11/Applications/Sound
 Requires:	%{name} = %{epoch}:%{version}
 Obsoletes:	xmms-tonegen
@@ -247,62 +247,62 @@ Obsoletes:	xmms-tonegen
 %description input-tonegen
 Input plugin for XMMS to generate sound of given frequency.
 
-%description input-tonegen -l pl
-Wtyczka dla XMMS-a generuj╠ca d╪wiЙk o zadanej czЙstotliwo╤ci.
+%description input-tonegen -l pl.UTF-8
+Wtyczka dla XMMS-a generujд┘ca dе╨wiд≥k o zadanej czд≥stotliwoе⌡ci.
 
 %package input-vorbis
 Summary:	XMMS - OGG Vorbis input plugin
-Summary(ja):	XMMS - OGGs╓Р╨фю╦╓╧╓К╓©╓А╓нфЧно╔в╔И╔╟╔╓╔С
-Summary(pl):	XMMS - wtyczka do odtwarzania plikСw OGG Vorbis
-Summary(zh_CN):	XMMS - ╡╔╥е 0GGs ╠ЮбКнд╪Ч╣дйДхК╡Е╪Ч
+Summary(ja.UTF-8):   XMMS - OGGsЦ┌▓Е├█Г■÷Ц│≥Ц┌▀Ц│÷Ц┌│Ц│╝Е┘╔Е┼⌡Ц┐≈Ц┐╘Ц┌╟Ц┌╓Ц┐Ё
+Summary(pl.UTF-8):   XMMS - wtyczka do odtwarzania plikцЁw OGG Vorbis
+Summary(zh_CN.UTF-8):   XMMS - Ф▓╜Ф■╬ 0GGs Г╪√Г═│Ф√┤Д╩╤Г └Х╬⌠Е┘╔Ф▐▓Д╩╤
 Group:		X11/Applications/Sound
 Requires:	%{name} >= %{epoch}:%{version}
 
 %description input-vorbis
 OGG Vorbis input plugin for XMMS.
 
-%description input-vorbis -l pl
-Wtyczka do odtwarzania plikСw w formacie OGG Vorbis.
+%description input-vorbis -l pl.UTF-8
+Wtyczka do odtwarzania plikцЁw w formacie OGG Vorbis.
 
 %package input-cdaudio
 Summary:	XMMS - cdaudio input plugin
-Summary(pl):	XMMS - wtyczka do odtwarzania plyt CD-audio
+Summary(pl.UTF-8):   XMMS - wtyczka do odtwarzania plyt CD-audio
 Group:		X11/Applications/Sound
 Requires:	%{name} >= %{epoch}:%{version}
 
 %description input-cdaudio
 CD audio input plugin for XMMS.
 
-%description input-cdaudio -l pl
-Wtyczka do odtwarzania pЁyt CD-audio.
+%description input-cdaudio -l pl.UTF-8
+Wtyczka do odtwarzania pе┌yt CD-audio.
 
 %package input-mpg123
 Summary:	XMMS - mpg123 input plugin
-Summary(pl):	XMMS - wtyczka do odtwarzania plikow mp3
+Summary(pl.UTF-8):   XMMS - wtyczka do odtwarzania plikow mp3
 Group:		X11/Applications/Sound
 Requires:	%{name} >= %{epoch}:%{version}
 
 %description input-mpg123
 mpg123 input plugin for XMMS.
 
-%description input-mpg123 -l pl
-Wtyczka dla XMMS-a do obsЁugi mpg123.
+%description input-mpg123 -l pl.UTF-8
+Wtyczka dla XMMS-a do obsе┌ugi mpg123.
 
 %package input-wav
 Summary:	XMMS - wav input plugin
-Summary(pl):	XMMS - wtyczka do odtwarzania plikow wav
+Summary(pl.UTF-8):   XMMS - wtyczka do odtwarzania plikow wav
 Group:		X11/Applications/Sound
 Requires:	%{name} >= %{epoch}:%{version}
 
 %description input-wav
 wav input plugin for XMMS.
 
-%description input-wav -l pl
-Wtyczka dla XMMS-a do obsЁugi plikСw wav.
+%description input-wav -l pl.UTF-8
+Wtyczka dla XMMS-a do obsе┌ugi plikцЁw wav.
 
 %package output-OSS
 Summary:	XMMS - OSS output plugin
-Summary(pl):	XMMS - plugin obsЁugi sterownikСw OSS
+Summary(pl.UTF-8):   XMMS - plugin obsе┌ugi sterownikцЁw OSS
 Group:		X11/Applications/Sound
 Requires:	%{name} >= %{epoch}:%{version}
 Provides:	xmms-output-plugin
@@ -310,12 +310,12 @@ Provides:	xmms-output-plugin
 %description output-OSS
 OSS output plugin for XMMS.
 
-%description output-OSS -l pl
-ObsЁuga sterownikСw OSS dla XMMS-a.
+%description output-OSS -l pl.UTF-8
+Obsе┌uga sterownikцЁw OSS dla XMMS-a.
 
 %package output-ALSA
 Summary:	XMMS - ALSA output plugin
-Summary(pl):	XMMS - plugin obsЁugi sterownikСw Alsa
+Summary(pl.UTF-8):   XMMS - plugin obsе┌ugi sterownikцЁw Alsa
 Group:		X11/Applications/Sound
 Requires:	%{name} >= %{epoch}:%{version}
 Obsoletes:	xmms-output-alsa
@@ -324,16 +324,16 @@ Provides:	xmms-output-plugin
 %description output-ALSA
 ALSA output plugin for XMMS.
 
-%description output-ALSA -l pl
-ObsЁuga sterownikСw ALSA dla XMMS-a.
+%description output-ALSA -l pl.UTF-8
+Obsе┌uga sterownikцЁw ALSA dla XMMS-a.
 
 %package output-esd
 Summary:	XMMS - Output plugin for use with the esound package
-Summary(es):	Plugin de salida para XMMS para uso con el paquete eSound
-Summary(ja):	XMMS - esound╓РмЬмя╓╧╓К╫пно╔в╔И╔╟╔╓╔С
-Summary(pl):	XMMS - wtyczka umo©liwiaj╠ca korzystanie z esound
-Summary(pt_BR):	Plugin de saida para o XMMS para uso com o pacote eSound
-Summary(zh_CN):	XMMS - сК esound хМ╪Ч╟Эр╩фПй╧сц╣дйДЁЖ╡Е╪Ч
+Summary(es.UTF-8):   Plugin de salida para XMMS para uso con el paquete eSound
+Summary(ja.UTF-8):   XMMS - esoundЦ┌▓Е┬╘Г■╗Ц│≥Ц┌▀Е┤╨Е┼⌡Ц┐≈Ц┐╘Ц┌╟Ц┌╓Ц┐Ё
+Summary(pl.UTF-8):   XMMS - wtyczka umoе╪liwiajд┘ca korzystanie z esound
+Summary(pt_BR.UTF-8):   Plugin de saida para o XMMS para uso com o pacote eSound
+Summary(zh_CN.UTF-8):   XMMS - Д╦▌ esound Х╫╞Д╩╤Е▄┘Д╦─Х╣╥Д╫©Г■╗Г └Х╬⌠Е┤╨Ф▐▓Д╩╤
 Group:		X11/Applications/Sound
 Requires:	%{name} = %{epoch}:%{version}
 Requires:	esound >= 0.2.8
@@ -343,19 +343,19 @@ Provides:	xmms-output-plugin
 %description output-esd
 Output plugin for XMMS for use with the esound package.
 
-%description output-esd -l es
+%description output-esd -l es.UTF-8
 Plugin de salida para XMMS para uso con el paquete eSound.
 
-%description output-esd -l pl
-Wtyczka dla XMMS-a umo©liwiaj╠ca wykorzystanie esound przy odtwarzaniu
-d╪wiЙkСw.
+%description output-esd -l pl.UTF-8
+Wtyczka dla XMMS-a umoе╪liwiajд┘ca wykorzystanie esound przy odtwarzaniu
+dе╨wiд≥kцЁw.
 
-%description output-esd -l pt_BR
-Plugin de saМda para o XMMS trabalhar com o esd.
+%description output-esd -l pt_BR.UTF-8
+Plugin de saц╜da para o XMMS trabalhar com o esd.
 
 %package output-disk
 Summary:	XMMS - disk-writer output plugin
-Summary(pl):	XMMS - wtyczka do zapisywania danych na dysk
+Summary(pl.UTF-8):   XMMS - wtyczka do zapisywania danych na dysk
 Group:		X11/Applications/Sound
 Requires:	%{name} >= %{epoch}:%{version}
 Provides:	xmms-output-plugin
@@ -363,16 +363,16 @@ Provides:	xmms-output-plugin
 %description output-disk
 disk-wirter output plugin for XMMS.
 
-%description output-disk -l pl
-Wtyczka dla XMMS-a zapisuj╠ca dane wyj╤ciowe na dysk.
+%description output-disk -l pl.UTF-8
+Wtyczka dla XMMS-a zapisujд┘ca dane wyjе⌡ciowe na dysk.
 
 %package visualization-GL
 Summary:	XMMS - Visualization plugins that use the OenGL library
-Summary(ja):	XMMS - OpenGL╓РмЬмя╓╥╓©╔╟╔И╔у╔ё╔╚╔К╓й╩КЁп╡╫╔в╔И╔╟╔╓╔С
-Summary(pl):	XMMS - wtyczki do wizualizacji z u©yciem OpenGL
-Summary(ru):	XMMS - подключаемые модули визуализации, использующие библиотеку OenGL
-Summary(uk):	XMMS - п╕д'╓днуван╕ модул╕ в╕зуал╕зац╕╖, як╕ використовують б╕бл╕отеку OpenGL
-Summary(zh_CN):	XMMS - ©ийс╩╞╡Е╪Ч
+Summary(ja.UTF-8):   XMMS - OpenGLЦ┌▓Е┬╘Г■╗Ц│≈Ц│÷Ц┌╟Ц┐╘Ц┐∙Ц┌ёЦ┌╚Ц┐╚Ц│╙Х╕√Х╕ Е▄√Ц┐≈Ц┐╘Ц┌╟Ц┌╓Ц┐Ё
+Summary(pl.UTF-8):   XMMS - wtyczki do wizualizacji z uе╪yciem OpenGL
+Summary(ru.UTF-8):   XMMS - п©п╬п╢п╨п╩я▌я┤п╟п╣п╪я▀п╣ п╪п╬п╢я┐п╩п╦ п╡п╦п╥я┐п╟п╩п╦п╥п╟я├п╦п╦, п╦я│п©п╬п╩я▄п╥я┐я▌я┴п╦п╣ п╠п╦п╠п╩п╦п╬я┌п╣п╨я┐ OenGL
+Summary(uk.UTF-8):   XMMS - п©я√п╢'я■п╢п╫я┐п╡п╟п╫я√ п╪п╬п╢я┐п╩я√ п╡я√п╥я┐п╟п╩я√п╥п╟я├я√я≈, я▐п╨я√ п╡п╦п╨п╬я─п╦я│я┌п╬п╡я┐я▌я┌я▄ п╠я√п╠п╩я√п╬я┌п╣п╨я┐ OpenGL
+Summary(zh_CN.UTF-8):   XMMS - Е▐╞Х╖├Е▄√Ф▐▓Д╩╤
 Group:		X11/Applications/Multimedia
 Requires:	%{name} = %{epoch}:%{version}
 Requires:	OpenGL
@@ -381,15 +381,15 @@ Obsoletes:	xmms-mesa
 %description visualization-GL
 XMMS - Visualization plugins that use the OpenGL library.
 
-%description visualization-GL -l pl
-Wtyczki graficzne wykorzystuj╠ce bibliotekЙ OpenGL.
+%description visualization-GL -l pl.UTF-8
+Wtyczki graficzne wykorzystujд┘ce bibliotekд≥ OpenGL.
 
-%description visualization-GL -l ru
-XMMS - подключаемые модули визуализации, использующие библиотеку
+%description visualization-GL -l ru.UTF-8
+XMMS - п©п╬п╢п╨п╩я▌я┤п╟п╣п╪я▀п╣ п╪п╬п╢я┐п╩п╦ п╡п╦п╥я┐п╟п╩п╦п╥п╟я├п╦п╦, п╦я│п©п╬п╩я▄п╥я┐я▌я┴п╦п╣ п╠п╦п╠п╩п╦п╬я┌п╣п╨я┐
 OpenGL.
 
-%description visualization-GL -l uk
-XMMS - п╕д'╓днуван╕ модул╕ в╕зуал╕зац╕╖, як╕ використовують б╕бл╕отеку
+%description visualization-GL -l uk.UTF-8
+XMMS - п©я√п╢'я■п╢п╫я┐п╡п╟п╫я√ п╪п╬п╢я┐п╩я√ п╡я√п╥я┐п╟п╩я√п╥п╟я├я√я≈, я▐п╨я√ п╡п╦п╨п╬я─п╦я│я┌п╬п╡я┐я▌я┌я▄ п╠я√п╠п╩я√п╬я┌п╣п╨я┐
 OpenGL.
 
 %prep
