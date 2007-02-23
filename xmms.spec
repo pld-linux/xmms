@@ -14,7 +14,7 @@ Summary(uk.UTF-8):	Програвач музики з WinAmp GUI
 Summary(zh_CN.UTF-8):	XMMS - X 端多媒体播放器
 Name:		xmms
 Version:	1.2.10
-Release:	6
+Release:	7
 Epoch:		2
 License:	GPL v2+
 Group:		X11/Applications/Sound
@@ -34,6 +34,7 @@ Patch1:		%{name}-am18.patch
 Patch2:		%{name}-gtk2.patch
 Patch3:		%{name}-gcc4.patch
 Patch4:		%{name}-alsa-mono-vol-adjust.patch
+Patch5:		%{name}-libSM.patch
 URL:		http://www.xmms.org/
 BuildRequires:	OpenGL-devel
 BuildRequires:	alsa-lib-devel >= 0.9.5
@@ -406,6 +407,7 @@ OpenGL.
 #patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 cp -f %{SOURCE2} .
 

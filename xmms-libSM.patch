@@ -1,0 +1,11 @@
+--- xmms-1.2.10/configure.in~	2004-02-23 22:40:44.000000000 +0100
++++ xmms-1.2.10/configure.in	2007-02-23 18:59:29.000000000 +0100
+@@ -69,7 +69,7 @@
+ AC_PATH_PROG(XMMS_PATH,xmms,no)
+ 
+ LIBS_save=$LIBS
+-LIBS="$LIBS $GTK_LIBS"
++LIBS="$LIBS $GTK_LIBS -lICE"
+ SM_LIBS=""
+ AC_CHECK_LIB(SM, SmcOpenConnection,[
+ AC_DEFINE(WITH_SM, , [Define if building with support for X11R6 session management])
