@@ -34,7 +34,6 @@ Patch1:		%{name}-am18.patch
 Patch2:		%{name}-gtk2.patch
 Patch3:		%{name}-gcc4.patch
 Patch4:		%{name}-alsa-mono-vol-adjust.patch
-Patch5:		%{name}-libSM.patch
 URL:		http://www.xmms.org/
 BuildRequires:	OpenGL-devel
 BuildRequires:	alsa-lib-devel >= 0.9.5
@@ -407,7 +406,6 @@ OpenGL.
 #patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%patch5 -p1
 
 cp -f %{SOURCE2} .
 
