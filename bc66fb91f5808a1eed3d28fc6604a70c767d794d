@@ -1,0 +1,3 @@
+- release 4,
+- added automake, autoconf to BuildRequires,
+- fixes which allow build xmms also in automake 1.4b environment.
