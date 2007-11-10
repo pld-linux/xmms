@@ -14,7 +14,7 @@ Summary(uk.UTF-8):	Програвач музики з WinAmp GUI
 Summary(zh_CN.UTF-8):	XMMS - X 端多媒体播放器
 Name:		xmms
 Version:	1.2.10
-Release:	7
+Release:	8
 Epoch:		2
 License:	GPL v2+
 Group:		X11/Applications/Sound
@@ -62,6 +62,8 @@ Requires:	gtk+ >= 1.2.2
 Requires:	xmms-output-plugin
 Obsoletes:	x11amp
 Obsoletes:	xmms-gnome
+# sr@Latn vs. sr@latin
+Conflicts:	glibc-misc < 6:2.7
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_noautoreqdep	libGL.so.1 libGLU.so.1
@@ -497,6 +499,9 @@ install icons/*    $RPM_BUILD_ROOT%{_datadir}/xmms
 install Skins/*    $RPM_BUILD_ROOT%{_datadir}/xmms/Skins
 install %{SOURCE6} $RPM_BUILD_ROOT%{_datadir}/mime-info/xmms.keys
 install %{SOURCE7} $RPM_BUILD_ROOT%{_pixmapsdir}
+
+[ -d $RPM_BUILD_ROOT%{_datadir}/locale/sr@latin ] || \
+        mv -f $RPM_BUILD_ROOT%{_datadir}/locale/sr@{Latn,latin}
 
 %find_lang %{name}
 
