@@ -1,8 +1,3 @@
-#
-# Conditional build:
-%bcond_with	gtk2	# experimental GTK+2 port (and probably broken/incomplete)
-			# (deprecated - many plugins won't work, use xmms2 or bmp/bmpx/audacious instead)
-#
 Summary:	Sound player with the WinAmp GUI, for Unix-based systems
 Summary(es.UTF-8):	Editor de sonido con GUI semejante al de WinAmp
 Summary(ja.UTF-8):	XMMS - X Window System上で動作するマルチメディアプレーヤー
@@ -30,8 +25,8 @@ Source5:	%{name}-skins.tar.bz2
 Source6:	%{name}-gnome-mime-info
 Source7:	%{name}.png
 Patch0:		%{name}-warn_about_unplayables.patch
-Patch1:		%{name}-gtk2.patch
-Patch2:		%{name}-gcc4.patch
+Patch1:		%{name}-gcc4.patch
+#Patch1:		%{name}-gtk2.patch
 URL:		http://www.xmms.org/
 BuildRequires:	OpenGL-devel
 BuildRequires:	alsa-lib-devel >= 0.9.5
@@ -48,15 +43,9 @@ BuildRequires:	perl-base
 BuildRequires:	xorg-lib-libSM-devel
 BuildRequires:	xorg-lib-libXxf86vm-devel
 BuildRequires:	zlib-devel
-%if %{with gtk2}
-BuildRequires:	gtk+2-devel >= 2:2.2.0
-# broken/incomplete patch? links with both GTK+ versions
-BuildRequires:	gtk+-devel >= 1.2.2
-%else
 BuildRequires:	gtk+-devel >= 1.2.2
 Requires:	glib >= 1.2.2
 Requires:	gtk+ >= 1.2.2
-%endif
 Requires:	xmms-output-plugin
 Obsoletes:	x11amp
 Obsoletes:	xmms-gnome
@@ -148,7 +137,6 @@ Summary(uk.UTF-8):	.h-файли для XMMS
 Summary(zh_CN.UTF-8):	XMMS - 开发库
 Group:		X11/Development/Libraries
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
-# broken/incomplete gtk2 patch? libxmms is still linked with old GTK+
 Requires:	gtk+-devel
 
 %description devel
@@ -402,8 +390,7 @@ OpenGL.
 %prep
 %setup -q -a1 -a5
 %patch0 -p1
-#patch1 -p1
-%patch2 -p1
+%patch1 -p1
 
 cp -f %{SOURCE2} .
 
@@ -412,47 +399,12 @@ mv -f po/{no,nb}.po
 # allow (re)building, incl. nb.gmo
 rm -f po/stamp-po
 
-%if %{with gtk2}
-%patch2 -p1
-
-rm -f po/*.gmo
-for F in po/*.po
-do
-	ENC=`cat $F | grep "charset=" | cut -d= -f2 | cut -d'\' -f1`
-	case $ENC in
-		iso-8859-1|ISO-8859-1) E=ISO8859-1 ; ;;
-		iso-8859-2|ISO-8859-2) E=ISO8859-2 ; ;;
-		iso-8859-3) E=ISO8859-3 ; ;;
-		iso-8859-5) E=ISO8859-5 ; ;;
-		ISO-8859-7) E=ISO8859-7 ; ;;
-		ISO-8859-9) E=ISO8859-9 ; ;;
-		ISO-8859-11) E=ISO8859-11 ; ;;
-		iso-8859-13) E=ISO8859-13 ; ;;
-		windows-1251) E=WINDOWS-1251 ; ;;
-		utf-8|UTF-8) E="" ; ;;
-		EUC-JP) E="" ; ;;
-		euc-kr) E="" ; ;;
-		koi8-r) E=KOI8-R ; ;;
-		koi8-u) E=KOI8-U ; ;;
-		tcvn-5712) E=TCVN-5712 ; ;;
-		gb2312) E="" ; ;;
-		big5) E="" ; ;;
-		*) echo "Unknown encoding: $ENC"; exit 1
-	esac
-	if [ "$E" != "" ]; then
-		mv $F tmp.po
-		cat tmp.po | egrep -v '^#\.' | sed -e "s/\(charset=\)$ENC/\1UTF-8/" | \
-			iconv -f $E -t UTF-8 -o $F
-	fi
-done
-%endif
-
 install -d m4
-# get only XMMS_FUNC_POSIX
-head -n39 libxmms/acinclude.m4 > m4/xmms-func-posix.m4
+# get only XMMS_* macros
+head -n60 libxmms/acinclude.m4 > m4/xmms-macros.m4
 
 %build
-# kill copies of many macros
+# kill old libtool.m4 copy
 rm -f acinclude.m4
 %{__gettextize}
 %{__libtoolize}
@@ -462,7 +414,7 @@ rm -f acinclude.m4
 %{__automake}
 
 cd libxmms
-# kill old libtool.m4
+# kill old libtool.m4 copy
 rm -f acinclude.m4
 %{__aclocal} -I ../m4
 %{__autoconf}
@@ -496,6 +448,8 @@ install Skins/*    $RPM_BUILD_ROOT%{_datadir}/xmms/Skins
 install %{SOURCE6} $RPM_BUILD_ROOT%{_datadir}/mime-info/xmms.keys
 install %{SOURCE7} $RPM_BUILD_ROOT%{_pixmapsdir}
 
+rm -f $RPM_BUILD_ROOT%{_libdir}/xmms/*/*.la
+
 [ -d $RPM_BUILD_ROOT%{_datadir}/locale/sr@latin ] || \
         mv -f $RPM_BUILD_ROOT%{_datadir}/locale/sr@{Latn,latin}
 
@@ -522,28 +476,28 @@ umask 022
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog NEWS README mp3license FAQ
 %attr(755,root,root) %{_bindir}/xmms
-%attr(755,root,root) %{_libdir}/xmms/Effect/*
-%attr(755,root,root) %{_libdir}/xmms/General/*
-%attr(755,root,root) %{_libdir}/xmms/Visualization/libbscope*
-%attr(755,root,root) %{_libdir}/xmms/Visualization/libsanalyzer*
-%dir %{_datadir}/xmms
-%dir %{_datadir}/xmms/Skins
 %dir %{_libdir}/xmms/Effect
+%attr(755,root,root) %{_libdir}/xmms/Effect/*.so
 %dir %{_libdir}/xmms/General
+%attr(755,root,root) %{_libdir}/xmms/General/*.so
 %dir %{_libdir}/xmms/Output
 %dir %{_libdir}/xmms/Visualization
+%attr(755,root,root) %{_libdir}/xmms/Visualization/libbscope.so
+%attr(755,root,root) %{_libdir}/xmms/Visualization/libsanalyzer.so
+%dir %{_datadir}/xmms
+%dir %{_datadir}/xmms/Skins
 %{_datadir}/xmms/*gif
 %{_datadir}/xmms/x*xpm
 %{_desktopdir}/xmms.desktop
-%{_mandir}/*/xmms*
-%{_pixmapsdir}/xmms*
+%{_pixmapsdir}/xmms.png
+%{_mandir}/man1/xmms.1*
 
 %files wm
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/wmxmms
-%{_datadir}/xmms/wmxmms*xpm
+%{_datadir}/xmms/wmxmms*.xpm
 %{_desktopdir}/wmxmms.desktop
-%{_mandir}/*/wmxmms*
+%{_mandir}/man1/wmxmms.1*
 
 %files skins
 %defattr(644,root,root,755)
@@ -551,21 +505,22 @@ umask 022
 
 %files libs
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libxmms.so.*.*
+%attr(755,root,root) %{_libdir}/libxmms.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libxmms.so.1
 %dir %{_libdir}/xmms
 %dir %{_libdir}/xmms/Input
 
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/xmms-config
-%attr(755,root,root) %{_libdir}/lib*.so
-%{_libdir}/lib*.la
-%{_includedir}/*
-%{_aclocaldir}/*
+%attr(755,root,root) %{_libdir}/libxmms.so
+%{_libdir}/libxmms.la
+%{_includedir}/xmms
+%{_aclocaldir}/xmms.m4
 
 %files static
 %defattr(644,root,root,755)
-%{_libdir}/lib*.a
+%{_libdir}/libxmms.a
 
 %files gnome-mime-info
 %defattr(644,root,root,755)
@@ -573,44 +528,44 @@ umask 022
 
 %files input-mikmod
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/xmms/Input/libmikmod*
+%attr(755,root,root) %{_libdir}/xmms/Input/libmikmod.so
 
 %files input-tonegen
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/xmms/Input/libtonegen*
+%attr(755,root,root) %{_libdir}/xmms/Input/libtonegen.so
 
 %files input-cdaudio
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/xmms/Input/libcdaudio*
+%attr(755,root,root) %{_libdir}/xmms/Input/libcdaudio.so
 
 %files input-vorbis
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/xmms/Input/libvorbis*
+%attr(755,root,root) %{_libdir}/xmms/Input/libvorbis.so
 
 %files input-mpg123
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/xmms/Input/libmpg123*
+%attr(755,root,root) %{_libdir}/xmms/Input/libmpg123.so
 
 %files input-wav
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/xmms/Input/libwav*
+%attr(755,root,root) %{_libdir}/xmms/Input/libwav.so
 
 %files output-OSS
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/xmms/Output/libOSS*
+%attr(755,root,root) %{_libdir}/xmms/Output/libOSS.so
 
 %files output-ALSA
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/xmms/Output/libALSA*
+%attr(755,root,root) %{_libdir}/xmms/Output/libALSA.so
 
 %files output-esd
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/xmms/Output/libesdout*
+%attr(755,root,root) %{_libdir}/xmms/Output/libesdout.so
 
 %files output-disk
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/xmms/Output/libdisk_writer*
+%attr(755,root,root) %{_libdir}/xmms/Output/libdisk_writer.so
 
 %files visualization-GL
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/xmms/Visualization/libogl_spectrum*
+%attr(755,root,root) %{_libdir}/xmms/Visualization/libogl_spectrum.so
