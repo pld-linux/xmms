@@ -1,14 +1,3 @@
---- xmms-1.2.10/libxmms/xmmsctrl.h.orig	2003-06-11 20:44:17.000000000 +0200
-+++ xmms-1.2.10/libxmms/xmmsctrl.h	2004-05-08 11:29:28.259765480 +0200
-@@ -85,7 +85,7 @@
- 
- 	
- #ifdef __cplusplus
--};
-+}
- #endif
- 
- /* Deprecated APIs */
 --- xmms-1.2.10/General/ir/ir.c.orig	2001-03-05 14:17:44.000000000 +0100
 +++ xmms-1.2.10/General/ir/ir.c	2005-03-17 18:49:17.000000000 +0100
 @@ -16,10 +16,10 @@
