@@ -13,13 +13,13 @@ Summary(ru.UTF-8):	Проигрыватель музыки с WinAmp GUI
 Summary(uk.UTF-8):	Програвач музики з WinAmp GUI
 Summary(zh_CN.UTF-8):	XMMS - X 端多媒体播放器
 Name:		xmms
-Version:	1.2.10
-Release:	8
+Version:	1.2.11
+Release:	1	
 Epoch:		2
 License:	GPL v2+
 Group:		X11/Applications/Sound
 Source0:	http://www.xmms.org/files/1.2.x/%{name}-%{version}.tar.bz2
-# Source0-md5:	03a85cfc5e1877a2e1f7be4fa1d3f63c
+# Source0-md5:	f3e6dbaf0b3f571a532ab575656be506
 Source1:	%{name}-icons.tar.gz
 # Source1-md5:	14fc5a0bb3679daf1c3900e3a30674e9
 Source2:	mp3license
@@ -30,10 +30,8 @@ Source5:	%{name}-skins.tar.bz2
 Source6:	%{name}-gnome-mime-info
 Source7:	%{name}.png
 Patch0:		%{name}-warn_about_unplayables.patch
-Patch1:		%{name}-am18.patch
-Patch2:		%{name}-gtk2.patch
-Patch3:		%{name}-gcc4.patch
-Patch4:		%{name}-alsa-mono-vol-adjust.patch
+Patch1:		%{name}-gtk2.patch
+Patch2:		%{name}-gcc4.patch
 URL:		http://www.xmms.org/
 BuildRequires:	OpenGL-devel
 BuildRequires:	alsa-lib-devel >= 0.9.5
@@ -404,10 +402,8 @@ OpenGL.
 %prep
 %setup -q -a1 -a5
 %patch0 -p1
-%patch1 -p1
-#patch2 -p1
-%patch3 -p1
-%patch4 -p1
+#patch1 -p1
+%patch2 -p1
 
 cp -f %{SOURCE2} .
 
