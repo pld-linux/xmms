@@ -9,7 +9,7 @@ Summary(uk.UTF-8):	Програвач музики з WinAmp GUI
 Summary(zh_CN.UTF-8):	XMMS - X 端多媒体播放器
 Name:		xmms
 Version:	1.2.11
-Release:	1	
+Release:	2
 Epoch:		2
 License:	GPL v2+
 Group:		X11/Applications/Sound
@@ -47,6 +47,21 @@ BuildRequires:	gtk+-devel >= 1.2.2
 Requires:	glib >= 1.2.2
 Requires:	gtk+ >= 1.2.2
 Requires:	xmms-output-plugin
+Suggests:	xmms-input-FMRadio
+Suggests:	xmms-input-cdaudio
+Suggests:	xmms-input-faad2
+Suggests:	xmms-input-flac
+Suggests:	xmms-input-midi
+Suggests:	xmms-input-mikmod
+Suggests:	xmms-input-musepack
+Suggests:	xmms-input-mpg123
+Suggests:	xmms-input-sap
+Suggests:	xmms-input-shn
+Suggests:	xmms-input-smpeg
+Suggests:	xmms-input-sndfile
+Suggests:	xmms-input-uade
+Suggests:	xmms-input-vorbis
+Suggests:	xmms-input-wav
 Obsoletes:	x11amp
 Obsoletes:	xmms-gnome
 # sr@Latn vs. sr@latin
@@ -460,9 +475,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %post
 umask 022
-echo "Remember to install appropriate xmms-input-* packages for files you want"
-echo "to play."
-
 [ ! -x /usr/bin/update-desktop-database ] || /usr/bin/update-desktop-database >/dev/null 2>&1 ||:
 
 %postun
