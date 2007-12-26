@@ -1,5 +1,4 @@
 [Desktop Entry]
-Encoding=UTF-8
 Name=Xmms
 Comment=X Multimedia System
 Comment[az]=X Multimedya Sistemi
@@ -42,7 +41,7 @@ Comment[uk]=Мультимедіа система для X
 Comment[zh_CN]=X 多媒体系统
 Comment[zh_TW]=X 多媒體系統
 Exec=xmms
-Icon=xmms.png
+Icon=xmms
 MimeType=audio/x-mp3;audio/x-mod;audio/x-wav;audio/x-mpegurl;audio/x-scpls;application/x-ogg;
 Path=
 SwallowExec=
@@ -51,6 +50,5 @@ Terminal=false
 TerminalOptions=
 Type=Application
 BinaryPattern=
-MapNotify=false
 Categories=AudioVideo;Player;
 # vi: encoding=utf-8
