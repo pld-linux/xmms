@@ -17,13 +17,12 @@ Source0:	http://www.xmms.org/files/1.2.x/%{name}-%{version}.tar.bz2
 # Source0-md5:	f3e6dbaf0b3f571a532ab575656be506
 Source1:	%{name}-icons.tar.gz
 # Source1-md5:	14fc5a0bb3679daf1c3900e3a30674e9
-Source2:	mp3license
+Source2:	%{name}-skins.tar.bz2
+# Source2-md5:	39d6de4bf2c37c17b868df3596871c59
 Source3:	%{name}.desktop
 Source4:	wm%{name}.desktop
-Source5:	%{name}-skins.tar.bz2
-# Source5-md5:	39d6de4bf2c37c17b868df3596871c59
-Source6:	%{name}-gnome-mime-info
-Source7:	%{name}.png
+Source5:	%{name}-gnome-mime-info
+Source6:	%{name}.png
 Patch0:		%{name}-warn_about_unplayables.patch
 Patch1:		%{name}-gcc4.patch
 #Patch1:		%{name}-gtk2.patch
@@ -403,11 +402,9 @@ XMMS - під'єднувані модулі візуалізації, які в�
 OpenGL.
 
 %prep
-%setup -q -a1 -a5
+%setup -q -a1 -a2
 %patch0 -p1
 %patch1 -p1
-
-cp -f %{SOURCE2} .
 
 mv -f po/{no,nb}.po
 %{__perl} -pi -e 's/ no / nb /' po/LINGUAS
@@ -460,8 +457,8 @@ install %{SOURCE3} $RPM_BUILD_ROOT%{_desktopdir}
 install %{SOURCE4} $RPM_BUILD_ROOT%{_desktopdir}
 install icons/*    $RPM_BUILD_ROOT%{_datadir}/xmms
 install Skins/*    $RPM_BUILD_ROOT%{_datadir}/xmms/Skins
-install %{SOURCE6} $RPM_BUILD_ROOT%{_datadir}/mime-info/xmms.keys
-install %{SOURCE7} $RPM_BUILD_ROOT%{_pixmapsdir}
+install %{SOURCE5} $RPM_BUILD_ROOT%{_datadir}/mime-info/xmms.keys
+install %{SOURCE6} $RPM_BUILD_ROOT%{_pixmapsdir}
 
 rm -f $RPM_BUILD_ROOT%{_libdir}/xmms/*/*.la
 
@@ -486,7 +483,7 @@ umask 022
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc AUTHORS ChangeLog NEWS README mp3license FAQ
+%doc AUTHORS ChangeLog NEWS README FAQ
 %attr(755,root,root) %{_bindir}/xmms
 %dir %{_libdir}/xmms/Effect
 %attr(755,root,root) %{_libdir}/xmms/Effect/*.so
