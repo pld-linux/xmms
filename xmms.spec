@@ -33,16 +33,17 @@ BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	esound-devel
 BuildRequires:	gettext-devel
+BuildRequires:	gtk+-devel >= 1.2.2
 BuildRequires:	libmikmod-devel > 3.1.7
 BuildRequires:	libogg-devel
 BuildRequires:	libtool
 BuildRequires:	libvorbis-devel >= 1:1.0
 BuildRequires:	libxml-devel >= 1.7.0
 BuildRequires:	perl-base
+BuildRequires:	pkgconfig
 BuildRequires:	xorg-lib-libSM-devel
 BuildRequires:	xorg-lib-libXxf86vm-devel
 BuildRequires:	zlib-devel
-BuildRequires:	gtk+-devel >= 1.2.2
 Requires:	glib >= 1.2.2
 Requires:	gtk+ >= 1.2.2
 Requires:	xmms-output-plugin
@@ -52,8 +53,8 @@ Suggests:	xmms-input-faad2
 Suggests:	xmms-input-flac
 Suggests:	xmms-input-midi
 Suggests:	xmms-input-mikmod
-Suggests:	xmms-input-musepack
 Suggests:	xmms-input-mpg123
+Suggests:	xmms-input-musepack
 Suggests:	xmms-input-sap
 Suggests:	xmms-input-shn
 Suggests:	xmms-input-smpeg
