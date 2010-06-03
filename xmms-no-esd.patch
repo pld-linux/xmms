@@ -1,0 +1,22 @@
+--- xmms-1.2.11/configure.in~	2007-11-16 22:52:30.000000000 +0100
++++ xmms-1.2.11/configure.in	2010-06-03 17:12:31.248078972 +0200
+@@ -201,17 +201,8 @@
+ [  --disable-esd           Disable esound output plugin [default=enabled]],,
+ 	[enable_esd="yes"])
+ 
+-if test "x$enable_esd" = "xyes"; then
+-	AM_PATH_ESD([0.2.8], 
+-	   [have_esd=yes 
+-	    AC_CHECK_LIB([esd], [esd_get_latency], 
+-	       AC_DEFINE([HAVE_ESD_GET_LATENCY],,
+-		  [Define if libesd has the esd_get_latency function]))], 
+-	   [have_esd=no])
+-else
+-	AC_MSG_RESULT([*** esound plugin disabled per user request ***])
+-	have_esd=no
+-fi
++AC_MSG_RESULT([*** esound plugin disabled per user request ***])
++have_esd=no
+ AM_CONDITIONAL([HAVE_ESD], [test "x$have_esd" = "xyes"])
+ 
+ 

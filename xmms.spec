@@ -9,7 +9,7 @@ Summary(uk.UTF-8):	Програвач музики з WinAmp GUI
 Summary(zh_CN.UTF-8):	XMMS - X 端多媒体播放器
 Name:		xmms
 Version:	1.2.11
-Release:	5
+Release:	6
 Epoch:		2
 License:	GPL v2+
 Group:		X11/Applications/Sound
@@ -25,6 +25,7 @@ Source5:	%{name}-gnome-mime-info
 Source6:	%{name}.png
 Patch0:		%{name}-warn_about_unplayables.patch
 Patch1:		%{name}-gcc4.patch
+Patch2:		%{name}-no-esd.patch
 #Patch1:		%{name}-gtk2.patch
 URL:		http://www.xmms.org/
 BuildRequires:	OpenGL-devel
@@ -379,6 +380,7 @@ OpenGL.
 %setup -q -a1 -a2
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 mv -f po/{no,nb}.po
 %{__perl} -pi -e 's/ no / nb /' po/LINGUAS
