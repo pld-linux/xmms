@@ -9,7 +9,7 @@ Summary(uk.UTF-8):	Програвач музики з WinAmp GUI
 Summary(zh_CN.UTF-8):	XMMS - X 端多媒体播放器
 Name:		xmms
 Version:	1.2.11
-Release:	4
+Release:	5
 Epoch:		2
 License:	GPL v2+
 Group:		X11/Applications/Sound
@@ -31,7 +31,6 @@ BuildRequires:	OpenGL-devel
 BuildRequires:	alsa-lib-devel >= 0.9.5
 BuildRequires:	autoconf
 BuildRequires:	automake
-BuildRequires:	esound-devel
 BuildRequires:	gettext-devel
 BuildRequires:	gtk+-devel >= 1.2.2
 BuildRequires:	libmikmod-devel > 3.1.7
@@ -338,32 +337,6 @@ ALSA output plugin for XMMS.
 %description output-ALSA -l pl.UTF-8
 Obsługa sterowników ALSA dla XMMS-a.
 
-%package output-esd
-Summary:	XMMS - Output plugin for use with the esound package
-Summary(es.UTF-8):	Plugin de salida para XMMS para uso con el paquete eSound
-Summary(ja.UTF-8):	XMMS - esoundを利用する出力プラグイン
-Summary(pl.UTF-8):	XMMS - wtyczka umożliwiająca korzystanie z esound
-Summary(pt_BR.UTF-8):	Plugin de saida para o XMMS para uso com o pacote eSound
-Summary(zh_CN.UTF-8):	XMMS - 与 esound 软件包一起使用的输出插件
-Group:		X11/Applications/Sound
-Requires:	%{name} = %{epoch}:%{version}-%{release}
-Requires:	esound >= 0.2.8
-Provides:	xmms-output-plugin
-Obsoletes:	xmms-esd
-
-%description output-esd
-Output plugin for XMMS for use with the esound package.
-
-%description output-esd -l es.UTF-8
-Plugin de salida para XMMS para uso con el paquete eSound.
-
-%description output-esd -l pl.UTF-8
-Wtyczka dla XMMS-a umożliwiająca wykorzystanie esound przy odtwarzaniu
-dźwięków.
-
-%description output-esd -l pt_BR.UTF-8
-Plugin de saída para o XMMS trabalhar com o esd.
-
 %package output-disk
 Summary:	XMMS - disk-writer output plugin
 Summary(pl.UTF-8):	XMMS - wtyczka do zapisywania danych na dysk
@@ -567,10 +540,6 @@ umask 022
 %files output-ALSA
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/xmms/Output/libALSA.so
-
-%files output-esd
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/xmms/Output/libesdout.so
 
 %files output-disk
 %defattr(644,root,root,755)
