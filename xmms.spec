@@ -64,6 +64,7 @@ Suggests:	xmms-input-vorbis
 Suggests:	xmms-input-wav
 Obsoletes:	x11amp
 Obsoletes:	xmms-gnome
+Obsoletes:	xmms-output-esd
 # sr@Latn vs. sr@latin
 Conflicts:	glibc-misc < 6:2.7
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
