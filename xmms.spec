@@ -32,7 +32,7 @@ BuildRequires:	OpenGL-devel
 BuildRequires:	alsa-lib-devel >= 0.9.5
 BuildRequires:	autoconf
 BuildRequires:	automake
-BuildRequires:	gettext-devel
+BuildRequires:	gettext-tools
 BuildRequires:	gtk+-devel >= 1.2.2
 BuildRequires:	libmikmod-devel > 3.1.7
 BuildRequires:	libogg-devel
