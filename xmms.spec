@@ -9,7 +9,7 @@ Summary(uk.UTF-8):	Програвач музики з WinAmp GUI
 Summary(zh_CN.UTF-8):	XMMS - X 端多媒体播放器
 Name:		xmms
 Version:	1.2.11
-Release:	8
+Release:	9
 Epoch:		2
 License:	GPL v2+
 Group:		X11/Applications/Sound
